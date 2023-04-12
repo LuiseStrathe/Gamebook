@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Welcome to GAMEBOOK</h1>
+  <p style="font-size:18pt;">    This Gamebook is a simple and free online game notebook as you might have one at home. 
+    It is a simple web application that allows you to create and manage 
+    your gameplay in the analog world. <br>
+    You can use this Notebook to note down your game results and always keep track of the game status.</p>
+    <br>
+
+
+  <p>Choose a game to start a new notebook:</p>
+  {% for id, name in template_recipes.items() %}
+    <p style="padding:20px; background-color: rgb(106, 0, 41); color:white; 
+        font-size:18pt;text-transform: uppercase;
+        display:block;height:100%;">
+      <a style = "color:white; " href="{{ url_for('recipe', id=id) }}">
+      {{ name }}</a></p>
+  {% endfor %}
+
+  <br><br>
+
+  <div style="width:100%;position:relative">
+    <iframe src="https://giphy.com/embed/3tEFVAbfzzcwo" width="100%" height="100%"
+      style="position:left" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "_base.html" %}
+<!-- Exports header and navbar from header.html 
+     or any file you want-->
+{% block title %}Page Not Found{% endblock %} 
+{% block content %} 
+
+  <h1>Oh nooo! It seems this page does not exist.</h1> 
+
+
+
+  <a href={{url_for('index')}}><p>Click Here</a>To go return to the Gamebook</p> 
+  {% endblock %} 

@@ -1,0 +1,5 @@
+HOWTO.md
+*.csv
+secret.* 
+*.pem
+*__pycache__*

@@ -1,0 +1,56 @@
+body {
+    background-color: #7c7400;
+    font-family: 'Dotum', sans-serif;
+    padding: 20px;
+    font-size: 14pt;
+  }
+
+
+h1 {
+    color: rgb(255, 97, 134);
+    size: 28pt;
+}
+
+
+a {
+    text-decoration: none;
+    color: black;
+    border-style: none;
+    padding: 20px;
+}
+
+a:hover {
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    text-align: center;
+}
+
+.location { grid-area: loc;}
+.description { grid-area: desc; }
+.loc-form { grid-area: frm; }
+
+.loc-container {
+    display: grid;
+    grid-template-areas: 
+      'loc loc  loc desc desc desc desc desc frm';
+    column-gap: 5px;
+    background-color: lightslategray;
+    padding: 5px;
+ }
+
+ .loc-container > div.location {
+     text-align: right;
+ }
+
+ .loc-container > div {
+    background-color: lightgray;
+    text-align: left;
+}
+
+input.up {
+    background-color: #5cb85c;
+}
+
+input.del {
+    background-color: #d9534f;
+}
