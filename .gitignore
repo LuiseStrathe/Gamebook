@@ -3,3 +3,4 @@ HOWTO.md
 secret.* 
 *.pem
 *__pycache__*
+/venv

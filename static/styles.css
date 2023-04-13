@@ -25,6 +25,7 @@ a:hover {
     text-align: center;
 }
 
+
 .location { grid-area: loc;}
 .description { grid-area: desc; }
 .loc-form { grid-area: frm; }

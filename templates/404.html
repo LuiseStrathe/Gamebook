@@ -1,12 +1,7 @@
-{% extends "_base.html" %}
-<!-- Exports header and navbar from header.html 
-     or any file you want-->
-{% block title %}Page Not Found{% endblock %} 
+{% extends "base.html" %}
 {% block content %} 
 
-  <h1>Oh nooo! It seems this page does not exist.</h1> 
+     <h1>Oh nooo! It seems this page does not exist -,-</h1> 
+     <a href={{url_for('index')}}><p>Return to Gamebook</a></p> 
 
-
-
-  <a href={{url_for('index')}}><p>Click Here</a>To go return to the Gamebook</p> 
-  {% endblock %} 
+{% endblock %} 

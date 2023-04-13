@@ -1,40 +1,42 @@
 from flask import Flask, render_template, request
-from helper import recipes, types, descriptions, ingredients, instructions, add_ingredients, add_instructions, comments
-from forms import RecipeForm, CommentForm
+from helper import *
+from forms import *
 from app import app, db
 
 
 
+#### INDEX ####
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/")
 def index():
-  recipe_form = RecipeForm(csrf_enabled=False)
-  if recipe_form.validate_on_submit():
-    new_id = len(recipes)+1
-    recipes[new_id] = recipe_form.recipe.data
-    types[new_id] = recipe_form.recipe_type.data
-    descriptions[new_id] = recipe_form.description.data
-    new_ingredients = recipe_form.ingredients.data
-    new_instructions = recipe_form.instructions.data
-    add_ingredients(new_id, new_ingredients)
-    add_instructions(new_id, new_instructions)
-    comments[new_id] = []
-  return render_template("index.html", template_recipes=recipes, template_form=recipe_form)
-
-@app.route("/recipe/<int:id>", methods=["GET", "POST"])
-def recipe(id):
-  comment_form = CommentForm(csrf_enabled=False)
-  if comment_form.validate_on_submit():
-    new_comment = comment_form.comment.data
-    comments[id].append(new_comment)
-  return render_template("recipe.html", template_recipe=recipes[id], template_type=types[id], template_description=descriptions[id], template_ingredients=ingredients[id], template_instructions=instructions[id], template_comments=comments[id], template_form=comment_form)
+  return render_template("index.html", games=games, descriptions=descriptions)
 
 
+
+#### GAMEPAGE ####
+
+@app.route("/basic/<int:n>", methods=["GET", "POST"])
+def basic(n):
+  player_form = PlayerForm4(csrf_enabled=False)
+  if player_form.validate_on_submit():
+    #players = player_form[0].data, player_form[1].data, player_form[2].data, player_form[3].data
+    id = 42
+    return render_template("/basic/game_42.html", id=id)
+  return render_template("basic.html", player_form=player_form, 
+                         n=n)
+
+
+@app.route("/basic/game_<int:id>", methods=["GET", "POST"])
+def basic_book(id):
+  return render_template("basic_game.html")
+
+
+
+#### ELSE ####
 
 @app.route("/about")
 def about():
   return render_template("about.html")
-
 
 @app.errorhandler(404) 
 def not_found(e): 

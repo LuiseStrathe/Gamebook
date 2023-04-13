@@ -1,4 +1,4 @@
-#!/home/luise/Documents/DataScience/Projects/Flask_Game_Notebook/venv/bin/python3
+#!/home/luise/Documents/DataScience/Projects/Flask_Game_Notebook/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
