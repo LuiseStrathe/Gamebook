@@ -2,32 +2,50 @@ body {
     background-color: #7c7400;
     font-family: 'Dotum', sans-serif;
     padding: 20px;
-    font-size: 14pt;
-  }
+    font-size: 12pt;
+    text-align: center;}
 
 
-h1 {
+
+h1 { text-align: left;
     color: rgb(255, 97, 134);
-    size: 28pt;
-}
+    size: 32pt;
+    letter-spacing: 0.2em;}
 
+h2 {
+    color: rgb(0, 0, 41);
+    size: 20pt;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.4em;}
 
-a {
+h3 {
+    color: rgb(0, 0, 41);
+    size: 14pt;
+    text-align: center;
+    font-weight: bold;
+    text-transform: capitalize;
+    letter-spacing: 0.2em;}
+
+    
+a { text-align: center;
     text-decoration: none;
     color: black;
     border-style: none;
-    padding: 20px;
-}
+    padding: 20px;}
 
 a:hover {
-    background-color: rgb(0, 0, 0);
+    background-color:rgb(0, 0, 41);
     color: rgb(255, 255, 255);
-    text-align: center;
-}
+    text-align: center;}
+
 
 
 .location { grid-area: loc;}
+
 .description { grid-area: desc; }
+
 .loc-form { grid-area: frm; }
 
 .loc-container {
@@ -36,22 +54,18 @@ a:hover {
       'loc loc  loc desc desc desc desc desc frm';
     column-gap: 5px;
     background-color: lightslategray;
-    padding: 5px;
- }
+    padding: 5px; }
 
  .loc-container > div.location {
-     text-align: right;
- }
+     text-align: right; }
 
  .loc-container > div {
     background-color: lightgray;
-    text-align: left;
-}
+    text-align: left;}
+
 
 input.up {
-    background-color: #5cb85c;
-}
+    background-color: #5cb85c;}
 
 input.del {
-    background-color: #d9534f;
-}
+    background-color: #d9534f;}

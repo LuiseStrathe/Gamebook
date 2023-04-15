@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>Start random group game</h1><br>
+
+{% for m in [0, 1] %}
+  <h2>{{ modes[m] }}</h2>
+  <p>{{ descriptions[m] }} </p>
+  {% for i in [2, 3, 4] %}
+    <a style = "padding:20px; background-color:rgb(0, 0, 41); 
+      display:block; height:100%; color:white;" 
+      href = '{{ modes[m] }}/random)'>
+      Start {{ modes[m] }} Gamebook with <b>{{ i }} players</b></a><br>
+  {% endfor %}<br>
+{% endfor %}
+
+{% endblock %}

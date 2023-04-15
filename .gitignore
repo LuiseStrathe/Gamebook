@@ -1,6 +1,6 @@
 HOWTO.md
 *.csv
-secret.* 
-*.pem
 *__pycache__*
 /venv
+*.pkl
+/luise*

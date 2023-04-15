@@ -1,23 +1,21 @@
-{% extends "base.html" %}
+{% extends base %}
 {% block content %}
-  <h1>About the Gamebook project</h1>
-  <p>
-    Gamebook is a simple and free online Game Notebook as you might have one at home. 
-    It is a simple web application that allows you to create and manage your gameplay in the analog world. 
-  </p>
-  <p>
-    This is a personal portfolio project. That is why it is fully free of fees or advertisements. 
-    The data you enter is stored non-personalized and hosted my AWS servers.
-
-  </p>
-  <p>
-    Check out the documentation in the Github repository.
-  </p>
-  <p>
-    My name is Luise Strathe, Berlinn based Data Scientist. 
-    Feel free to visit my portfolio website.    
-  </p>
-  <p>
-    Thank you for visiting!!!
-  </p>
+  <h1>About the GameBook Project</h1><br>
+  <div style = 'text-align:left; size:14pt;'>
+    <p>{{ about_info }}</p><br>
+    <h3 style='text-align:left;'>Insights
+    </h3><p>
+      This is a non-commercial Data Science portfolio project. 
+      That is why it is fully free of fees or advertisements. 
+      The data you enter is stored non-personalized and only used for this one app. 
+      The app uses Flask frameworks and is hosted on a dedicated AWS server (US).
+    </p>
+    <p style = 'font-weight:bold; color:rgb(0, 0, 41);'>Have fun playing!!</p>
+    <br><br>
+    <a  style = 'background-color:lightslategray;' 
+        href = 'https://www.linkedin.com/in/luise-strathe'
+        target="_blank" rel="noopener noreferrer">
+        Developer Profile & Contact</a>   
+    
+  </div>
 {% endblock %}

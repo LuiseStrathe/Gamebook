@@ -1,5 +1,5 @@
 from flask import Flask
-from secret import secret_key
+from luise.secret import secret_key
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -9,7 +9,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
-import routes
+import src.routes
+
 
 if __name__ == "__main__":
 	app.run()
