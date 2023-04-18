@@ -1,0 +1,68 @@
+{% extends "_base_in.html" %}
+{% block content %}
+
+<h1>{{ group.name }} GameBook</h1>
+<p style="font-size:14pt; text-align:left">
+  Hello {{ group.name }}, <br>you can start a game or checkout your records here.</p>
+<br>
+
+
+<h2>overview</h2>
+<p>Not yet available.</p><br><br>
+
+
+
+<h2>Stats</h2>
+<p>Not yet available.</p><br><br>
+<div style = "display:block; height:100%; padding:20px; 
+  background-color:var(--c-dark); color:white"> 
+  <p>You have {{ n }} competitors in the group</p>
+  <p style = 'color: var(--c-title); padding:20px; size:16, 
+    font-weight:bold; letter-spacing: 0.2em;'>
+    {% for player in group.players %}
+    &nbsp;&nbsp;&nbsp; {{ player }}  &nbsp;&nbsp;&nbsp;
+    {% endfor %}</p>
+</div><br><br>
+
+
+
+<h2>pages</h2>
+<p>View all pages in your GameBook</p>
+<div class="tab">
+  <button class="tablinks" onclick="openMode(event, 'All')">All</button>
+  <button class="tablinks" onclick="openMode(event, 'Rounds')">Rounds</button>
+  <button class="tablinks" onclick="openMode(event, 'Dice')">Dice</button>
+</div>
+
+<div id="All" class="tabcontent">
+  <p>Not yet available -,-</p>
+</div>
+
+<div id="Rounds" class="tabcontent">
+  <p>Not yet available -,-</p> 
+</div>
+
+<div id="Dice" class="tabcontent">
+  <p>Not yet available.</p>
+</div>
+
+<script>
+function openMode(evt, Mode) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(Mode).style.display = "block";
+  evt.currentTarget.className += " active";}
+</script>
+
+  
+
+
+
+{% endblock %}

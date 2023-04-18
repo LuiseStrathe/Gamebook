@@ -1,17 +1,18 @@
-{% extends "base_in.html" %}
+{% extends "_base_in.html" %}
 {% block content %}
 
 <h1>{{ group.name }}</h1>
 <p style="font-size:14pt; text-align:left">
-  Hello {{ group.name }}, you can start a game or checkout your records here.</p>
+  Hello {{ group.name }}, <br>you can start a game or checkout your records here.</p>
 <br>
 
 
 <h2>group</h2>
 <div style = "display:block; height:100%; padding:20px; 
-  background-color:rgb(0, 0, 41); color:white"> 
+  background-color:var(--c-dark); color:white"> 
   <p>You have {{ n }} competitors in the group</p>
-  <p style = 'color: rgb(255, 97, 134); padding:20px; size:16, font-weight:bold; letter-spacing: 0.2em;'>
+  <p style = 'color: var(--c-title); padding:20px; size:16, 
+    font-weight:bold; letter-spacing: 0.2em;'>
     {% for player in group.players %}
     &nbsp;&nbsp;&nbsp; {{ player }}  &nbsp;&nbsp;&nbsp;
     {% endfor %}</p>
@@ -21,12 +22,13 @@
 <h2>PLAY</h2>
 
 <div style = "display:block; height:100%; padding:20px; 
-  background-color:rgb(65, 73, 136); color:white;"> 
-  <p>Start a new game with {{ group_name }}</p>
-  {% for i in [0, 1] %}
-    <a style = "padding:20px; background-color:lightslategray; 
+  background-color:var(--c-dark); "> 
+  <p>Start a new game with {{ group.name }}</p>
+  <p>Dice and Puzzle not yet available.</p>
+  {% for i in [0] %}
+    <a style = "padding:20px; background-color:var(--c-light); 
       display:block; height:100%; color:black;" 
-      href = "/{{ modes[i] }}/{{ group.id }}">
+      href = "/start/{{ modes[i] }}/{{ group.id }}">
       <span style='text-transform:uppercase; font-weight:bold;'>
       {{ modes[i] }}</span><br>
       {{ descriptions[i] }}</a><br>
@@ -35,9 +37,11 @@
 
 
 <h2>Maintenance</h2>
-<p> Are you sure you want to delete this team? All records will be deleted as well.</p>
-<a style = "padding:20px; background-color:rgb(142, 15, 15);font-weight:bold; 
-      display:block; height:100%; color:white;" 
-      href="/delete/{{ group.id }}">Delete this group and its GameBook</a>
+<p style='color:var(--light);'> 
+  Are you sure you want to delete this team? All records will be deleted as well.</p>
+<a style = "padding:20px; background-color:var(--c-danger);font-weight:bold; 
+      display:block; height:100%; " 
+      href="/delete/{{ group.id }}">
+      Delete this group and its GameBook</a>
 
 {% endblock %}

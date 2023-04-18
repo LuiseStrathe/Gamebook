@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html>
+
+  {% include '_head.html' %}
+  {% block head %}
+  {% endblock %}
+
   <body>
     <link rel="stylesheet" href="../static/styles.css">
-    <div style="position:fixed; top:0; right:0; width:100%; background:#565100; 
-    padding: 10px; text-align:right; color:rgb(0, 0, 41);">
+    <div style="position:fixed; top:0; right:0; width:100%; color:var(--light);
+    padding: 10px; text-align:right; background:var(--c-head);">
       
       <a href="/">HOME</a>
       | 

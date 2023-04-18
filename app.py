@@ -10,6 +10,8 @@ db = SQLAlchemy(app)
 
 
 import src.routes
+import src.routes_rounds
+import src.routes_groups
 
 
 if __name__ == "__main__":

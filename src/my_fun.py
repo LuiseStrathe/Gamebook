@@ -6,43 +6,14 @@ sys.path.insert(1, "./")
 import pickle
 import numpy as np
 import pandas as pd
-from flask import session
+from flask_wtf import FlaskForm
+from flask import Flask, render_template, request, url_for, redirect, flash, session
+from datetime import datetime
 
 from src.my_params import *
+from src.my_classes import *
 
 
-######### CLASSES #########
-
-class Group():
-
-    def __init__(self, name, key, players, motto=None):
-
-        self.name = name
-        self.id = name_to_id(name)
-        self.players = players
-        self.n = len(players)
-        self.key = key
-        self.games = pd.DataFrame(columns=result_cols)
-        self.motto = motto
-        self.filepath = f'{path_data}groups/{self.id}.pkl'
-
-        try:
-            check_name(self.name)
-        except:
-            print('Please check your group name and key.')
-
-        try:
-            with open(self.filepath, "wb") as f:
-                pickle.dump(self, f)
-        except:
-            print('This name already exists. Please choose another one.')
-
-    def update_group(self):
-        with open(self.filepath, "wb") as f:
-            pickle.dump(self, f)
-
-
-######### FUNCTIONS #########
 
 def init_session():
     session['status'] = 'OUT'
@@ -51,12 +22,16 @@ def init_session():
     session['game_id'] = 0
     session['mode'] = ''
     session['num_players'] = 0
+    session['round'] = 0
 
+def get_base():
+    base = '_base.html'
+    if session['status'] == 'IN':
+        base = '_base_in.html'
+    return base
 
 def load_group(id):
-    print(f'Loading group w/ id = {id}')
     path = f'{path_data}groups/{id}.pkl'
-    print('path = ', path)
     with open(path, "rb") as f:
         group = pickle.load(f)
     return group
@@ -68,8 +43,8 @@ def delete_group(id):
 
 
 def name_to_id(name):
-    for c in ' .,;:!?':
-        name = name.replace(c, '-')
+    for c in ' .,;:!?-':
+        name = name.replace(c, '_')
     id = name.lower()
     return id
 
@@ -100,18 +75,39 @@ def create_players(group_form):
     players = [p for p in players if p != '']
     return players
 
-def gen_game_id():
+
+def gen_game_id(mode):
     
     with open(f'data/max_id.txt', "rt") as f:
         new_id = int(f.readline()) + 1
         print(f'New game id: {new_id}')
     with open(f'data/max_id.txt', "wt") as f:  
         f.write(str(new_id))
-        
-    return new_id
+
+    return str(mode_key[mode] + '_' + str(new_id).zfill(10)) 
 
 
-def create_random_group(n):
-    players = [f'Player {i+1}' for i in range(n)]
-    group = Group(name='random', key='random', players=players)
+def create_random_group():
+    group = My_Group(name='random', key='random', players=session['random_players'], motto='random')
     return group
+
+
+def end_rounds(group, points, game_id, info):
+    winner = group.players[np.argmax(points[-1])]
+    
+    result = {'game_id':game_id, 'mode': game_id[0], "group":group.id, 
+         "result":points[-1][:], "n_rounds":points.shape[0], 
+         "winner":winner, 'info':info, 'time':datetime.now()}
+    
+    # save game points
+    points.save(f'{path_data}games/{game_id}.npy')
+    
+    # save in group
+    group.results.append(result, ignore_index=True)
+    group.update_group()
+    
+    # save in all results
+    results = pd.read_csv(f'{path_data}results.csv')
+    results = results.append(result, ignore_index=True)
+    results.to_csv(f'{path_data}results.csv', index=False)
+    

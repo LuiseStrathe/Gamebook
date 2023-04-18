@@ -1,0 +1,49 @@
+   {% extends '_base_in.html' %}
+
+   {% block content %}
+   
+    <h1>GameBook</h1>
+
+    <h3 style='text-align:left; '>{{ group.name }}</h3><br>
+    <link rel="stylesheet" href="../../../static/styles.css">
+   
+
+    <h2>Your rounds game</h2>
+    <p>{{ date }}</p>
+    <table>
+        <tr>
+            <th> </th>
+            {% for player in group.players %}
+                <th style='border-bottom: 1px solid var(--c-dark);'>
+                    {{ player }}</th>
+            {% endfor %}
+        </tr>
+
+
+        {% for row in range(round) %}
+            <tr>
+                <td style= 'text-align: right;'>
+                    Round {{ row + 1 }}</td>
+                {% for player in range(n) %}
+                    <td>{{ points[row][player] }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+
+
+        <tr>
+            <th style= 'text-align: right; '>
+                SUM</th>
+            {% for summe in points[-1] %}
+                <th>{{ summe }}</th>
+            {% endfor %}
+        </tr>
+
+
+    </table>
+
+
+   
+
+   
+   {% endblock %}

@@ -1,7 +1,7 @@
 {% extends base %}
 {% block content %}
   <h1>About the GameBook Project</h1><br>
-  <div style = 'text-align:left; size:14pt;'>
+  <div style = 'text-align:justify; size:14pt;'>
     <p>{{ about_info }}</p><br>
     <h3 style='text-align:left;'>Insights
     </h3><p>
@@ -9,13 +9,21 @@
       That is why it is fully free of fees or advertisements. 
       The data you enter is stored non-personalized and only used for this one app. 
       The app uses Flask frameworks and is hosted on a dedicated AWS server (US).
-    </p>
-    <p style = 'font-weight:bold; color:rgb(0, 0, 41);'>Have fun playing!!</p>
-    <br><br>
-    <a  style = 'background-color:lightslategray;' 
+    </p><br>
+    <h3 style = 'text-align:left; text-transform: none;'>Have fun playing!!</h3>
+    <br><br><br>
+
+    
+    <a  style = 'background-color:var(--c-back); color:var(--c-1); 
+        border: 1px solid var(--c-1); border-radius: 5px; padding: 20px;
+
+        box-shadow: 0 0 7px var(--c-1);
+        /* in order: x offset, y offset, blur size, spread size, color */
+        /* blur size and spread size are optional (they default to 0) */' 
+
         href = 'https://www.linkedin.com/in/luise-strathe'
         target="_blank" rel="noopener noreferrer">
-        Developer Profile & Contact</a>   
-    
+        Developer Profile & Contact</a>  
+
   </div>
 {% endblock %}

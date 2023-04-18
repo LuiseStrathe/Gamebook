@@ -1,8 +1,10 @@
 
-modes = ["rounds", "dice"]
+modes = ["rounds", "dice", 'puzzle']
+mode_key = {"rounds": "R", "dice": "D", "puzzle": "P"}
 
 descriptions = ["Play in rounds and add up points",
-                "Roll the dice and as in the classic achieve points in different categories"]
+                "Roll the dice and as in the classic achieve points in different categories",
+                "Time your puzzle skills"]
 
 about_info = str(' '.join([
     "This GameBook functions a simple and free online game notebook, as you might have one at home.",
@@ -14,5 +16,8 @@ about_info = str(' '.join([
 result_cols = ['game_id', 'mode', "group",
                "result", "n_rounds", "winner", 'info', 'time']
 
+player_cols = ['name', 'info', 'tag', 'image']
+
 path_data = 'data/'
+
 

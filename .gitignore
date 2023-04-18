@@ -3,4 +3,6 @@ HOWTO.md
 *__pycache__*
 /venv
 *.pkl
-/luise*
+/luise
+*/tmp/*
+/data
