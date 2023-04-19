@@ -18,6 +18,10 @@ class GroupForm(FlaskForm):
   p2 = StringField("Player 2", validators=[DataRequired()])
   p3 = StringField("Player 3")
   p4 = StringField("Player 4")
+  p5 = StringField("Player 5")
+  p6 = StringField("Player 6")
+  p7 = StringField("Player 7")
+  p8 = StringField("Player 8")
   
   submit = SubmitField("Save this group and proceed")
 

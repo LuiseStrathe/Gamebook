@@ -50,33 +50,22 @@
   <h2>modes</h2>
 
   <div class="tab">
-      <button class="tablinks" onclick="openMode(event, 'Rounds')">Rounds</button>
-      <button class="tablinks" onclick="openMode(event, 'Dice')">Dice</button>
-      <button class="tablinks" onclick="openMode(event, 'Puzzle')">Dice</button>
-  </div>
+    {% for m in range(num_modes) %}
+      <button class="tablinks" onclick="openMode(event, '{{ modes[m] }}')"      
+      style='text-transform:capitalize;'>{{ modes[m] }}</button>
+    {% endfor %} </div>
 
 
+  {% for m in range(num_modes) %}
+    <div id="{{ modes[m] }}"  class="tabcontent">
+      <p style='text-align:left; white-space: pre-line;'>{{ descriptions[m] }}</p> 
+      <iframe src="{{ giphs[m] }}" max_width="50%" height="100%"
+          style="position:left" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>  
+    </div>  
+  {% endfor %}
   
-  <div id="Rounds" class="tabcontent">
-    <p>{{ descriptions[0] }}</p> 
-    <iframe src="https://giphy.com/embed/3tEFVAbfzzcwo" max_width="50%" height="100%"
-        style="position:left" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
-  </div>
-  
-  <div id="Dice" class="tabcontent">
-    <p style = "color:var(--c-danger);">This mode is not yet available.</p>
-    <p>{{ descriptions[1] }}</p>
-    <iframe src="https://giphy.com/embed/l2JdUMnCDg6qs368g" max_width="50%" height="100%"
-        style="position:left" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
-  </div>
+  <br><br><br>
 
-  <div id="Puzzle" class="tabcontent">
-    <p style = "color:var(--c-danger);">This mode is not yet available.</p>
-    <p>{{ descriptions[2] }}</p>
-    <iframe src="https://giphy.com/embed/3o6Mbr1blVD5KKQBxK" max_width="50%" height="100%"
-        style="position:left" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
-  </div>
-  
   <script>
   function openMode(evt, Mode) {
     var i, tabcontent, tablinks;
@@ -91,4 +80,5 @@
     document.getElementById(Mode).style.display = "block";
     evt.currentTarget.className += " active";}
   </script>
+
 {% endblock %}

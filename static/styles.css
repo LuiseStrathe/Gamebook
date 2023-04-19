@@ -1,6 +1,6 @@
 
 :root {
-    --c-back: #141c2c; --c-head: #05060fce;
+    --c-back: #141c2c; --c-back2: #2c1423; --c-head: #05060fce;
     --title: #ff4070; --reg: #e7e9f1; --light: #ffffff; --titleglow: #ff4070;
     --c-dark: #02050d; --c-medium: rgb(41, 50, 119); 
     --c-white: #e7e9f1; --c-light: #a0aad3;
@@ -9,13 +9,15 @@
     --c-danger: rgb(172, 26, 26); --c-sucess: #208320;}
   
 
+
 body {
-    background-color: var(--c-back);
+    background: linear-gradient(to top left, var(--c-back2) 0%, var(--c-back) 100%);
     font-family: 'Dotum', sans-serif;
-    padding: 20px;
+    margin: 20px;
     font-size: 12pt;
     text-align: center;
-    color:var(--reg);}
+    color:var(--reg);
+    overflow-x: hidden;}
 
 
 
@@ -79,7 +81,7 @@ p { border-radius: 5px;}
     padding: 5px; }
 
  .loc-container > div.location {
-     text-align: right; }
+    text-align: right; }
 
  .loc-container > div {
     background-color: var(--c-light);

@@ -27,7 +27,8 @@ def index():
   
   return render_template("_index.html", 
                          modes=modes, descriptions=descriptions, 
-                         about_info=about_info)
+                         about_info=about_info, giphs=mode_giphs,
+                         num_modes=len(modes))
 
 
 

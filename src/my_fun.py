@@ -71,7 +71,10 @@ def check_key(id, key):
 
 def create_players(group_form):
     players = [group_form.p1.data, group_form.p2.data,
-               group_form.p3.data, group_form.p4.data]
+                group_form.p3.data, group_form.p4.data, 
+                group_form.p5.data, group_form.p6.data,
+                group_form.p7.data, group_form.p8.data]
+                
     players = [p for p in players if p != '']
     return players
 

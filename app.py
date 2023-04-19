@@ -1,5 +1,5 @@
 from flask import Flask
-from luise.secret import secret_key
+from data.server.secret import secret_key
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
