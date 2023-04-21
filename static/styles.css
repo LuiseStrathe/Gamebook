@@ -6,7 +6,9 @@
     --c-dark: #02050ddc; --c-medium: rgba(41, 50, 119, 0.857); 
     --c-white: #e7e9f1; --c-light: #a0aad3d7;
     --c-1: #e5d352; --c-2: #8075ff;
-    --c-danger: rgb(172, 26, 26); --c-sucess: #208320;}
+    --c-danger: rgb(172, 26, 26); --c-sucess: #208320;
+    --p0: #60d2ff; --p1: #4a74ff; --p2: #53eba4; --p3: #2799bf; 
+    --p4: #9aff9a; --p5: #5a73ff; --p6: #735ee6; --p7: #4df7b0;}
   
 
 
@@ -86,12 +88,26 @@ image {
     background-color: var(--c-light);
     padding: 5px; }
 
- .loc-container > div.location {
-    text-align: right; }
+.loc-container > div.location {
+    text-align: right; }    
 
- .loc-container > div {
+.loc-container > div {
     background-color: var(--c-light);
     text-align: left;}
+
+
+.rounds_chart {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 2px;
+    padding: 10pt 0pt;}
+
+.rounds_bar {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    border-radius: 0px;}
 
 
 input.up {

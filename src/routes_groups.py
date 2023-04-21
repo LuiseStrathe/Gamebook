@@ -11,7 +11,6 @@ from src.routes_rounds import *
 from src.routes import *
 
 from flask import Flask, render_template, request, url_for, redirect, flash, session
-from os.path import exists
 
 
 
@@ -20,14 +19,14 @@ from os.path import exists
 # Group page
 @app.route("/group/<string:group_id>", methods=["GET", "POST"])
 def group(group_id):
-  
-  if check_key(session['username'], session['key']):
-    group = load_group(group_id)
-    return render_template("group.html", 
-                           descriptions=descriptions, modes=modes, 
-                           group=group)
-    
-  else: return redirect('login')
+    if check_key(session['username'], session['key']):
+      group = load_group(group_id)
+      return render_template("group.html", 
+                            descriptions=descriptions, modes=modes, 
+                            group=group)
+    else:
+      init_session()
+      return redirect(url_for('group_login', retry=False))
 
 
 # enter GameBook
@@ -35,7 +34,9 @@ def group(group_id):
 def enter_gamebook():
   if check_key(session['username'], session['key']):    
     return redirect(f"/gamebook/{session['username']}")
-  else: return redirect('login')
+  else: 
+    init_session()
+    return redirect(url_for('group_login', retry=False))
 
 # GameBook
 @app.route("/gamebook/<string:group_id>", methods=["GET", "POST"])
@@ -43,11 +44,25 @@ def gamebook(group_id):
   
   if check_key(session['username'], session['key']):
     group = load_group(group_id)
+    
+    stats = [[0 for _ in range(group.n + 1)] for _ in modes]
+    for m, mode in enumerate(modes):
+      
+      games = group.results[group.results.g_mode == mode]
+      n_games = games.shape[0]
+      print('>> num games in category', mode, ':', n_games)
+      if n_games > 0:
+        wins = [n_games, *[games[games.winner_name == p].shape[0] for p in group.players]]
+        stats[m] = wins
+      
     return render_template("gamebook.html", 
                            descriptions=descriptions, modes=modes, 
-                           group=group)
+                           group=group, giphs=mode_giphs, stats=stats,
+                           num_modes=len(modes), mode_key=mode_key)
     
-  else: return redirect('login')
+  else: 
+    init_session()
+    return redirect(url_for('group_login', retry=False))
   
   
 # Random 
@@ -99,8 +114,7 @@ def login():
   if request.method == 'POST':
       name, key = request.form['username'], request.form['key']
       id = name_to_id(name)
-      if exists(f'{path_data}groups/{id}.pkl'):
-        if check_key(id, key):
+      if check_key(id, key):
           session['username'] = id
           session['key'] = key
           session['status'] = 'IN'
@@ -110,9 +124,8 @@ def login():
           print(name, 'now logged in')
           return redirect(f"/group/{id}")
       else: 
-        init_session()
-        retry = True
-        return redirect(url_for('login', retry=retry))
+          init_session()
+          return redirect(url_for('group_login', retry=True))
       
   return render_template('group_login.html', retry=retry)
 

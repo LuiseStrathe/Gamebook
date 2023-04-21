@@ -57,10 +57,6 @@ class CloseRoundForm(FlaskForm):
 class SubmitGameForm(FlaskForm):
   info = TextAreaField("Page Comment", validators=[DataRequired()])
   submit = SubmitField("Finish this Page")
-  
-# Clear Game
-class ClearGameForm(FlaskForm):
-  submit = SubmitField("Reset your current Page")
 
 # random_start 
 class RandomGroup(FlaskForm):

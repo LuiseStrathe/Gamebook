@@ -1,49 +1,57 @@
-   {% extends '_base_in.html' %}
+{% extends "_base_in.html" %}
+{% block content %}
+<link rel="stylesheet" href="../../../static/styles.css">
 
-   {% block content %}
-   
-    <h1>GameBook</h1>
+<h1 style='text-transform:uppercase;'>
+   {{ game_entry.g_mode[0] }}: {{ game_entry.game_id[0] }}</h1><br>
 
-    <h3 style='text-align:left; '>{{ group.name }}</h3><br>
-    <link rel="stylesheet" href="../../../static/styles.css">
-   
 
-    <h2>Your rounds game</h2>
-    <p>{{ date }}</p>
-    <table>
-        <tr>
+
+<h3>{{ game_entry.info_3[0] }}</h3>
+<p style="font-size:14pt; color:var(--light)">
+  {{ game_entry.time[0].strftime("%m/%d/%Y, %H:%M") }}<br>
+  {{ game_entry.winner_name[0] }} won this game!</p>
+<br>
+
+<div style='background-color: var(--c-dark); color:var(--light); margin:20pt;'>
+
+       <table>
+         <tr>
             <th> </th>
             {% for player in group.players %}
-                <th style='border-bottom: 1px solid var(--c-dark);'>
-                    {{ player }}</th>
+               <th style='border-bottom: 1px solid var(--c-2);'>
+                  {{ player }}</th>
             {% endfor %}
-        </tr>
+         </tr>
 
-
-        {% for row in range(round) %}
+         {% for row in range(game_entry.result[0].shape[0] - 1) %}
             <tr>
-                <td style= 'text-align: right;'>
-                    Round {{ row + 1 }}</td>
-                {% for player in range(n) %}
-                    <td>{{ points[row][player] }}</td>
-                {% endfor %}
+               <td style= 'text-align: right;'>
+                  Round {{ row + 1 }}</td>
+               {% for player in range(game_entry.n_rounds[0]) %}
+                  <td>{{ game_entry.result[0][row][player] }}</td>
+               {% endfor %}
             </tr>
-        {% endfor %}
+         {% endfor %}
 
-
-        <tr>
+         <tr>
             <th style= 'text-align: right; '>
-                SUM</th>
-            {% for summe in points[-1] %}
-                <th>{{ summe }}</th>
+               SUM</th>
+            {% for summe in game_entry.result[0][-1] %}
+               <th>{{ summe }}</th>
             {% endfor %}
-        </tr>
+         </tr>
 
 
-    </table>
+       </table>
+
+</div><br><br>
+
+<a style = "border: 1px solid var(--c-light); display:block; height:100%; " 
+      href="/gamebook">
+            Return to your GameBook</a><br><br>
 
 
-   
 
-   
-   {% endblock %}
+
+{% endblock %}

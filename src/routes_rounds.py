@@ -41,7 +41,7 @@ def rounds(group_id, game_id, round):
   n =                 int(session['num_players'])
   rounds_form =       CloseRoundForm(csrf_enabled=False)
   submit_game_form =  SubmitGameForm(csrf_enabled=False)
-  clear_game_form =   ClearGameForm(csrf_enabled=False)    
+  
   if group_id == 'random': 
                       group = create_random_group()
   else:               group = load_group(group_id)
@@ -72,7 +72,7 @@ def rounds(group_id, game_id, round):
     print('Entered Points:', new_points)
     
     if round == 0:    points = new_points
-    else:             points = np.vstack([points, new_points])  
+    else:             points = np.vstack([points[:-1], new_points])  
                
     points =          np.vstack([points, np.sum(points, axis=0)])
     np.save(f"{path_data}tmp/rounds/{game_id}", points)  
@@ -83,26 +83,22 @@ def rounds(group_id, game_id, round):
     session['round']  += 1    
     return redirect(f"/rounds/{group_id}/{game_id}/{session['round']}")
   
-
-  # exit game
-  if clear_game_form.validate_on_submit():
-    print(f"Game {game_id} is now cleared")
-    session['game_id'] = ''
-    if redirect_link == '/': return redirect('/')
-    else: return redirect(f"/gamebook")
     
   # submit page
   if submit_game_form.validate_on_submit():
     print(f"Game {game_id} submitted")
-    end_rounds(group, points, game_id=game_id, info=submit_game_form.info.data)
-    return redirect(f"{redirect_link}")
+    
+    # info_3: user note
+    infos = ['', '', submit_game_form.info.data]
+    end_rounds(group=group, points=points, game_id=game_id, infos=infos)
+    return redirect(f"/{group_id}/rounds/{game_id}")
   
   
   return render_template("rounds.html",
                             modes=modes, descriptions=descriptions, base=base,
-                            rounds_form=rounds_form, submit_game_form=submit_game_form, clear_game_form=clear_game_form, 
+                            rounds_form=rounds_form, submit_game_form=submit_game_form, 
                             group=group, game_id=game_id, n=n, start=start,  
-                            round=round, points=points[:-1],
+                            round=round, points=points,
                             point_entries=point_entries)
 
 
@@ -110,13 +106,11 @@ def rounds(group_id, game_id, round):
 @app.route("/<string:group_id>/rounds/<string:game_id>")
 def rounds_page(group_id, game_id):
   
-  if session['status'] != 'OUT':
+  if session['status'] == 'OUT':
     return redirect('/')
   
   group = load_group(group_id)
-  result = group.results['game_id' == game_id]
-  time = result['time'].strftime("%d.%m.%Y %H")
-  points = np.load(f"{path_data}rounds/{game_id}.npy")
+  game_entry = group.results[group.results['game_id'] == game_id]
   
   return render_template("rounds_page.html",
-                         group=group, game_id=game_id, time=time)
+                         group=group, game_id=game_id, game_entry=game_entry)

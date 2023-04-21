@@ -13,11 +13,11 @@
 <h2>group</h2>
 <div style = "display:block; height:100%; padding:20px; 
   background-color:var(--c-dark); color:white"> 
-  <p>You have {{ n }} competitors in the group</p>
-  {% for player in group.players %}
-    <p style = 'font-size:16; font-weight:bold; letter-spacing: 0.2em;'>
-    {{ player }} </p>
-  {% endfor %}
+  <p>You have {{ group.n }} competitors in the group</p>
+  <p style = 'font-size:16; font-weight:bold; letter-spacing: 0.2em;'>
+    {% for player in group.players %}
+      {{ player }} &ensp;
+    {% endfor %}</p>
 </div><br>
 
 
@@ -28,12 +28,9 @@
   <p>Start a new game with {{ group.name }}</p>
   <p>Dice, Puzzle and Skat not yet available.</p>
   {% for i in [0] %}
-    <a style = "background-color:var(--c-light); 
-      display:block; height:100%; color:black; white-space: pre-line; " 
-      href = "/start/{{ modes[i] }}/{{ group.id }}">
-      <span style='text-transform:uppercase; font-weight:bold;  '>
-      {{ modes[i] }}</span><br>
-      {{ descriptions[i] }}</a><br>
+    <a style = "display:block; border-bottom: 1px solid var(--c-2);
+      white-space: pre-line; text-transform:uppercase; font-weight:bold; " 
+      href = "/start/{{ modes[i] }}/{{ group.id }}">Start {{ modes[i] }}</a><br>
   {% endfor %}</div><br><br>
 
 

@@ -69,17 +69,11 @@
             <p>{{ submit_game_form.info() }}</p>
             <p>{{ submit_game_form.submit() }}</p>
         </form>
-    </div><br>
+    </div><br><br>
 
 
-    <div style='width:100%; size:20pt; color:var(--light)'>
-        <form action="" method="POST">
-            {{ clear_game_form.hidden_tag() }}
-            <h2 style='color:var(--c-danger)'>Exit</h2>
-            <p>Exit this game now without saving.</p>
-            <p>{{ clear_game_form.submit() }}</p>
-        </form>
-    </div><br>
+    <a style='white-space: pre-line; color:var(--c-danger)'
+        href='/'>Exit this game now without saving.</a><br><br><br>
 {% endif %}
 
 

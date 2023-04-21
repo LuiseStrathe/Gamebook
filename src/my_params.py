@@ -37,8 +37,13 @@ about_info = str(' '.join([
     "Each game you play will add a page to your GameBook with the final results.",
     "With your group GameBook you have access to statistics of all your group's games."]))
 
-result_cols = ['game_id', 'mode', "group",
-               "result", "n_rounds", "winner", 'info', 'time']
+result_cols = ['game_id', 'g_mode', "group_id",
+               "result", "n_rounds", "winner_name", 'time', 
+               'info_1', 'info_2', 'info_3']
+'''         result: np array of points, mode specific scheme
+            time:   timestamp
+            info:   mode specific info
+                '''
 
 player_cols = ['name', 'info', 'tag', 'image']
 

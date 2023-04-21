@@ -95,22 +95,24 @@ def create_random_group():
     return group
 
 
-def end_rounds(group, points, game_id, info):
+def end_rounds(group, points, game_id, infos):
     winner = group.players[np.argmax(points[-1])]
-    
-    result = {'game_id':game_id, 'mode': game_id[0], "group":group.id, 
-         "result":points[-1][:], "n_rounds":points.shape[0], 
-         "winner":winner, 'info':info, 'time':datetime.now()}
-    
-    # save game points
-    points.save(f'{path_data}games/{game_id}.npy')
+    print('winner: ', winner)
+          
+    result = {'game_id':game_id, 'g_mode': 'rounds', "group_id":group.id, 
+         "result":points, "n_rounds":points.shape[0], 
+         "winner_name":winner, 'time':datetime.now(),
+         'info_1':infos[0], 'info_2': infos[1], 'info_3':infos[2]}
+    print(result)
     
     # save in group
-    group.results.append(result, ignore_index=True)
+    group.results = pd.concat([group.results, pd.DataFrame([result])])
+    print(group.results.head())
     group.update_group()
     
     # save in all results
-    results = pd.read_csv(f'{path_data}results.csv')
-    results = results.append(result, ignore_index=True)
-    results.to_csv(f'{path_data}results.csv', index=False)
+    results = pd.read_csv(f'{path_data}modes/results.csv')
+    results = pd.concat([results, pd.DataFrame([result])])
+    print(results.head())
+    results.to_csv(f'{path_data}modes/results.csv', index=False)
     
