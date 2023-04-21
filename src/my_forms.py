@@ -31,7 +31,10 @@ class DeleteForm(FlaskForm):
   key = StringField("Group Key", validators=[DataRequired()])
   submit = SubmitField("Delete this group and its GameBook")
 
-
+# motto
+class MottoForm(FlaskForm):
+  motto = StringField("New motto", validators=[DataRequired()])
+  submit = SubmitField("Change Motto")
 
   
 #### GAME ####

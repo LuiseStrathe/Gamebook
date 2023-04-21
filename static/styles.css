@@ -1,11 +1,11 @@
 
 :root {
-    --c-back: #141c2c; --c-back2: #2c1423; --c-head: #05060fce;
-    --title: #ff4070; --reg: #e7e9f1; --light: #ffffff; --titleglow: #ff4070;
-    --c-dark: #02050d; --c-medium: rgb(41, 50, 119); 
-    --c-white: #e7e9f1; --c-light: #a0aad3;
+    --c-back: #0a1e2a; --c-back2: #371546; --c-back0: #080e36; 
+    --c-head: #05060fce; --title: #ff4070; --titleglow: #ff4070;
+    --reg: #e7e9f1; --light: #ffffff;
+    --c-dark: #02050ddc; --c-medium: rgba(41, 50, 119, 0.857); 
+    --c-white: #e7e9f1; --c-light: #a0aad3d7;
     --c-1: #e5d352; --c-2: #8075ff;
-    
     --c-danger: rgb(172, 26, 26); --c-sucess: #208320;}
   
 
@@ -17,7 +17,9 @@ body {
     font-size: 12pt;
     text-align: center;
     color:var(--reg);
-    overflow-x: hidden;}
+    overflow-x: hidden;
+    background-repeat: no-repeat;
+    background-attachment: fixed;}
 
 
 
@@ -64,6 +66,10 @@ div {
     border-radius: 5px;}
 
 p { border-radius: 5px;}
+
+image {
+    width: 100%; 
+    }
 
 
 .location { grid-area: loc;}

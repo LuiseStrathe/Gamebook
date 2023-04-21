@@ -8,7 +8,7 @@ mode_giphs = ["https://giphy.com/embed/3tEFVAbfzzcwo", 'https://giphy.com/embed/
 
 descriptions = ["Play in rounds with your group.\n\n \
                 In each round, you can enter points for each player.\n \
-                The Winner is the player with the most points over all rounds.\n\n \
+                The winner is the player with the most points over all rounds.\n\n \
                 You can use this mode for all kinds of games. Either you note down rounds \
                 (as in scrabble) or \
                 the results of multiple games you want to combine, e.g. cards or table tennis.",
@@ -18,10 +18,10 @@ descriptions = ["Play in rounds with your group.\n\n \
                 Each time you roll the dice, you can choose which dice you want to keep. \
                 You can not reroll with those anymore.\n \
                 To end your turn you have to choose a combination and enter the points.\n \
-                The Winner is the player with the most total points.",
+                The winner is the player with the most total points.",
                 
                 "Time your puzzle skills\n\n \
-                You can enter your puzzle times in the gamebook.\n \
+                You can enter your puzzle times in the GameBook.\n \
                 For this you can specify the puzzle and the time.\n \
                 Also you can save puzzles and later see how group members performed.",
                 
@@ -31,7 +31,7 @@ descriptions = ["Play in rounds with your group.\n\n \
 
 
 about_info = str(' '.join([
-    "This GameBook functions a simple and free online game notebook, as you might have one at home.",
+    "This GameBook functions a simple and free online game notebook, as you might have one at home.\n\n",
     "It is a simple web application that allows you to create and manage your gameplay in the analog world.", 
     "This is for 2 to 8 players per group, competing against each other.",
     "Each game you play will add a page to your GameBook with the final results.",

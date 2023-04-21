@@ -168,3 +168,22 @@ def delete(group_id):
                          group_name=group_name, delete_form=delete_form)
 
 
+# Motto
+@app.route('/motto', methods=["GET", "POST"])
+def motto():
+  
+  if check_key(session['username'], session['key']):
+    
+    group = load_group(session['username'])
+    motto_form = MottoForm(csrf_enabled=False)
+  
+    if motto_form.validate_on_submit():
+      
+          group.motto = motto_form.motto.data
+          group.update_group()
+          return redirect(f'/group/{group.id}')
+  
+    return render_template("group_motto.html", 
+                         group=group, motto_form=motto_form)
+  
+  else: redirect('/')

@@ -1,8 +1,15 @@
 {% extends base %}
 {% block content %}
   <h1>About the GameBook Project</h1><br>
+
+  <p style="font-size:20pt; text-align:center; color:var(--c-danger);">
+    -----------------------------------------<br>
+    BETA VERSION<br>
+    THIS APP IS IN DEVELOPMENT<br>
+    -----------------------------------------</p>
+    
   <div style = 'text-align:justify; size:14pt;'>
-    <p>{{ about_info }}</p><br>
+    <p style='text-align:block; white-space: pre-line;'>{{ about_info }}</p><br>
     <h3 style='text-align:left;'>Insights
     </h3><p>
       This is a non-commercial Data Science portfolio project. 
@@ -14,12 +21,17 @@
     <br><br><br>
 
     
-    <a  style = 'background-color:var(--c-back); color:var(--c-1); 
-        border: 1px solid var(--c-1); border-radius: 5px; padding: 20px;
+    <a  style = 'letter-spacing: 0.2em; border: 1px solid var(--c-1); 
+    padding: 20px;font-weight: bold;
 
         box-shadow: 0 0 7px var(--c-1);
         /* in order: x offset, y offset, blur size, spread size, color */
-        /* blur size and spread size are optional (they default to 0) */' 
+        /* blur size and spread size are optional (they default to 0) */
+        
+        :hover {
+          background-color: var(--c-dark);
+          color: black;
+        }' 
 
         href = 'https://www.datascienceportfol.io/Luise_strathe'
         target="_blank" rel="noopener noreferrer">

@@ -1,9 +1,12 @@
 {% extends "_base_in.html" %}
 {% block content %}
 
-<h1>{{ group.name }}</h1>
-<p style="font-size:14pt; text-align:left">
-  Hello {{ group.name }}, <br>you can start a game or checkout your records here.</p>
+<h1>{{ group.name }}</h1><br>
+
+<h3> {{ group.motto }} </h3>
+
+<p style="font-size:14pt;">
+  Greetings, {{ group.name }} <br>You can start a game or checkout your records here.</p>
 <br>
 
 
@@ -11,11 +14,10 @@
 <div style = "display:block; height:100%; padding:20px; 
   background-color:var(--c-dark); color:white"> 
   <p>You have {{ n }} competitors in the group</p>
-  <p style = 'color: var(--c-title); padding:20px; size:16, 
-    font-weight:bold; letter-spacing: 0.2em;'>
-    {% for player in group.players %}
-    &nbsp;&nbsp;&nbsp; {{ player }}  &nbsp;&nbsp;&nbsp;
-    {% endfor %}</p>
+  {% for player in group.players %}
+    <p style = 'font-size:16; font-weight:bold; letter-spacing: 0.2em;'>
+    {{ player }} </p>
+  {% endfor %}
 </div><br>
 
 
@@ -24,21 +26,33 @@
 <div style = "display:block; height:100%; padding:20px; 
   background-color:var(--c-dark); "> 
   <p>Start a new game with {{ group.name }}</p>
-  <p>Dice and Puzzle not yet available.</p>
+  <p>Dice, Puzzle and Skat not yet available.</p>
   {% for i in [0] %}
-    <a style = "padding:20px; background-color:var(--c-light); 
-      display:block; height:100%; color:black;" 
+    <a style = "background-color:var(--c-light); 
+      display:block; height:100%; color:black; white-space: pre-line; " 
       href = "/start/{{ modes[i] }}/{{ group.id }}">
-      <span style='text-transform:uppercase; font-weight:bold;'>
+      <span style='text-transform:uppercase; font-weight:bold;  '>
       {{ modes[i] }}</span><br>
       {{ descriptions[i] }}</a><br>
-  {% endfor %}</div><br>
+  {% endfor %}</div><br><br>
 
 
 
 <h2>Maintenance</h2>
+
+<a style = "font-weight:bold; border: 1px solid var(--c-1); 
+display:block; height:100%; letter-spacing: 0.2em;" 
+      href="/logout">
+      LOGOUT</a><br>
+
+
+<a style = "font-weight:bold; border: 1px solid var(--c-2); display:block; height:100%; " 
+      href="/motto">
+            Change your group motto</a><br><br>
+
+<h3 style='color:var(--c-danger);'>Delete Group</h3>
 <p style='color:var(--light);'> 
-  Are you sure you want to delete this team? All records will be deleted as well.</p>
+  Are you sure you want to delete this group? All records will be deleted as well.</p>
 <a style = "padding:20px; background-color:var(--c-danger);font-weight:bold; 
       display:block; height:100%; " 
       href="/delete/{{ group.id }}">
