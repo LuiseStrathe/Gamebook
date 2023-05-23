@@ -36,11 +36,7 @@
 
 
 
-<h2>pages</h2>
-<p>View all pages in your GameBook</p>
-
-<br><br>
-
+<h2>games</h2><br>
 
 <div class="tab">
   <button class="tablinks" onclick="openMode(event, 'All')"      
@@ -150,7 +146,9 @@ function openMode(evt, Mode) {
   }
   document.getElementById(Mode).style.display = "block";
   evt.currentTarget.className += " active";}
-</script>
+</script> <br>
 
+<a class='a-small-2' href='/group/{{ group.id }}'>
+  Back Home</a><br><br>
 
 {% endblock %}

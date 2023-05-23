@@ -1,0 +1,28 @@
+{% extends "_base_in.html" %}
+
+{% block content %}
+
+    <link rel="stylesheet" 
+    href="../../../static/styles.css">
+    <h2>Rolling Dice</h3>
+
+
+    <div >
+        <form action="" method="POST">
+            {{ start_form.hidden_tag() }}
+            <p>Who will play?</p>
+            <p>{{ start_form.players() }}</p><br>
+            <p>{{ start_form.submit() }}</p>
+        </form>
+    </div><br><br>
+
+
+
+    <a  class='a-small-2'
+        style='border-color:var(--c-danger); color:var(--c-danger); 
+        background-color:var(--c-dark);'
+        href='/'>Exit this game now without saving.</a><br><br><br>
+
+
+
+{% endblock %}

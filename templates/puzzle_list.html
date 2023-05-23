@@ -1,0 +1,65 @@
+{% extends "_base_in.html" %}
+
+{% block content %}
+
+    <link rel="stylesheet" href="../../../static/styles.css">
+
+    <h1>Puzzle List</h1>
+
+    <a class='a-small-2' href='/{{ group.id }}/puzzles'>
+        View Puzzle Statistics</a><br><br>
+
+    <h2>Puzzle List</h2>
+    <div class='div-1' >
+        <p> You have {{ puzzles.shape[0] }} puzzles in your GameBook.<br>
+        Select a puzzle to save a record of your time needed to finish it.</p>
+        {% for i in range(group.puzzles.shape[0]) %}
+            <a class='a-large-2' 
+                style='text-transform:none; text-align:left; letter-spacing:0em;'
+                href='/puzzle/{{ group.id }}/{{ i + 1 }}'>
+                <span style='font-weight: bold; letter-spacing:0.2em; 
+                color:var(--c-1); font-size: 14pt;'>
+                    {{ puzzles.iloc[i][1] }}</span>&emsp; # {{ i + 1 }}
+                    <br>{{ puzzles.iloc[i][2] }}
+                <br><b>{{ puzzles.iloc[i][3] }}</b> pieces
+            </a><br>
+        {% endfor %}
+    </div><br><br>
+
+
+
+    <h2>Add a Puzzle</h2>
+    <div class='div-1'>
+    <p> Add a new puzzle to your GameBook puzzle list here.<br>
+        <span style='font-style:italic;'> 
+            You can select a puzzle from your groups puzzle list to save 
+            the times you needed to finish it.
+            Each group member can save multiple times for any puzzle.
+            You will also see statistics and be able to compare your puzzling performance.
+        </span></p>
+
+        <form action="" method="POST">
+            {{ add_puzzle_form.hidden_tag() }}
+            <table cellpadding="10px">
+                <tr><td style='text-align:right;'>
+                        {{ add_puzzle_form.title.label }}</td>
+                    <td style='text-align:left;'>
+                        {{ add_puzzle_form.title() }}</td></tr>
+                <tr><td style='text-align:right;'>
+                        {{ add_puzzle_form.description.label }}</td>
+                    <td style='text-align:left;'>
+                        {{ add_puzzle_form.description() }}</td></tr>
+                <tr><td style='text-align:right;'>
+                        {{ add_puzzle_form.pcs.label }}</td>
+                    <td style='text-align:left;'>
+                        {{ add_puzzle_form.pcs() }}</td></tr></table>
+                <p>{{ add_puzzle_form.submit() }}</p>
+                
+        </form>
+    </div><br><br>
+
+
+    <a class='a-small-2' href='/'>
+        Get back Home</a><br><br>
+
+{% endblock %}

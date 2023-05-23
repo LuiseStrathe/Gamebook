@@ -1,19 +1,22 @@
 
 :root {
-    --c-back: #0a1e2a; --c-back2: #371546; --c-back0: #080e36; 
-    --c-head: #05060fce; --title: #ff4070; --titleglow: #ff4070;
+    --c-back0: #100d3f; --c-back1: #534e23; --c-back2: #4a0b2e; 
+    --c-head: #000000ce; --title: #fff07e; --titleglow: #e5d352;
     --reg: #e7e9f1; --light: #ffffff;
-    --c-dark: #02050ddc; --c-medium: rgba(41, 50, 119, 0.857); 
+    --c-dark: #000000dc; --c-medium: rgba(41, 50, 119, 0.857); 
     --c-white: #e7e9f1; --c-light: #a0aad3d7;
-    --c-1: #e5d352; --c-2: #8075ff;
+    --c-1: #e5d352; --c-2: #8075ff; --input: #cec8b0;
     --c-danger: rgb(172, 26, 26); --c-sucess: #208320;
     --p0: #60d2ff; --p1: #4a74ff; --p2: #53eba4; --p3: #2799bf; 
     --p4: #9aff9a; --p5: #5a73ff; --p6: #735ee6; --p7: #4df7b0;}
   
 
-
 body {
     background: linear-gradient(to top left, var(--c-back2) 0%, var(--c-back) 100%);
+    background-image: url('background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
     font-family: 'Dotum', sans-serif;
     margin: 20px;
     font-size: 12pt;
@@ -27,21 +30,21 @@ body {
 
 h1 { text-align: left;
     color: var(--title);
-    size: 32pt;
+    size: 42pt;
     letter-spacing: 0.2em;
     text-shadow: 0 0 0.8em var(--title);}
 
 h2 {
-    color: var(--c-1);
+    color: var(--c-2);
     size: 20pt;
     text-align: center;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 0.4em;
-    text-shadow: 0 0 2em var(--c-1);}
+    text-shadow: 0 0 2em var(--c-2);}
 
 h3 {
-    color: var(--c-2);
+    color: var(--c-1);
     size: 14pt;
     text-align: center;
     font-weight: bold;
@@ -57,10 +60,8 @@ a { text-align: center;
     color: inherit;}
 
 a:hover {
-    background-color: var(--c-1);
     min-width: fit-content;
-    color:black;
-    box-shadow: 0 0 3px var(--c-1);}
+    box-shadow: 0 0 4px var(--c-2);}
 
 div {
     text-align: center;
@@ -86,14 +87,8 @@ image {
       'loc loc  loc desc desc desc desc desc frm';
     column-gap: 5px;
     background-color: var(--c-light);
-    padding: 5px; }
-
-.loc-container > div.location {
-    text-align: right; }    
-
-.loc-container > div {
-    background-color: var(--c-light);
-    text-align: left;}
+    padding: 5px; 
+    text-align: center;}
 
 
 .rounds_chart {
@@ -115,3 +110,5 @@ input.up {
 
 input.del {
     background-color: var(--c-danger);}
+
+

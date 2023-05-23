@@ -3,10 +3,11 @@
 {% block content %}
 
 <link rel="stylesheet" href="../../../static/styles.css">
-<h2>{{ group.name }}... <br>... Playing Rounds</h2>
+<h2>{{ group.name }}... </h2>
+<h3>... Playing Rounds</h3>
 
 
-<div style='background-color: var(--c-dark); color:var(--light); margin:20pt;'>
+<div class='div-1'>
     <p style='text-align:left; color:var(--light);'>
         Enter your results on this page of rounds:</p>
 
@@ -81,11 +82,11 @@
     <p style='color:var(--light);'>With a registered group you can save this page to your GameBook. <br>
                 Also you get access to <b>additional game modes and statistics</b> for your group.</p>
     
-    <h3><a href='/create_group' style='width:100%;'>
+    <a class='a-small-1' href='/create_group'>
             Register a group here
-    </a></h3><br><br>
+    </a><br><br>
 
-    <a href='/create_group'>
+    <a style='padding:20px;' href='/create_group'>
         Get back Home
     </a>    <br><br>
 {% endif %}

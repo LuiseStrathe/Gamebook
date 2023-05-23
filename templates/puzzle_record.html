@@ -1,0 +1,45 @@
+{% extends "_base_in.html" %}
+{% block content %}
+<link rel="stylesheet" href="../../../static/styles.css">
+
+
+   <h2>New Puzzle Entry</h2>        
+                
+   <div class='div-1'>
+       <p> Enter your finishing time here to add it to your group GameBook.</p>
+       <form action="" method="POST">
+           {{ puzzle_record_form.hidden_tag() }}
+           <table cellpadding="10px">
+               <tr><td style='text-align:right;'>
+                       {{ puzzle_record_form.player.label }}</td>
+                   <td style='text-align:left;'>
+                       {{ puzzle_record_form.player() }}</td></tr>
+               <tr><td style='text-align:right;'>Time to finish</td>
+                   <td style='text-align:left;'>
+                       {{ puzzle_record_form.hours() }} hours</td></tr>
+               <tr><td style='text-align:right;'></td>
+                   <td style='text-align:left;'>{{ puzzle_record_form.minutes() }} minutes</td></tr>
+               <tr><td style='text-align:right;'></td>
+                   <td style='text-align:left;'>{{ puzzle_record_form.seconds() }} seconds</td></tr>
+               <tr><td style='text-align:right;'>
+                       {{ puzzle_record_form.comment.label }}</td>
+                   <td style='text-align:left;'>
+                       {{ puzzle_record_form.comment() }}</td></tr></table>
+               <p>{{ puzzle_record_form.submit() }}</p>
+   </div><br><br>
+
+
+</div><br><br>
+
+<a class='a-small-2' 
+      href="/puzzle/{{ group.id }}/0">
+            Return to your Puzzle List</a><br>
+
+<a class='a-small-2' 
+      href="/gamebook">
+            Return to your GameBook</a><br><br>
+
+
+
+
+{% endblock %}

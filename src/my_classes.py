@@ -42,6 +42,7 @@ class My_Group():
         self.results = pd.DataFrame(columns=result_cols)
         self.motto = motto
         self.filepath = f'{path_data}groups/{self.id}.pkl'
+        self.puzzles = pd.DataFrame(columns=puzzle_cols)
 
         try:
             check_name_create(self.name)

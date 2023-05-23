@@ -44,6 +44,11 @@ result_cols = ['game_id', 'g_mode', "group_id",
             time:   timestamp
             info:   mode specific info
                 '''
+                
+puzzle_cols = ['id', 'title', 'description', 'pcs']
+
+dice_rows = ["1's", "2's", "3's", "4's", "5's", "6's", '3 of a kind',
+                '4 of a kind', 'full house', 'small straight', 'large straight', 'YEAHA', 'chance']
 
 player_cols = ['name', 'info', 'tag', 'image']
 

@@ -1,12 +1,6 @@
 {% extends base %}
 {% block content %}
   <h1>About the GameBook Project</h1><br>
-
-  <p style="font-size:20pt; text-align:center; color:var(--c-danger);">
-    -----------------------------------------<br>
-    BETA VERSION<br>
-    THIS APP IS IN DEVELOPMENT<br>
-    -----------------------------------------</p>
     
   <div style = 'text-align:justify; size:14pt;'>
     <p style='text-align:block; white-space: pre-line;'>{{ about_info }}</p><br>
@@ -21,21 +15,15 @@
     <br><br><br>
 
     
-    <a  style = 'letter-spacing: 0.2em; border: 1px solid var(--c-1); 
-    padding: 20px; font-weight: bold; display:block;
-
-        box-shadow: 0 0 7px var(--c-1);
-        /* in order: x offset, y offset, blur size, spread size, color */
-        /* blur size and spread size are optional (they default to 0) */
-        
-        :hover {
-          background-color: var(--c-dark);
-          color: black;
-        }' 
-
+    <a class='a-small-3'
         href = 'https://www.datascienceportfol.io/Luise_strathe'
         target="_blank" rel="noopener noreferrer">
         Developer Profile & Contact</a>  
 
   </div><br><br><br><br>
+
+  <a class='a-small-2' href='/'>
+    Back Home</a><br><br>
+
+
 {% endblock %}

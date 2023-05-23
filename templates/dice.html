@@ -1,0 +1,50 @@
+{% extends "_base_in.html" %}
+
+{% block content %}
+
+<link rel="stylesheet" href="../../../static/styles.css">
+<h2>Rolling Dice </h2>
+
+<div class='div-1'>
+    <p>Round {{ round }}</p>
+
+    <p style='font-size:14pt; font-style:uppercase; color:var(--c-danger); font-weight:bold;'>
+        {{ input_error }}</p>
+
+    <form action="" method="POST">
+        {{ dice_form.hidden_tag() }}
+
+        <table>
+            <tr>
+                <th> </th>
+                {% for player in players %}
+                    <th style='border-bottom: 1px solid var(--c-2);'>
+                        {{ player }}</th>
+                {% endfor %}
+            </tr>
+
+            {% for row in range(13) %}
+                <tr>
+                    <td style= 'text-align: right;'>
+                        {{ dice_rows[row] }}</td>
+                    {% for player in range(n) %}
+                        <td>{{ chart[row][player] }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+
+
+        <p>{{ dice_form.submit() }}</p><br>
+    </form>
+</div><br>
+
+
+
+<a class='a-small-2' 
+    style='border-color:var(--c-dark);color:var(--c-danger)'
+    href='/'>Exit this game now without saving.</a><br><br><br>
+
+
+
+{% endblock %}

@@ -7,8 +7,11 @@ from src.my_forms import *
 from src.my_params import *
 from src.my_classes import *
 from src.my_fun import *
-from src.routes_rounds import *
 from src.routes import *
+from src.routes_rounds import *
+from src.routes_puzzle import *
+from src.routes_dice import *
+
 
 from flask import Flask, render_template, request, url_for, redirect, flash, session
 
@@ -89,13 +92,22 @@ def random_group():
 @app.route("/start/<string:mode>/<string:group_id>",  methods=["GET", "POST"])
 def game_start(group_id, mode):
   
-  game_id =             gen_game_id(mode)
   session['round'] =    0
-  session['game_id'] =  game_id
   check =               check_key(session['username'], session['key']) and (session['status'] == 'IN')
   
-  if group_id=='random' or check:
-    return redirect(f"/{mode}/{group_id}/{game_id}/0")
+  if mode in ['rounds']:
+    game_id =             gen_game_id(mode)
+    session['game_id'] =  game_id
+    if group_id=='random' or check:
+      return redirect(f"/rounds/{group_id}/{game_id}/0")
+    
+  if mode in ['dice'] and check:
+    game_id =             gen_game_id(mode)
+    session['game_id'] =  game_id
+    return redirect(f"/{mode}/{group_id}/{game_id}/start")
+  
+  if mode == 'puzzle' and check:
+    return redirect(f"/puzzle/{group_id}/0")
   
   return redirect('/')
 

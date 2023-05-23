@@ -1,6 +1,8 @@
 
+from flask import session
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, RadioField, IntegerField
+from wtforms import StringField, SubmitField, TextAreaField, \
+  BooleanField, RadioField, IntegerField, SelectMultipleField
 from wtforms.validators import DataRequired
 
 
@@ -36,22 +38,10 @@ class MottoForm(FlaskForm):
   motto = StringField("New motto", validators=[DataRequired()])
   submit = SubmitField("Change Motto")
 
+
+
   
 #### GAME ####
-
-# One Round
-class CloseRoundForm(FlaskForm):
-  
-  pt1 = IntegerField("enter points", validators=[DataRequired()])
-  pt2 = IntegerField("enter points", validators=[DataRequired()])
-  pt3 = IntegerField("enter points")
-  pt4 = IntegerField("enter points")
-  pt5 = IntegerField("enter points")
-  pt6 = IntegerField("enter points")
-  pt7 = IntegerField("enter points")
-  pt8 = IntegerField("enter points")
-  
-  submit = SubmitField("Close this Round")
 
 # Submit Game
 class SubmitGameForm(FlaskForm):
@@ -67,3 +57,30 @@ class RandomGroup(FlaskForm):
   p4 = StringField("Player 4")
   
   submit = SubmitField("Start without Login")
+  
+  
+  
+# ROUNDS
+class CloseRoundForm(FlaskForm):
+  
+  pt1 = IntegerField("enter points", validators=[DataRequired()])
+  pt2 = IntegerField("enter points", validators=[DataRequired()])
+  pt3 = IntegerField("enter points")
+  pt4 = IntegerField("enter points")
+  pt5 = IntegerField("enter points")
+  pt6 = IntegerField("enter points")
+  pt7 = IntegerField("enter points")
+  pt8 = IntegerField("enter points")
+  
+  submit = SubmitField("Close this Round")
+  
+  
+  
+  
+# PUZZLE
+class AddPuzzleForm(FlaskForm):
+  title = StringField("Title", validators=[DataRequired()])
+  pcs = IntegerField("Number of Pieces", validators=[DataRequired()])
+  description = StringField("Description (optional)")
+  submit = SubmitField("Add this puzzle to the GameBook")
+  

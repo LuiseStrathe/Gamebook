@@ -107,12 +107,135 @@ def end_rounds(group, points, game_id, infos):
     
     # save in group
     group.results = pd.concat([group.results, pd.DataFrame([result])])
-    print(group.results.head())
     group.update_group()
     
     # save in all results
     results = pd.read_csv(f'{path_data}modes/results.csv')
     results = pd.concat([results, pd.DataFrame([result])])
-    print(results.head())
     results.to_csv(f'{path_data}modes/results.csv', index=False)
     
+    
+    
+    
+def add_puzzle(group_id, add_puzzle_form):
+    
+    group = load_group(group_id)
+    
+    record = {'id': int(group.puzzles.shape[0]),
+                     'title': add_puzzle_form.title.data, 
+                     'pcs': add_puzzle_form.pcs.data, 
+                     'description': add_puzzle_form.description.data}
+
+    group.puzzles = pd.concat([group.puzzles, 
+                               pd.DataFrame([record])])
+
+    group.update_group()
+    pass
+
+
+
+def submit_puzzle_record(group_id, puzzle_id,
+                         puzzle_record_form):
+    
+    group = load_group(group_id)
+    game_id = gen_game_id('puzzle')
+    duration =  puzzle_record_form.hours.data * 60^2 \
+                + puzzle_record_form.minutes.data * 60 \
+                + puzzle_record_form.seconds.data
+    pcs = group.puzzles.iloc[puzzle_id, 3]
+    
+    result = {'game_id':game_id, 'g_mode': 'puzzle', "group_id":group.id, 
+         "result": duration, "n_rounds": pcs, 
+         "winner_name":puzzle_record_form.player.data[0], 
+         'time':datetime.now(),
+         'info_1':puzzle_record_form.comment.data, 'info_2': '', 'info_3':''}
+    print(result)
+    
+    # save in group
+    group.results = pd.concat([group.results, pd.DataFrame([result])])
+    group.update_group()
+    
+    # save in all results
+    results = pd.read_csv(f'{path_data}modes/results.csv')
+    results = pd.concat([results, pd.DataFrame([result])])
+    results.to_csv(f'{path_data}modes/results.csv', index=False)    
+    pass
+
+
+
+
+
+# DICE
+
+def check_dice_points(points, round):
+    checks = np.full(points.shape, True)
+    
+    for i in range(6):
+        vals = [(i+1)*j for j in range(6)]
+        checks[i] = [p in vals or np.isnan(p) for p in points[i]]
+        
+    for i in [6, 7, 12]:
+        checks[i] = [(5 <= p <= 30 or np.isnan(p) or p == 0) \
+            for p in points[i]]
+    
+    for i, v in [[8, 25], [9, 30], [10, 40], [11, 50]]:
+        checks[i] = [(p in[v, 0]) or np.isnan(p) for p in points[i]]
+    
+    counts = np.sum(np.isnan(points), axis=0)
+    print(counts, round, (counts == round - 1).all())
+    check = (checks == True).all() and (counts == 14 - round).all()
+  
+    return check, checks
+
+
+
+def dice_update_points(points, inputs):
+    
+    counter = 0
+    for r in range(13):
+        for p in range(points.shape[1]):
+            if np.isnan(points[r, p]):
+                if inputs[counter] != None:
+                    points[r, p] = inputs[counter]
+                counter += 1
+                
+    return points
+
+
+def totals_dice(points):
+    n = points.shape[1]
+    top = np.sum(points[:6], axis=0)
+    bottom = np.sum(points[6:], axis=0)
+    bonus = np.zeros(n)
+    for i in range(n):
+        if top[i] >= 63:
+            bonus[i] = 35
+    total = [t + o + b for t, o, b in zip(top, bottom, bonus)]
+    totals = np.vstack([top, bonus, bottom, total])
+    
+    return totals
+
+
+def end_dice(group_id, game_id, players, points, infos):
+    
+    group = load_group(group_id)
+    totals = totals_dice(points)
+    winner = players[np.argmax(totals)]
+    result = np.vstack([points, totals])
+    
+    result = {'game_id':game_id, 'g_mode': 'dice', "group_id":group.id, 
+         "result": result, "n_rounds": points.shape[1], 
+         "winner_name":winner, 
+         'time':datetime.now(),
+         'info_1': players, 'info_2': infos[0], 'info_3':''}
+    print(result)
+    
+    # save in group
+    group.results = pd.concat([group.results, pd.DataFrame([result])])
+    group.update_group()
+    
+    # save in all results
+    results = pd.read_csv(f'{path_data}modes/results.csv')
+    results = pd.concat([results, pd.DataFrame([result])])
+    results.to_csv(f'{path_data}modes/results.csv', index=False)   
+    pass

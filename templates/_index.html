@@ -5,52 +5,18 @@
 
   <p style="font-size:14pt;  white-space: pre-line; text-align:block; color:var(--light);">
     {{ about_info }}
-  </p>
-  <br>
+  </p><br><br><br><br>
+
+  
 
 
-  <h2>group</h2>
-  <div style = "display:block; height:100%; padding:20px; 
-    background-color: var(--c-dark);"> 
-    <p>Select a group first</p>
 
-    <a style = "padding:20px; background-color:var(--c-light); color:var(--c-dark); 
-        display:block; height:100%;" 
-        href="/login">
-        <span style='text-transform:uppercase; font-weight:bold; 
-        font-size:14pt; letter-spacing: 2pt;'>
-        Login your Group</span><br><br>
-        Continue with your registered group and open your group GameBook.</a><br>
-    
-    <a style = "padding:20px; background-color:var(--c-light); color:var(--c-dark);
-        display:block; height:100%;" 
-        href="/create_group">
-        <span style='text-transform:uppercase; font-weight:bold; 
-        font-size:14pt; letter-spacing: 2pt;'>
-        Register a new Group</span><br><br>
-        Create a new group and start your own GameBook. Each game you play adds a page.
-        You can always login and continue and check out earlier game results again. </a><br>
-    
-    <a style = "padding:20px; background-color:var(--c-light); color:var(--c-dark); 
-        display:block; height:100%;" 
-        href="/random_group">
-        <span style='text-transform:uppercase; font-weight:bold; 
-        font-size:14pt; letter-spacing: 2pt;'>
-        Try GameBook without login</span><br><br>
-        You will not be able to save your game notes.<br>
-        You can only try in the mode <b>rounds</b>.<br>
-        You can play with <b>2 to 4 persons</b>.</a><br>
-
-  </div>
-  <br>
-
-    
-  <h2>modes</h2>
+  <h2>play modes</h2>
 
   <div class="tab">
     {% for m in range(num_modes) %}
       <button class="tablinks" onclick="openMode(event, '{{ modes[m] }}')"      
-      style='text-transform:capitalize;'>{{ modes[m] }}</button>
+      style='text-transform:capitalize;'>{{ modes[m] }}</button> 
     {% endfor %} </div>
 
 
@@ -61,8 +27,6 @@
           style="position:left" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>  
     </div>  
   {% endfor %}
-  
-  <br><br><br>
 
   <script>
   function openMode(evt, Mode) {
@@ -79,4 +43,27 @@
     evt.currentTarget.className += " active";}
   </script>
 
+
+
+
+  <br><br><br>
+  <h2>start here</h2>
+  <div class='div-1'> 
+
+    <a class='a-small-1' href="/login">
+        Login your Group</a>
+    <p> Continue with your registered group and open your group GameBook.</p><br><br>
+    
+    <a class='a-small-1' href="/create_group">
+        Register a new Group</a>
+    <p> Create a new group and start your own GameBook. Each game you play adds a page.
+        You can always login and continue and check out earlier game results again. </p><br><br>
+    
+    <a class='a-small-2' href="/random_group">
+        Try GameBook without login</a>
+    <p> You will not be able to save your game notes.<br>
+        You can only try in the mode <b>rounds</b>.<br>
+        You can play with <b>2 to 4 persons</b>.</p><br>
+
+  </div>
 {% endblock %}
