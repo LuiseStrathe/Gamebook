@@ -1,6 +1,7 @@
 HOWTO.md
 *.csv
 *__pycache__*
+/.venv
 /venv
 *.pkl
 /luise
