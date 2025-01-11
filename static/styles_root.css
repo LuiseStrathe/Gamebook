@@ -1,0 +1,31 @@
+
+:root {
+    --c-head: #1a1a1ad7; 
+    --title: #2b0d00; 
+    --titleglow: #4e1c059d;
+    
+    --reg: #242424; 
+    --light: #1a1a1a;
+    
+    --c-dark: #ffffff86; 
+    --c-medium: #b3b3b3c7; 
+    --c-std: #ffffff; 
+    --c-light: #222222d7;
+    
+    --c-1: #c6d356;
+    --c-2: #b3420e; 
+
+    --input: #b0bace;
+
+    --c-danger: #ac1a1a; 
+    --c-sucess: #208320;
+
+    --p0: #60d2ff; 
+    --p1: #4a74ff; 
+    --p2: #53eba4; 
+    --p3: #2799bf; 
+    --p4: #9aff9a; 
+    --p5: #5a73ff; 
+    --p6: #735ee6; 
+    --p7: #4df7b0;}
+  

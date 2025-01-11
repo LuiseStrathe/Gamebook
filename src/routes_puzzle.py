@@ -1,14 +1,14 @@
 
 import sys
 sys.path.insert(1, "./")
-from app import app
+from Gamebook.gamebook_app import app
 
-from src.my_forms import *
-from src.my_params import *
-from src.my_classes import *
-from src.my_fun import *
-from src.routes import *
-from src.routes_groups import *
+from Gamebook.src.my_forms import *
+from Gamebook.src.my_params import *
+from Gamebook.src.my_classes import *
+from Gamebook.src.my_fun import *
+from Gamebook.src.routes import *
+from Gamebook.src.routes_groups import *
 
 from flask import Flask, render_template, request, url_for, redirect, flash, session
 import numpy as np

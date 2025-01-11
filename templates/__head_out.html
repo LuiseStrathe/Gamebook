@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/styles_main.css">
+    <link rel="stylesheet" href="../static/styles_out.css">
+
+  </head>
+
+
+  <body>
+
+    <header>
+
+      <div 
+        style="position:fixed; top:0; right:0; 
+        width:100%; padding: 20px; border-bottom: 1px solid --titleglow;
+        background:var(--c-head); color:white;  align-items: center;
+        justify-content: space-between; display: flex;">
+
+        <div style="padding: 5px; display:inline-block;">
+          <script>
+            document.write('<a href="' + document.referrer + '">Go back</a>');
+          </script>
+        </div>
+
+        <div style="padding: 5px; display:inline-block;">
+          <a href="/">HOME&emsp;</a> 
+          <a href="/login">LOGIN&emsp;</a>  
+          <a href="/about">ABOUT</a>
+        </div>
+      </div><br><br>
+
+      <button title="Go to top"
+          style="position: fixed; z-index: 10;
+          bottom: 20px; right: 30px;">
+            UP
+      </button>
+
+    </header>
+
+
+    {% block content %}
+    {% endblock %}
+
+
+    <footer>
+      <div 
+        style="width:100%; padding: 20px; margin: 20px 0 -20px -20px;
+        background:var(--c-head);
+        justify-content:space-around; display:flex; border-radius: 0;">
+
+        <div style="color:white; text-align:left;">
+          <p style="font-weight: bold; font-size: 14px; margin-left:10px;">
+            GamesBook.site</p>
+          <p><a href="/">Home</a><br></p>
+          <p><a href="/about">About & Contact</a></p>
+          <p><a href="/random_group">Test it</a><br></p>          
+        </div>
+
+        <div style="color:white; text-align:left;">
+          <p style="font-weight: bold; font-size: 14px; margin-left:10px;">
+            Start here</p>
+          <p><a href="/login">Login</a><br></p>
+          <p><a href="/create_group">Register</a></p>
+        </div>
+      
+      </div>
+
+    </footer>
+
+  </body>
+
+</html>

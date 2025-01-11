@@ -1,59 +1,58 @@
-{% extends "_base_in.html" %}
+
+{% extends head %}
+
+
 {% block content %}
-<link rel="stylesheet" href="../../../static/styles.css">
 
-<h1 style='text-transform:uppercase;'>
-   {{ game_entry.g_mode[0] }}<br>
-   <span style='font-size:14pt; font-st:italic;'>
-      "{{ game_entry.info_3[0] }}"</span></h1><br>
-
+   <h1 style='text-transform:uppercase;'>
+      {{ game_entry.g_mode[0] }}<br>
+      <span style='font-size:14pt; font-st:italic;'>
+         "{{ game_entry.info_3[0] }}"</span></h1><br>
 
 
-<h3>{{ game_entry.winner_name[0] }} won!</h3>
-<p style="font-size:14pt; color:var(--light)">
-   {{ game_entry.time[0].strftime("On %A, %B %d (%Y) at %H:%M") }}<br>
-   Game id - {{ game_entry.game_id[0] }}</p><br>
+
+   <h3>{{ game_entry.winner_name[0] }} won!</h3>
+   <p style="font-size:14pt; color:var(--light)">
+      {{ game_entry.time[0].strftime("On %A, %B %d (%Y) at %H:%M") }}<br>
+      Game id - {{ game_entry.game_id[0] }}</p><br>
 
 
-<div style='background-color: var(--c-dark); color:var(--light); margin:20pt;'>
+   <div style='background-color: var(--c-dark); color:var(--light); margin:20pt;'>
 
-       <table>
-         <tr>
-            <th> </th>
-            {% for player in group.players %}
-               <th style='border-bottom: 1px solid var(--c-2);'>
-                  {{ player }}</th>
-            {% endfor %}
-         </tr>
-
-         {% for row in range(game_entry.result[0].shape[0] - 1) %}
+         <table>
             <tr>
-               <td style= 'text-align: right;'>
-                  Round {{ row + 1 }}</td>
-               {% for player in range(game_entry.n_rounds[0]) %}
-                  <td>{{ game_entry.result[0][row][player] }}</td>
+               <th> </th>
+               {% for player in group.players %}
+                  <th style='border-bottom: 1px solid var(--c-2);'>
+                     {{ player }}</th>
                {% endfor %}
             </tr>
-         {% endfor %}
 
-         <tr>
-            <th style= 'text-align: right; '>
-               SUM</th>
-            {% for summe in game_entry.result[0][-1] %}
-               <th>{{ summe }}</th>
+            {% for row in range(game_entry.result[0].shape[0] - 1) %}
+               <tr>
+                  <td style= 'text-align: right;'>
+                     Round {{ row + 1 }}</td>
+                  {% for player in range(game_entry.n_rounds[0]) %}
+                     <td>{{ game_entry.result[0][row][player] }}</td>
+                  {% endfor %}
+               </tr>
             {% endfor %}
-         </tr>
+
+            <tr>
+               <th style= 'text-align: right; '>
+                  SUM</th>
+               {% for summe in game_entry.result[0][-1] %}
+                  <th>{{ summe }}</th>
+               {% endfor %}
+            </tr>
 
 
-       </table>
+         </table>
 
-</div><br><br>
+   </div><br><br>
 
-<a class='a-small-2' 
-      href="/gamebook">
-            Return to your GameBook</a><br><br>
-
-
-
+   <a class='a-small-2' 
+         href="/gamebook">
+               Return to your GameBook</a><br><br>
 
 {% endblock %}

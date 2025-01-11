@@ -1,7 +1,8 @@
-{% extends "_base_in.html" %}
-{% block content %}
-<link rel="stylesheet" href="../../../static/styles.css">
 
+{% extends "__head_in.html" %}
+
+
+{% block content %}
 
    <h2>New Puzzle Entry</h2>        
                 
@@ -29,15 +30,15 @@
    </div><br><br>
 
 
-</div><br><br>
+    </div><br><br>
 
-<a class='a-small-2' 
-      href="/puzzle/{{ group.id }}/0">
-            Return to your Puzzle List</a><br>
+    <a class='a-small-2' 
+        href="/puzzle/{{ group.id }}/0">
+                Return to your Puzzle List</a><br>
 
-<a class='a-small-2' 
-      href="/gamebook">
-            Return to your GameBook</a><br><br>
+    <a class='a-small-2' 
+        href="/gamebook">
+                Return to your GameBook</a><br><br>
 
 
 

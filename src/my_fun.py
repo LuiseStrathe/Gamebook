@@ -10,8 +10,8 @@ from flask_wtf import FlaskForm
 from flask import Flask, render_template, request, url_for, redirect, flash, session
 from datetime import datetime
 
-from src.my_params import *
-from src.my_classes import *
+from Gamebook.src.my_params import *
+from Gamebook.src.my_classes import *
 
 
 
@@ -24,11 +24,11 @@ def init_session():
     session['num_players'] = 0
     session['round'] = 0
 
-def get_base():
-    base = '_base.html'
+def get_head_html():
+    head_html = '__head_out.html'
     if session['status'] == 'IN':
-        base = '_base_in.html'
-    return base
+        head_html = '__head_in.html'
+    return head_html
 
 def load_group(id):
     path = f'{path_data}groups/{id}.pkl'

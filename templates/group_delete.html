@@ -1,18 +1,21 @@
-{% extends "_base_in.html" %}
+
+{% extends "__head_in.html" %}
+
+
 {% block content %}
 
-<h1>Permanently DELETE this group and Gamebook</h1><br>
-<h2>{{ group_name }}</h2><br>
+    <h1>Permanently DELETE this group and Gamebook</h1><br>
+    <h2>{{ group_name }}</h2><br>
 
-<form action="" method="POST" style = ''>
-    {{ delete_form.hidden_tag() }}
-    <p>Enter your key to verify yourself</p>
-    <p> {{ delete_form.key(size=20) }}</p>
-    <p> {{ delete_form.submit() }}</p>
-</form>
+    <form action="" method="POST" style = ''>
+        {{ delete_form.hidden_tag() }}
+        <p>Enter your key to verify yourself</p>
+        <p> {{ delete_form.key(size=20) }}</p>
+        <p> {{ delete_form.submit() }}</p>
+    </form>
 
-<br><br>
-<a  style = "background_color:var(--c-dark); size: 14px; padding:5px;"
-    href = "/create_group">Or register a new group here</a>
+    <br><br>
+    <a  style = "background_color:var(--c-dark); size: 14px; padding:5px;"
+        href = "/create_group">Or register a new group here</a>
 
 {% endblock %}

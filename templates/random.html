@@ -1,24 +1,24 @@
-{% extends "_base.html" %}
+
+{% extends "__head_out.html" %}
+
+
 {% block content %}
 
-<h2>Start random group game</h2><br>
+  <h2>Start random group game</h2><br>
 
+  {% for m in [0] %}
 
+    <p>{{ descriptions[0] }} </p><br>
 
+    <form action="" method="POST">
+      {{ random_form.hidden_tag() }}
+      <h3>{{ random_form.p1.label }}</h3> <p>{{ random_form.p1() }}</p><br>
+      <h3>{{ random_form.p2.label }}</h3> <p>{{ random_form.p2() }}</p><br>
+      <h3>{{ random_form.p3.label }}</h3> <p>{{ random_form.p3() }}<br>(optional)</p><br>
+      <h3>{{ random_form.p4.label }}</h3> <p>{{ random_form.p4() }}<br>(optional)</p><br><br>
+      <p>{{ random_form.submit() }}</p><br>
+    </form>
 
-{% for m in [0] %}
-
-  <p>{{ descriptions[0] }} </p><br>
-
-  <form action="" method="POST">
-    {{ random_form.hidden_tag() }}
-    <h3>{{ random_form.p1.label }}</h3> <p>{{ random_form.p1() }}</p><br>
-    <h3>{{ random_form.p2.label }}</h3> <p>{{ random_form.p2() }}</p><br>
-    <h3>{{ random_form.p3.label }}</h3> <p>{{ random_form.p3() }}<br>(optional)</p><br>
-    <h3>{{ random_form.p4.label }}</h3> <p>{{ random_form.p4() }}<br>(optional)</p><br><br>
-    <p>{{ random_form.submit() }}</p><br>
-  </form>
-
-{% endfor %}
+  {% endfor %}
 
 {% endblock %}

@@ -1,26 +1,29 @@
-{% extends "_base.html" %}
+
+{% extends "__head_out.html" %}
+
+
 {% block content %}
 
-<h1>Login your Group</h1><br>
+  <h1>Login your Group</h1><br>
 
-{% if retry %}
-  <p style = "color: red;">Your ground name or key were incorrect <br>
-  -,-<br>
-  Please, try again.</p>
-{% endif %}
+  {% if retry %}
+    <p style = "color: red;">Your ground name or key were incorrect <br>
+    -,-<br>
+    Please, try again.</p>
+  {% endif %}
 
 
-<form action = "" method = "post">
+  <form action = "" method = "post">
 
-  <h3 style='color:var(--light); font-weight: medium;'>Group Name:</h3>
-  <p><input type = text name = username></p>
-  <h3 style='color:var(--light); font-weight: medium;'>Group Key:</h3>
-  <p><input type = text name = key></p><br>
-  <p><input type = submit value = Login></p>
+    <h3 style='color:var(--light); font-weight: medium;'>Group Name:</h3>
+    <p><input type = text name = username></p>
+    <h3 style='color:var(--light); font-weight: medium;'>Group Key:</h3>
+    <p><input type = text name = key></p><br>
+    <p><input type = submit value = Login></p>
 
-</form>
+  </form>
 
-<br><br>
-<h3><a  href = "/create_group">Or register a new group here</a></h3>
+  <br><br>
+  <h3><a  href = "/create_group">Or register a new group here</a></h3>
 
 {% endblock %}

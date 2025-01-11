@@ -1,24 +1,37 @@
-{% extends base %}
+
+{% extends head %}
+
+
 {% block content %}
+
+  <title>About</title>
   <h1>About the GameBook Project</h1><br>
     
   <div style = 'text-align:justify; size:14pt;'>
-    <p style='text-align:block; white-space: pre-line;'>{{ about_info }}</p><br>
+    <p style='text-align:block; white-space: pre-line;'>
+      {{ about_info }}</p><br>
     <h3 style='text-align:left;'>Insights
     </h3><p>
       This is a non-commercial Data Science portfolio project. 
-      That is why it is fully free of fees or advertisements. 
-      The data you enter is stored non-personalized and only used for this one app. 
-      The app uses Flask frameworks and is hosted on a dedicated AWS server (US).
+      That is why it is fully free of fees and advertisements. 
+      The data you enter is stored non-personalized and only 
+      used for this one app. 
+      The app uses Flask frameworks and is hosted on a dedicated
+      VPS in Germany.
     </p><br>
-    <h3 style = 'text-align:left; text-transform: none;'>Have fun playing!!</h3>
+    <h3 style = 'text-align:left; text-transform: none;'>
+      Have fun playing!!</h3>
     <br><br><br>
 
+    <p>If you wish to learn more about this project or want to 
+      explore the source code you can visit the 
+      <a href='https://github.com/LuiseStrathe/Gamebook/blob/main/README.md'
+      target='blank'>GameBook repository here</a>.</p>
     
-    <a class='a-small-3'
+    <p>To find out more about the <a
         href = 'https://www.datascienceportfol.io/Luise_strathe'
         target="_blank" rel="noopener noreferrer">
-        Developer Profile & Contact</a>  
+        developer or contact</a> you can visit my profile.</p>
 
   </div><br><br><br><br>
 

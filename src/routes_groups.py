@@ -1,16 +1,16 @@
 
 import sys
 sys.path.insert(1, "./")
-from app import app
+from Gamebook.gamebook_app import app
 
-from src.my_forms import *
-from src.my_params import *
-from src.my_classes import *
-from src.my_fun import *
-from src.routes import *
-from src.routes_rounds import *
-from src.routes_puzzle import *
-from src.routes_dice import *
+from Gamebook.src.my_forms import *
+from Gamebook.src.my_params import *
+from Gamebook.src.my_classes import *
+from Gamebook.src.my_fun import *
+from Gamebook.src.routes import *
+from Gamebook.src.routes_rounds import *
+from Gamebook.src.routes_puzzle import *
+from Gamebook.src.routes_dice import *
 
 
 from flask import Flask, render_template, request, url_for, redirect, flash, session
@@ -22,6 +22,7 @@ from flask import Flask, render_template, request, url_for, redirect, flash, ses
 # Group page
 @app.route("/group/<string:group_id>", methods=["GET", "POST"])
 def group(group_id):
+  
     if check_key(session['username'], session['key']):
       group = load_group(group_id)
       return render_template("group.html", 
@@ -29,7 +30,7 @@ def group(group_id):
                             group=group)
     else:
       init_session()
-      return redirect(url_for('group_login', retry=False))
+      return redirect(url_for('login', retry=False))
 
 
 # enter GameBook
@@ -39,7 +40,7 @@ def enter_gamebook():
     return redirect(f"/gamebook/{session['username']}")
   else: 
     init_session()
-    return redirect(url_for('group_login', retry=False))
+    return redirect(url_for('login', retry=False))
 
 # GameBook
 @app.route("/gamebook/<string:group_id>", methods=["GET", "POST"])
@@ -65,7 +66,7 @@ def gamebook(group_id):
     
   else: 
     init_session()
-    return redirect(url_for('group_login', retry=False))
+    return redirect(url_for('login', retry=False))
   
   
 # Random 
@@ -137,7 +138,7 @@ def login():
           return redirect(f"/group/{id}")
       else: 
           init_session()
-          return redirect(url_for('group_login', retry=True))
+          return redirect(url_for('login', retry=True))
       
   return render_template('group_login.html', retry=retry)
 

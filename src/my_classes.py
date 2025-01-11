@@ -1,14 +1,14 @@
 
 import os
 import sys
-sys.path.insert(1, "./")
+sys.path.append("./")
 
 import pickle
 import numpy as np
 import pandas as pd
 from flask import session
 
-from src.my_params import *
+from Gamebook.src.my_params import *
 
 
 # helper functions to avoid circular imports

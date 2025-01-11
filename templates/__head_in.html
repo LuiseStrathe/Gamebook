@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/styles_main.css">
+    <link rel="stylesheet" href="../static/styles_in.css">
+  </head>
+
+
+  <body>
+
+    <header>
+
+      <div 
+        style="position:fixed; top:0; right:0; 
+        width:100%; padding:20px; border-bottom: 1px solid --titleglow;
+        background:var(--c-head); color:white; align-items: center;
+        justify-content: space-between; display: flex;">
+
+        <div style="padding: 5px; display:inline-block;">
+          <script>
+            document.write('<a href="' + document.referrer + '">Go back</a>');
+          </script>
+          <p style="color:orange; display:inline-block;">
+            &emsp;My Group's Name&emsp;</p>
+          <p style="display:inline-block;">
+            current location</p>
+        </div>
+
+        <div style="padding: 5px; display:inline-block; ">
+          <a href="/">GROUP&emsp;</a> 
+          <a href="/enter_gamebook">STATS&emsp;</a>  
+          <a href="/logout">LOGOUT</a>
+        </div>
+      </div><br><br>
+
+      <button title="Go to top"
+          style="position: fixed; z-index: 10;
+          bottom: 20px; right: 30px;">
+            UP
+      </button>
+
+    </header>
+
+
+    {% block content %}
+    {% endblock %}
+
+
+    <footer>
+      <div 
+        style="width:100%; padding: 20px; margin: 20px 0 -20px -20px;
+        background:var(--c-head); display: flex;
+        justify-content:space-around; border-radius: 0;">
+
+        <div style="color:white; text-align:left; display:inline-block; ">
+          <p style="font-weight: bold; font-size: 14px; margin-left:10px;">
+            GamesBook.site</p>
+          <p><a href="/about">About & Contact</a></p>
+        </div>
+
+        <div style="color:white; text-align:left; display:inline-block; ">
+          <p style="font-weight: bold; font-size: 14px; margin-left:10px;">
+            Account</p>
+          <p><a href="/motto">Settings</a><br></p>     
+          <p><a href="/logout">Logout</a><br></p>          
+        </div>
+
+        <div style="color:white; text-align:left; display:inline-block; ">
+          <p style="font-weight: bold; font-size: 14px; margin-left:10px;">
+            The Group Name</p>
+          <p><a href="/">To group</a><br></p>
+          <p><a href="/enter_gamebook">Group statistics</a></p>
+        </div>
+      
+      </div>
+    </footer>
+
+  </body>
+
+</html>
