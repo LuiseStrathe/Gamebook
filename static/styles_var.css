@@ -1,0 +1,91 @@
+
+/* This file contains the variables for the css styles. 
+   The variables are used in the css files to make the 
+   design more flexible and easier to change. */
+
+
+
+:root {
+    
+    /* -----------------  DIMENSIONS  ---------------- */
+
+    --d-head-height: 45px;
+
+
+   /* -------------------  COLORS  ------------------- */
+
+
+
+   /* background */  
+
+   --b-head:   #252525ce;
+   --b-foot:   #252525;
+   --b-basic:  #ffcaaa;
+   --b-basic-g: linear-gradient(163deg, #ffcaaa 13%, #daffed 79%);
+
+   --b-std:    #ffffff86;     
+   --b-button: #b3b3b3c7; 
+   --b-input:  #d3e2ff;
+   --b-table:  #ffffff;
+   --b-tab:    #f0f0f0;
+
+
+   /* text */
+
+   --t-head:   #ffffffd7;
+   --t-group:  #ff9334;
+
+   --t-std:    #000000;
+   --t-light:  #232323;
+
+   --t-h1:     #1a1a1a;
+   --t-h1-s:   #1a1a1a;
+   --t-h2:     #1a1a1a;
+   --t-h3:     #1a1a1a;
+
+   --t-input:  #00033a;
+
+   --t-table:  #000000;
+
+   --t-tab:    #000000;
+   --t-tab-a:  #000000;
+   --t-tab-h:  #000000;
+
+
+
+
+   /* links */
+   --a-text:   #0000ff;
+   --a-hover:  #0000ff;
+   --a-shadow: #0000ff;
+
+
+
+   /* highlights */
+
+   --h-1:      #c6d356;
+   --h-2:      #b3420e; 
+   --h-red:    #ac1a1a; 
+   --h-green:  #208320;
+
+
+
+   /* borders */
+
+   --o-std:    #000000;
+   --o-tab:    #000000;
+   --o-tab-a:  #000000;
+   --o-tab-h:  #000000;
+
+
+   /* data visualization */
+
+   --p0:       #60d2ff; 
+   --p1:       #4a74ff; 
+   --p2:       #53eba4; 
+   --p3:       #2799bf; 
+   --p4:       #9aff9a; 
+   --p5:       #5a73ff; 
+   --p6:       #735ee6; 
+   --p7:       #4df7b0;}
+

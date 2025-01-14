@@ -22,7 +22,6 @@ from datetime import datetime
 def rounds(group_id, game_id, round):
   
   # init
-  head_html = get_head_html() 
   if session['status'] != 'IN':
                       redirect_link = f"/rounds/random/{game_id}/{round}"   
   else:               
@@ -87,13 +86,13 @@ def rounds(group_id, game_id, round):
     end_rounds(group=group, points=points, game_id=game_id, infos=infos)
     return redirect(f"/{group_id}/rounds/{game_id}")
   
-  
-  return render_template( "rounds.html",
+  static = 'rounds.html'
+  return render_template( static, page=page_html(static, "out"),
                             modes=modes, descriptions=descriptions, 
                             rounds_form=rounds_form, submit_game_form=submit_game_form, 
                             group=group, game_id=game_id, n=n, start=start,  
                             round=round, points=points,
-                            point_entries=point_entries, head=head_html)
+                            point_entries=point_entries)
 
 
 # PAGE
@@ -106,5 +105,6 @@ def rounds_page(group_id, game_id):
   group = load_group(group_id)
   game_entry = group.results[group.results['game_id'] == game_id]
   
-  return render_template("rounds_page.html",
+  static = 'rounds_page.html'
+  return render_template(static, page=page_html(static, "out"),
                          group=group, game_id=game_id, game_entry=game_entry)

@@ -15,30 +15,37 @@ from flask import Flask, render_template, request, url_for, redirect, flash, ses
 
 
 
+
+
 # INDEX
 @app.route("/")
 def index():
   
   if session['status'] == 'IN':
-    group = load_group(session['group_id'])
+    
+    username = session['username']
+    id = name_to_id(username)
+    
+    group = load_group(id)
     return redirect(f'/group/{group.id}')
   
   init_session()
   
-  return render_template("_index.html", 
+  static = "_index.html"
+  return render_template(static, page=page_html(static, "out"),
                          modes=modes, descriptions=descriptions, 
                          about_info=about_info, giphs=mode_giphs,
-                         num_modes=len(modes), head="__head_out.html")
+                         num_modes=len(modes))
 
 
 
 # about
 @app.route("/about")
 def about():
-  
-  head_html = get_head_html()
-  return render_template("_about.html", about_info=about_info, 
-                         head=head_html)
+ 
+  static = "_about.html"
+  return render_template(static, page=page_html(static),
+                         about_info=about_info)
 
 
 

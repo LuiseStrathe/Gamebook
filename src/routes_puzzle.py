@@ -34,10 +34,10 @@ def puzzle_list(group_id):
     add_puzzle(group_id=group_id, add_puzzle_form = add_puzzle_form)
     return redirect(f"/puzzle/{group_id}/0")
   
-    
-  return render_template("puzzle_list.html",
-                            add_puzzle_form=add_puzzle_form, 
-                            group=group, puzzles=pd.DataFrame(group.puzzles))
+  static = 'puzzle_list.html'  
+  return render_template(static, page=page_html(static, "in"), 
+                          add_puzzle_form=add_puzzle_form, 
+                          group=group, puzzles=pd.DataFrame(group.puzzles))
 
 
 
@@ -70,7 +70,8 @@ def puzzle_record(group_id, puzzle_id):
                          puzzle_record_form=puzzle_record_form)
     return redirect(f"/puzzle/{group_id}/0")
   
-  return render_template("puzzle_record.html", 
+  static = 'puzzle_record.html'
+  return render_template(static, page=page_html(static, "in"), 
                           puzzle_record_form=puzzle_record_form,
                           group=group)
   
@@ -86,5 +87,6 @@ def puzzle_stats(group_id):
   group = load_group(group_id)
   records = group.results[group.results['g_mode'] == 'puzzle']
   
-  return render_template("puzzle_stats.html",
+  static = 'puzzle_stats.html'
+  return render_template(static, page=page_html(static, "in"), 
                          group=group, records=records)

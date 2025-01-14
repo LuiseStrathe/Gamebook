@@ -45,7 +45,8 @@ def dice_start(group_id, game_id):
     
     return redirect(f"/dice/{group_id}/{game_id}/1")
   
-  return render_template("dice_start.html",
+  static = "dice_start.html"
+  return render_template(static, page=page_html(static, "in"), 
                             group=group, game_id=game_id,
                             start_form=start_form)
 
@@ -112,11 +113,12 @@ def dice(group_id, game_id, round):
         session['round']  += 1
         return redirect(f"/dice/{group_id}/{game_id}/{session['round']}")
                
-  
-  return render_template("dice.html", input_error=input_error,
-                            dice_form=dice_form, dice_rows=dice_rows,
-                            group=group, game_id=game_id, n=n, 
-                            round=round, chart=chart, players=players)
+  static = "dice.html"
+  return render_template(static, page=page_html(static, "in"), 
+                          input_error=input_error,
+                          dice_form=dice_form, dice_rows=dice_rows,
+                          group=group, game_id=game_id, n=n, 
+                          round=round, chart=chart, players=players)
 
 
 
@@ -130,6 +132,7 @@ def dice_page(group_id, game_id):
   group = load_group(group_id)
   game_entry = group.results[group.results['game_id'] == game_id]
   
-  return render_template("dice_page.html",
+  static = "dice_page.html"
+  return render_template(static, page=page_html(static, "in"), 
                          group=group, game_id=game_id, 
                          game_entry=game_entry)

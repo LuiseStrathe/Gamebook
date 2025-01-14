@@ -14,6 +14,8 @@ from Gamebook.src.my_params import *
 from Gamebook.src.my_classes import *
 
 
+###############  SYSTEM  ##################
+
 
 def init_session():
     session['status'] = 'OUT'
@@ -23,60 +25,123 @@ def init_session():
     session['mode'] = ''
     session['num_players'] = 0
     session['round'] = 0
+    
+    
+def verify_session():    
+    
+    if session['status'] == "IN":
+        
+        try: session['username']
+        except: pass
+        
+        else: 
+            if session['username'] not in ['random', '']:
+               
+                return True
+        
+    else: 
+        init_session()
+        
+        return False
 
-def get_head_html():
-    head_html = '__head_out.html'
-    if session['status'] == 'IN':
-        head_html = '__head_in.html'
-    return head_html
+
+
+def page_html(static, force_in_out="no"):
+    
+    page_html = ["__head_out.html", 
+                page_titles[static], 
+                "NaN"]
+    
+    if verify_session():    
+        
+        page_html[0] = "__head_in.html"
+        page_html[2] = session['username']
+        
+    if force_in_out == 'no':
+        pass
+    
+    elif force_in_out == 'in':
+        page_html[0] = "__head_in.html"
+        
+    else:
+        page_html[0] = "__head_out.html"
+        
+    return page_html
+
+
+
+###############  GROUP  ##################
+
+
 
 def load_group(id):
+    
     path = f'{path_data}groups/{id}.pkl'
     with open(path, "rb") as f:
         group = pickle.load(f)
+    
     return group
 
 
 def delete_group(id):
+    
     path = f'{path_data}groups/{id}.pkl'
     os.remove(path)
+    
+    init_session()
 
 
 def name_to_id(name):
+    
     for c in ' .,;:!?-':
         name = name.replace(c, '_')
+    
     id = name.lower()
+    
     return id
 
+
 def id_to_name(id):
+    
     group = load_group(id)
+    
     return group.name
 
 
 def check_name(name):
+    
     id = name_to_id(name)
     if id == 'random':
         check = False
     else:
         check = id not in os.listdir(f'{path_data}groups/')
+    
     return check, id
 
 
 def check_key(id, key):
+
     if id in ['random', '', None]:
             check = False
     else: check = load_group(id).key == key
+
     return  check
 
 
 def create_players(group_form):
+
     players = [group_form.p1.data, group_form.p2.data,
                 group_form.p3.data, group_form.p4.data, 
                 group_form.p5.data, group_form.p6.data,
                 group_form.p7.data, group_form.p8.data]
                 
     players = [p for p in players if p != '']
+
     return players
+
+
+
+###############  PLAY  ##################
 
 
 def gen_game_id(mode):
@@ -84,6 +149,7 @@ def gen_game_id(mode):
     with open(f'data/max_id.txt', "rt") as f:
         new_id = int(f.readline()) + 1
         print(f'New game id: {new_id}')
+
     with open(f'data/max_id.txt', "wt") as f:  
         f.write(str(new_id))
 
@@ -91,11 +157,18 @@ def gen_game_id(mode):
 
 
 def create_random_group():
+
     group = My_Group(name='random', key='random', players=session['random_players'], motto='random')
+
     return group
 
 
+
+# ROUNDS
+
+
 def end_rounds(group, points, game_id, infos):
+
     winner = group.players[np.argmax(points[-1])]
     print('winner: ', winner)
           
@@ -115,7 +188,10 @@ def end_rounds(group, points, game_id, infos):
     results.to_csv(f'{path_data}modes/results.csv', index=False)
     
     
-    
+
+
+# PUZZLES
+
     
 def add_puzzle(group_id, add_puzzle_form):
     
@@ -163,9 +239,8 @@ def submit_puzzle_record(group_id, puzzle_id,
 
 
 
-
-
 # DICE
+
 
 def check_dice_points(points, round):
     checks = np.full(points.shape, True)

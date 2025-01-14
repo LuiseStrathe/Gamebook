@@ -11,6 +11,7 @@ idna
 itsdangerous
 Jinja2
 MarkupSafe
+nodejs
 numpy
 pandas
 python-dateutil
@@ -24,6 +25,7 @@ urllib3
 Werkzeug
 WTForms
 zope.interface
+
 
 # for server
 gunicorn

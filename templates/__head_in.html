@@ -2,81 +2,160 @@
 <!DOCTYPE html>
 <html>
 
+
   <head>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta lang="en-US" charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>GamesBook</title>    
+    <meta name="Save the analogue games you play with friends or familiy." 
+      content="GamesBook">    
+    <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+    
+    <link rel="icon" type="image/png" href="../static/media/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../static/media/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="../static/media/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../static/media/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="../static/media/favicon/site.webmanifest" />
+
     <link rel="stylesheet" href="../static/styles_main.css">
-    <link rel="stylesheet" href="../static/styles_in.css">
+    <script type="text/javascript" src="{{url_for('static', filename='main.js')}}"></script>
+    
+
   </head>
 
 
-  <body>
+  <body 
+    style="background-image: url('../static/media/gamebook_bg_o0.jpg');">
 
     <header>
+      <div id="header">
+      
 
-      <div 
-        style="position:fixed; top:0; right:0; 
-        width:100%; padding:20px; border-bottom: 1px solid --titleglow;
-        background:var(--c-head); color:white; align-items: center;
-        justify-content: space-between; display: flex;">
+        <div class="headerBox">
+          
+          <a
+            onclick="goBack()" 
+            class="navIcon" 
+            title="Return to previous page">
+              &hookleftarrow;
+          </a>
+          
+          <a href="/"
+            title="Home" class="navIcon">
+              <img id="homeIcon" 
+                src="../static/media/favicon/favicon-96x96.png" 
+                alt="Go to Home">
+          </a>
 
-        <div style="padding: 5px; display:inline-block;">
-          <script>
-            document.write('<a href="' + document.referrer + '">Go back</a>');
-          </script>
-          <p style="color:orange; display:inline-block;">
-            &emsp;My Group's Name&emsp;</p>
-          <p style="display:inline-block;">
-            current location</p>
+        </div>
+          
+          
+        <p>
+          <span id="groupTitle">{{ page_html[2] }}</span><br>
+          {{ page_html[1] }}
+        </p>
+
+
+        <div class="headerBox">
+
+          <a href="/about"
+            title="About" class="navIcon menuText">
+              ABOUT</a>
+
+
+          <a href="/login" 
+            title="Login" 
+            id="logIcon" class="navIcon"
+            style="margin-top: -0.4rem;">
+              &#x2386;
+          </a>
+
+
         </div>
 
-        <div style="padding: 5px; display:inline-block; ">
-          <a href="/">GROUP&emsp;</a> 
-          <a href="/enter_gamebook">STATS&emsp;</a>  
-          <a href="/logout">LOGOUT</a>
+      </div>
+
+
+
+      <nav>
+
+        <button id="navButton"
+          onclick='toggle_nav()'>
+            &#9776;
+        </button>
+
+
+        <div id="navDrop" class="navContent">
+
+          <p>MENU</p>
+          <a href="/about">&#x2023; About & Contact</a>
+          <hr>
+          <a href="/">&#x2023; Overview</a>
+          <a href="/">&#x2023; Statistics</a>
+          
+          <a href="/"><span class="navMode"> 
+            &#x1805; Play Rounds</a></span>
+          <a href="/"><span class="navMode"> 
+            &#x1805; Play Dice</a></span>
+          <a href="/"><span class="navMode"> 
+            &#x1805; Enter a Puzzle</a></span>
+          <a href="/"><span class="navMode"> 
+            &#x1805; Play Skat</a></span>
+          <hr>
+          <a style="color:var(--t-head);" 
+            href="/group_motto">&#x2023; Settings</a>
+          <a href="/logout">&#x2023; Logout</a>
+        
         </div>
-      </div><br><br>
 
-      <button title="Go to top"
-          style="position: fixed; z-index: 10;
-          bottom: 20px; right: 30px;">
-            UP
-      </button>
+      </nav>
 
+
+
+      <a class="goUp"  title="Go to top"
+        onclick="topFunction()">
+            &UpArrowBar;
+      </a>   
+      
     </header>
+
 
 
     {% block content %}
     {% endblock %}
 
 
+
     <footer>
-      <div 
-        style="width:100%; padding: 20px; margin: 20px 0 -20px -20px;
-        background:var(--c-head); display: flex;
-        justify-content:space-around; border-radius: 0;">
 
-        <div style="color:white; text-align:left; display:inline-block; ">
-          <p style="font-weight: bold; font-size: 14px; margin-left:10px;">
-            GamesBook.site</p>
-          <p><a href="/about">About & Contact</a></p>
-        </div>
-
-        <div style="color:white; text-align:left; display:inline-block; ">
-          <p style="font-weight: bold; font-size: 14px; margin-left:10px;">
-            Account</p>
-          <p><a href="/motto">Settings</a><br></p>     
-          <p><a href="/logout">Logout</a><br></p>          
-        </div>
-
-        <div style="color:white; text-align:left; display:inline-block; ">
-          <p style="font-weight: bold; font-size: 14px; margin-left:10px;">
-            The Group Name</p>
-          <p><a href="/">To group</a><br></p>
-          <p><a href="/enter_gamebook">Group statistics</a></p>
-        </div>
-      
+      <div >
+        <p style="font-weight: bold; 
+          margin-bottom: 30px; margin-top: 40px;">
+          GamesBook.site</p>
+        <p><a href="/about">About & Contact</a></p>
       </div>
+
+      <div>
+        <p style="font-weight: bold; 
+          margin-bottom: 30px; margin-top: 40px;">
+          {{ page_html[2] }}</p>
+        <p><a href="/">Overview</a><br></p>
+        <p><a href="/">Statistics</a><br></p>
+      </div>
+
+      <div>
+        <p style="font-weight: bold; 
+          margin-bottom: 30px; margin-top: 40px;">
+          Start here</p>
+        <p><a href="/group_motto">Settings</a><br></p>
+        <p><a href="/logout">Logout</a></p>
+      </div>
+
     </footer>
+
 
   </body>
 

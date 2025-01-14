@@ -5,7 +5,7 @@
 <p>GamesBook is a free Flask web application. The app allows users to record analogue games they play! Their gaming records and analytics can be accessed by their whole group.</p>
 
 
-<a href="gamesbook.site" target='_blank'>>>> Visit GameBook here!</a>
+<a href="www.gamesbook.site" target='_blank'>>>> Visit GameBook here!</a>
 
 <br>
 
@@ -82,7 +82,7 @@
 <ul>
     <li><b>gamebook_app.py</b> <br> The main file of the Flask application. It contains the routes and the logic for the web application, called with Gunicorn via wsgi.py.</li>
     <li><b>templates/</b> <br> Contains the HTML templates for the web application.</li>
-    <li><b>static/</b> <br> Contains the CSS and media files for the web application.</li>
+    <li><b>static/</b> <br> Contains the CSS, JavaScript and media files for the web application.</li>
     <li><b>src/</b> <br> Contains the Python source code for the web application.</li>
     <li><b>requirements.txt</b> <br> Contains the required Python packages for the web application.</li>
     <li><b>Licence</b> <br> Contains the MIT licence for the web application.</li></ul>

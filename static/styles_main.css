@@ -1,382 +1,232 @@
 
+/*  This file is used to style the elements of the 
+    gamebook app. It adds more specific styles to the
+    root styles using the variables from the var file. */
+
+
 @import url("styles_root.css");
+@import url("styles_var.css");
   
 
-body {
-    background-image: url('media/gamebook_bg_c3r.jpg');
-    background-repeat: no-repeat;
-    background-size: 100% auto;
-      
-    margin: 20px;   
-    overflow-x: hidden;
 
-    font-family: 'Dotum', sans-serif;
-    font-size: 12pt;
-    text-align: center;
-    color:var(--reg);
-}
+/* CONTENTS
 
-h1 {
-    text-align: left;
-    color: var(--title);
-    size: 42pt;
-    letter-spacing: 0.2em;
-    text-shadow: 0 0 0.8em var(--title);}
+        > CONTAINERS
+        > LINKS
+        > BUTTONS
+        > TABS
+        > TABLES
+        > FORMS
+        > unknown >> check those later
+*/
 
-h2 {
-    color: var(--c-2);
-    size: 20pt;
-    text-align: center;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 0.4em;
-    text-shadow: 0 0 2em var(--c-2);}
 
-h3 {
-    color: var(--c-1);
-    size: 14pt;
-    text-align: center;
-    font-weight: bold;
-    text-transform: capitalize;
-    letter-spacing: 0.2em;}
+
+
+
+
+
+
+/* -----------------  CONTAINERS  ----------------- */
+    
+
+
+    div {
+        text-align: center;
+        padding: 10px;
+        border-radius: 5px;}
+
+
+    .div-1 {
+        display:block; 
+        height:100%; 
+        padding:20px; 
+        background-color:var(--c-dark);}
+
+
+
+
+
+
+
+
+/* --------------------  LINKS  ------------------- */
+
+
+
+    p a { 
+        text-decoration: none;
+        color: var(--a-text);}
+
+    a:hover {
+        cursor: pointer;
+        text-decoration: underline;}
+
+    a:visited, a:active {
+        color: inherit;
+        background-color: inherit;}
+
+
+
+
+
+/* -------------------  BUTTONS  ------------------ */
+
+
+
+
+
+
+
+
+/* --------------------  TABS  -------------------- */
+
+
+    .tab {
+        overflow: hidden;
+        background-color: var(--b-tab);
+        border-radius: 5px;
+        border-bottom: 1px solid var(--o-std);
+        }
+        
+    .tab button {
+        background-color: inherit;
+        float: left;
+        margin: 0px 5px;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        font-size: 14px;
+        color: var(--t-tab);
+        font-weight: bold;
+        letter-spacing: 2px;
+        border: 1px solid var(--o-std);
+        border-radius: 5px;}
+        
+    .tab button:hover {
+        border: 1px solid var(--c-2);}
+        
+    .tab button.active {
+        background-color: var(--c-2);
+        border: 1px solid var(--o-tab-a);}
+        
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        background-color: var(--b-std);} 
+
+
+
+
+
+
+
+
+/* -------------------  TABLES  ------------------- */
+
+
+    table, th, td {
+        width: 100%;
+        text-align: center;
+        letter-spacing: 2px;
+        border-radius: 5px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        color: var(--t-light);}
+
+    th {
+        font-weight: bold; 
+        padding-top: 10px;
+        padding-bottom: 10px;
+        color: var(--t-input);
+        text-transform:capitalize;
+        font-size: 1.2em;
+        letter-spacing: 2px;
+        background-color: var(--b-tab);
+        border-bottom: 1px solid var(--o-std);}
+    
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        padding: 5pt;
+        background-color: var(--b-basic);
+        table-layout: fixed ; }
+    
+    tr.active-row {
+        color: var(--t-light);
+        line-height: 3em;
+        border: 1px solid var(--o-std);
+        border-radius: 10px;}
+
+
+
+
+
+
+
+/* -------------------  FORMS  ------------------- */
+
+
+
+    input.up {
+        background-color: var(--h-green);}
+
+    input.del {
+        background-color: var(--h-red);}
+
+    input {
+        background-color: var(--b-input);
+        min-width:50px;
+        max-width: 80%;
+        margin: 0 20px;
+
+        color: var(--t-input);
+        font-weight: bold;
+        font-size: 1.2em;
+        text-align: center;
+
+        cursor: text;
+        }      
+
+
+
+
+
+
+
+/* ------------------  unknown  ------------------ */
+
+
+
+    .location { grid-area: loc;}
+
+    .description { grid-area: desc; }
+
+    .loc-form { grid-area: frm; }
+
+    .loc-container {
+        display: grid;
+        grid-template-areas: 
+        'loc loc  loc desc desc desc desc desc frm';
+        column-gap: 5px;
+        background-color: var(--b-basic);
+        padding: 5px; 
+        text-align: center;}
+
+    .rounds_chart {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        gap: 2px;
+        padding: 10pt 0pt;}
+
+    .rounds_bar {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        border-radius: 0px;}
+
+
 
     
-a { text-align: center;
-    text-decoration: none;
-    border-style: none;
-    border-radius: 5px;
-    padding: 20px;
-    color: inherit;}
 
-a:hover {
-    min-width: fit-content;
-    box-shadow: 0 0 4px var(--c-2);}
-
-div {
-    text-align: center;
-    padding: 10px;
-    border-radius: 5px;}
-
-p { border-radius: 5px;}
-
-image {
-    width: 100%; 
-    }
-
-
-
-.location { grid-area: loc;}
-
-.description { grid-area: desc; }
-
-.loc-form { grid-area: frm; }
-
-.loc-container {
-    display: grid;
-    grid-template-areas: 
-      'loc loc  loc desc desc desc desc desc frm';
-    column-gap: 5px;
-    background-color: var(--c-light);
-    padding: 5px; 
-    text-align: center;}
-
-.rounds_chart {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    gap: 2px;
-    padding: 10pt 0pt;}
-
-.rounds_bar {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    border-radius: 0px;}
-
-input.up {
-    background-color: var(--c-sucess);}
-
-input.del {
-    background-color: var(--c-danger);}
-
-
-       table, th, td {
-            width: 100%;
-            text-align: center;
-            letter-spacing: 2px;
-            border-radius: 5px;
-            padding-top: 5px;
-            padding-bottom: 5px;
-            color: var(--light);}
-
-        th {
-            font-weight: bold; 
-            padding-top: 10px;
-            padding-bottom: 10px;
-            color: var(--light);
-            text-transform:capitalize;
-            font-size: 1.2em;
-            letter-spacing: 2px;
-            background-color: var(--c-dark);
-            border-bottom: 1px solid var(--c-2);}
-        
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            padding: 5pt;
-            background-color: var(--c-back);
-            table-layout: fixed ; }
-        
-        tr.active-row {
-            color: var(--light);
-            line-height: 3em;
-            border: 1px solid var(--c-2);
-            border-radius: 10px;}
-
-              
-
-
-        /* INPUT */
-
-        input {
-            font-weight: bold;
-            font-size: 1.2em;
-            min-width:50px;
-            max-width: 80%;
-            color: var(--c-dark);
-            background-color: var(--input);}      
-
-
-        /* TABS */
-
-        .tab {
-            overflow: hidden;
-            background-color: var(--c-dark);
-            border-radius: 5px;
-            border-bottom: 1px solid var(--c-2);
-            }
-            
-        .tab button {
-            background-color: inherit;
-            float: left;
-            margin: 0px 5px;
-            cursor: pointer;
-            padding: 14px 16px;
-            transition: 0.3s;
-            font-size: 14px;
-            color: var(--light);
-            font-weight: bold;
-            letter-spacing: 2px;
-            border: 1px solid var(--c-white);
-            border-radius: 5px;}
-            
-        .tab button:hover {
-            border: 1px solid var(--c-2);}
-            
-        .tab button.active {
-            background-color: var(--c-2);
-            border: 1px solid var(--c-2);}
-            
-        .tabcontent {
-            display: none;
-            padding: 6px 12px;
-            background-color: var(--c-dark);} 
-
-
-
-        .div-1 {
-            display:block; 
-            height:100%; 
-            padding:20px; 
-            background-color:var(--c-dark);}
-        
-        .a-small-1 {
-            display: -webkit-inline-box;
-            margin: 10px;
-            min-width: fit-content; 
-            background: linear-gradient(to bottom right,var(--c-back2), var(--c-back0)) border-box;
-            border-radius: 5px;
-            border: 1px solid var(--c-2);
-            text-transform:uppercase; 
-            letter-spacing: 0.2em;
-            max-width: fit-content;}
-        
-        .a-large-1 {
-            display:block; 
-            min-width: fit-content;
-            border: 1px solid var(--c-1); 
-            background: linear-gradient(to bottom right,var(--c-back1), var(--c-back0)) border-box;
-            border-radius: 5px;
-            text-transform:uppercase; 
-            letter-spacing: 0.2em;}
-        
-        .a-small-2 {
-            margin: 10px;
-            display: -webkit-inline-box;
-            min-width: fit-content; 
-            border-radius: 5px;
-            border: 1px solid var(--c-light);
-            text-transform:uppercase; 
-            letter-spacing: 0.2em;}
-        
-        .a-large-2 {
-            display:block; 
-            min-width: fit-content; 
-            border-radius: 5px;
-            border: 1px solid var(--c-light);
-            text-transform:uppercase; 
-            letter-spacing: 0.2em;}
-        
-        .a-small-3 {
-            display: -webkit-inline-box;
-            margin: 10px;
-            min-width: fit-content; 
-            background: linear-gradient(to bottom,var(--c-back1), var(--c-dark)) border-box;
-            border-radius: 5px;
-            border: 1px solid var(--c-1);
-            text-transform:uppercase; 
-            letter-spacing: 0.2em;
-            max-width: fit-content;}
-
-
-/* ########################################### */
-
-/* TABLE */
-
-table, th, td {
-    width: 100%;
-    text-align: center;
-    letter-spacing: 2px;
-    border-radius: 5px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    color: var(--light);}
-
-th {
-    font-weight: bold; 
-    padding-top: 10px;
-    padding-bottom: 10px;
-    color: var(--light);
-    text-transform:capitalize;
-    font-size: 1.2em;
-    letter-spacing: 2px;
-    background-color: var(--c-dark);
-    border-bottom: 1px solid var(--c-2);}
-
-table {
-    border-collapse: collapse;
-    width: 100%;
-    padding: 5pt;
-    background-color: var(--c-back);
-    table-layout: fixed ; }
-
-tr.active-row {
-    color: var(--light);
-    line-height: 3em;
-    border: 1px solid var(--c-2);
-    border-radius: 10px;}
-
-        
-
-
-/* INPUT */
-
-input {
-    font-weight: bold;
-    font-size: 1.2em;
-    min-width:50px;
-    max-width: 80%;
-    color: var(--c-dark);
-    background-color: var(--input);}      
-
-
-/* TABS */
-
-.tab {
-    overflow: hidden;
-    background-color: var(--c-dark);
-    border-radius: 5px;
-    border-bottom: 1px solid var(--c-2);
-    }
-    
-.tab button {
-    background-color: inherit;
-    float: left;
-    margin: 0px 5px;
-    cursor: pointer;
-    padding: 14px 16px;
-    transition: 0.3s;
-    font-size: 14px;
-    color: var(--light);
-    font-weight: bold;
-    letter-spacing: 2px;
-    border: 1px solid var(--c-white);
-    border-radius: 5px;}
-    
-.tab button:hover {
-    border: 1px solid var(--c-2);}
-    
-.tab button.active {
-    background-color: var(--c-2);
-    border: 1px solid var(--c-2);}
-    
-.tabcontent {
-    display: none;
-    padding: 6px 12px;
-    background-color: var(--c-dark);} 
-
-
-
-.div-1 {
-    display:block; 
-    height:100%; 
-    padding:20px; 
-    background-color:var(--c-dark);}
-
-.a-small-1 {
-    display: -webkit-inline-box;
-    margin: 10px;
-    min-width: fit-content; 
-    background: linear-gradient(to bottom right,var(--c-back2), var(--c-back0)) border-box;
-    border-radius: 5px;
-    border: 1px solid var(--c-2);
-    text-transform:uppercase; 
-    letter-spacing: 0.2em;
-    max-width: fit-content;}
-
-.a-large-1 {
-    display:block; 
-    min-width: fit-content;
-    border: 1px solid var(--c-1); 
-    background: linear-gradient(to bottom right,var(--c-back1), var(--c-back0)) border-box;
-    border-radius: 5px;
-    text-transform:uppercase; 
-    letter-spacing: 0.2em;}
-
-.a-small-2 {
-    margin: 10px;
-    display: -webkit-inline-box;
-    min-width: fit-content; 
-    border-radius: 5px;
-    border: 1px solid var(--c-light);
-    text-transform:uppercase; 
-    letter-spacing: 0.2em;}
-
-.a-large-2 {
-    display:block; 
-    min-width: fit-content; 
-    border-radius: 5px;
-    border: 1px solid var(--c-light);
-    text-transform:uppercase; 
-    letter-spacing: 0.2em;}
-
-.a-small-3 {
-    display: -webkit-inline-box;
-    margin: 10px;
-    min-width: fit-content; 
-    background: linear-gradient(to bottom,var(--c-back1), var(--c-dark)) border-box;
-    border-radius: 5px;
-    border: 1px solid var(--c-1);
-    text-transform:uppercase; 
-    letter-spacing: 0.2em;
-    max-width: fit-content;}

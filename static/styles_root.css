@@ -1,31 +1,316 @@
 
-:root {
-    --c-head: #1a1a1ad7; 
-    --title: #2b0d00; 
-    --titleglow: #4e1c059d;
-    
-    --reg: #242424; 
-    --light: #1a1a1a;
-    
-    --c-dark: #ffffff86; 
-    --c-medium: #b3b3b3c7; 
-    --c-std: #ffffff; 
-    --c-light: #222222d7;
-    
-    --c-1: #c6d356;
-    --c-2: #b3420e; 
+/*  This file contains stky for the generic elements, such
+    as body, div, h1, div etc. */ 
 
-    --input: #b0bace;
 
-    --c-danger: #ac1a1a; 
-    --c-sucess: #208320;
 
-    --p0: #60d2ff; 
-    --p1: #4a74ff; 
-    --p2: #53eba4; 
-    --p3: #2799bf; 
-    --p4: #9aff9a; 
-    --p5: #5a73ff; 
-    --p6: #735ee6; 
-    --p7: #4df7b0;}
-  
+/* CONTENTS
+        > ROOT
+        > HEADER
+        > FOOTER
+        > NAVIGATION
+        > HEADLINES
+        > FOOTNOTE
+*/
+ 
+
+
+
+
+
+
+/* --------------------  ROOT  ------------------- */
+
+
+html {
+    height: 100%;       /* for background cover */   
+    font-size: 12pt;    /* rem baseline */
+    font-family: 'Dotum', sans-serif;
+    }
+
+html * {
+    box-sizing: border-box;}
+
+
+body {
+
+    /* background default */
+    background: var(--b-basic);
+    background: var(--b-basic-g);
+
+    /* background image */
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    /* containers */
+    overflow-x: hidden;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+
+    /* text */
+    color:var(--t-std);}
+
+
+
+
+
+
+
+/* ------------------  HEADER  ------------------ */
+
+
+
+header {
+    color: var(--t-head);
+
+    hr {
+        border: none;
+        border-top: 1px dashed var(--t-head);
+        width: auto;
+        margin: 5px 10px; }
+    
+    #groupTitle {
+        color: var(--t-group);
+        font-size: 1rem;
+    }}
+
+
+
+#header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 0 40px 0 0px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+
+    border-radius: 0;
+    background: var(--b-head);
+    height: var(--d-head-height);
+    
+    a:hover {
+            color: var(--h-1);
+            text-decoration: none;  }}
+
+
+
+.headerBox {
+    display: inline-flex; 
+    align-items: center;
+}
+
+
+
+
+/* Navigation Icons    */
+
+
+.navIcon, .goUp , .homeIcon{ 
+    display: inline-flex; 
+    font-size: 1.8rem;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 0 10px;
+    margin: 0;
+    justify-items: center;
+    color: var(--t-head);}
+
+
+#homeIcon {
+    cursor: pointer;
+    width: 1.7rem; 
+    height: 1.7rem; 
+    filter: brightness(0) invert(1); }
+
+.menuText {
+    font-size: 1.2rem;
+    letter-spacing: 0.2rem;}
+
+.goUp { 
+        display: block;
+        position: fixed; 
+        z-index: 10;
+        bottom: 20px; 
+        right: 20px;
+
+        transition: 0.3s;
+        color: var(--t-std) !important;}
+
+
+@media screen and (max-width: 480px) {
+    .menuText {
+        display: none;}
+    
+    #homeIcon {
+        display: none;}
+    
+    #logIcon {
+        display: none;}}
+
+
+
+/* -------------------  FOOTER  ------------------ */
+
+
+footer {
+    display: flex;
+    justify-content:space-around; 
+    align-items: flex-start;
+    flex-wrap: wrap;
+    min-height: 600px;
+
+    padding: 30px 15% 50px;
+    margin: 0;
+
+    color: var(--t-head);
+    background: var(--b-foot);
+
+    
+    div {
+        padding: 20px;
+        text-align: left;
+        min-width: 100px;
+    
+        a {
+            color: var(--t-head);}}}
+
+@media screen and (max-width: 480px) {
+    footer {
+        min-height: 300px;
+        display: block;
+        padding-left: 20%;
+        }}
+
+
+
+/* -----------------  NAVIGATION  ---------------- */
+
+
+nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 99;
+
+    text-align: right;}
+
+nav .navMode {
+      text-decoration: italic;
+      margin-left: 15px;}
+
+
+/* Menu button */
+#navButton {
+    background-color: transparent;
+    padding-right: 20px;
+    margin: 0;
+    height: var(--d-head-height);
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: var(--t-head);}
+
+
+/* Menu container */
+.navContent {
+    display: none;              /* Hidden by default! */
+    width: 280px;
+    background-color: var(--b-head);
+    margin: 0;
+    padding: 0 0 10px 0;
+    border-radius: 0;
+    border-top: 1px solid var(--b-foot);
+    border-bottom: 1px solid var(--b-foot);
+    box-shadow: 0 0 10px 1px var(--b-head);
+    }
+
+
+/* Menu head */
+.navContent p {
+    display: block;
+    background-color: var(--b-head);
+    letter-spacing: 0.2rem;
+    font-weight: bold;
+    padding: 20px;
+    margin: 0;}   
+
+
+/* Menu items */
+.navContent a {
+    display: block;
+    text-align: left;
+    padding: 10px;
+    margin: 10px 15px;    
+
+    border-radius: 5px;
+    text-decoration: none;}
+
+
+.navContent a:hover {
+    border: 1px solid var(--t-head);
+    text-decoration: none;}
+
+
+nav 
+
+/* Drop (show) the navigation content (menu links) */
+/* LEAVE ON BOTTOM of navContent */
+.show {display:block;}
+
+
+
+
+
+/* ------------------  HEADLINES  ----------------- */
+
+
+h1 {
+    text-align: left;
+
+    color: var(--t-h1);
+    text-shadow: 0 0 0.8rem var(--t-h1-s);
+    font-size: 3rem;
+    letter-spacing: 0.2rem;
+    padding: 60px 15px 15px;}
+
+h2 {
+    text-align: center;
+    text-transform: capitalize;
+
+    color: var(--t-h2);
+    size: 20pt;
+    font-weight: bold;
+    letter-spacing: 0.4em;}
+
+h3 {
+    text-align: center;
+    text-transform: capitalize;
+    
+    color: var(--t-h3);
+    size: 14pt;
+    font-weight: bold;
+    letter-spacing: 0.2em;}
+
+
+
+
+
+/* ------------------  FOOTNOTE  ----------------- */
+
+
+.footNote {
+    color: var(--t-light);
+    font-size: 0.9rem;
+    text-decoration: italic;
+    text-align: center;
+    padding: 10px 20px 20px;}
+
+
+
+
+
+

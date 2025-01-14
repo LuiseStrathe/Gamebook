@@ -25,7 +25,9 @@ def group(group_id):
   
     if check_key(session['username'], session['key']):
       group = load_group(group_id)
-      return render_template("group.html", 
+      
+      static = 'group.html'
+      return render_template(static, page=page_html(static, "in"), 
                             descriptions=descriptions, modes=modes, 
                             group=group)
     else:
@@ -36,11 +38,15 @@ def group(group_id):
 # enter GameBook
 @app.route("/gamebook")
 def enter_gamebook():
+  
   if check_key(session['username'], session['key']):    
     return redirect(f"/gamebook/{session['username']}")
+  
   else: 
     init_session()
+  
     return redirect(url_for('login', retry=False))
+
 
 # GameBook
 @app.route("/gamebook/<string:group_id>", methods=["GET", "POST"])
@@ -58,14 +64,16 @@ def gamebook(group_id):
       if n_games > 0:
         wins = [n_games, *[games[games.winner_name == p].shape[0] for p in group.players]]
         stats[m] = wins
-      
-    return render_template("gamebook.html", 
+    
+    static = 'gamebook.html'  
+    return render_template(static, page=page_html(static, "in"),
                            descriptions=descriptions, modes=modes, 
                            group=group, giphs=mode_giphs, stats=stats,
                            num_modes=len(modes), mode_key=mode_key)
     
   else: 
     init_session()
+  
     return redirect(url_for('login', retry=False))
   
   
@@ -84,7 +92,8 @@ def random_group():
     session['random_players'] = players
     return redirect(f"/start/rounds/random")
 
-  return render_template("random.html",
+  static = 'random.html'
+  return render_template(static, page=page_html(static, "out"), 
                          modes=modes, descriptions=descriptions,
                          random_form=random_form)
   
@@ -139,15 +148,17 @@ def login():
       else: 
           init_session()
           return redirect(url_for('login', retry=True))
-      
-  return render_template('group_login.html', retry=retry)
+        
+  static = 'group_login.html'    
+  return render_template(static, page=page_html(static, "out"), 
+                         retry=retry)
 
 
 # Logout
 @app.route('/logout')
 def logout():
    init_session()
-   return redirect(url_for('index'))
+   return redirect(f"/")
 
 
 # Register
@@ -173,8 +184,9 @@ def create_group():
       return redirect(f"/group/{group.id}")
     
     else: print("ERROR: group probably arleady exists")
-    
-  return render_template("group_create.html", 
+  
+  static = 'group_create.html'  
+  return render_template(static, page=page_html(static, "out"), 
                          group_form=group_form)
 
 
@@ -190,7 +202,8 @@ def delete(group_id):
         delete_group(group_id)
         return redirect('/')
   
-  return render_template("group_delete.html", 
+  static = 'group_delete.html'
+  return render_template(static, page=page_html(static, "out"), 
                          group_name=group_name, delete_form=delete_form)
 
 
@@ -208,8 +221,9 @@ def motto():
           group.motto = motto_form.motto.data
           group.update_group()
           return redirect(f'/group/{group.id}')
-  
-    return render_template("group_motto.html", 
+
+    static = 'group_motto.html'
+    return render_template(static, page=page_html(static, "in"), 
                          group=group, motto_form=motto_form)
   
   else: redirect('/')

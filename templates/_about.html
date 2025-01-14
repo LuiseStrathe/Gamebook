@@ -1,8 +1,11 @@
 
-{% extends head %}
+{% set page_html = page %}
+{% extends page[0] %}
 
 
 {% block content %}
+
+
 
   <title>About</title>
   <h1>About the GameBook Project</h1><br>
@@ -33,7 +36,22 @@
         target="_blank" rel="noopener noreferrer">
         developer or contact</a> you can visit my profile.</p>
 
-  </div><br><br><br><br>
+  </div><br><br><br>
+  
+  <section class="footNote" title="Legal Notes">
+      <p>GameBook is a project by Luise Strathe. <br>
+        It is a non-commercial Data Science portfolio project. 
+        It is fully free of fees and advertisements. 
+        The data you enter is stored non-personalized and only 
+        used for this one app. The app uses Flask frameworks and 
+        is hosted on a dedicated VPS in Germany. 
+        <br>Thanks goes out to the creators of the images and icons used:<br>
+        <a href='https://www.pexels.com/de-de/foto/rot-kunst-blau-abstrakt-20818851/' 
+          target='blank'>Артем Дворецкий</a> and
+        <a href='https://www.flaticon.com/free-icons/board-game' 
+          target='blank'>Freepik - Flaticon</a>.
+      </p>
+    </section><br>
 
   <a class='a-small-2' href='/'>
     Back Home</a><br><br>

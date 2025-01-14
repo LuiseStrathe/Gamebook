@@ -1,13 +1,15 @@
 
-{% extends head %}   
+{% set page_html = page %}
+{% extends page[0] %}
 
 
 {% block content %}
 
   <h1>Welcome to GameBook</h1>
 
-  <p style="font-size:14pt;  white-space: pre-line; text-align:block; color:var(--light);">
-    {{ about_info }}
+  <p style="font-size:14pt;  white-space: pre-line; 
+    text-align:block; color:var(--light);">
+      {{ about_info }} 
   </p><br><br><br><br>
 
   
