@@ -9,154 +9,202 @@
   
 
 
-/* CONTENTS
+/*  CONTENTS
 
+
+        ---- General ----
+
+        > TEXT
         > CONTAINERS
         > LINKS
-        > BUTTONS
         > TABS
         > TABLES
         > FORMS
-        > unknown >> check those later
+
+        ----- Pages ------
+
+        > SETTINGS
+        > ERROR pages
+
+        ----- Other ------
+
+        > media
+        > unknown
 */
 
 
 
 
 
+/*  ############################################
+
+                        GENERAL 
+    
+    ############################################  */
 
 
 
-/* -----------------  CONTAINERS  ----------------- */
+/* ----------------  CONTAINERS  --------------- */
     
 
 
-    div {
-        text-align: center;
-        padding: 10px;
-        border-radius: 5px;}
+div {
+    text-align: center;
+    padding: 10px;
+}
 
 
-    .div-1 {
-        display:block; 
-        height:100%; 
-        padding:20px; 
-        background-color:var(--c-dark);}
+.div-1 {
+    display:block; 
+    height:100%; 
+    padding:20px; 
+    background-color:var(--c-dark); 
+}
 
 
+.fullDiv {
+    width: 100%;
+    padding: 20px;
+    margin: 0;
+    text-align: center;
+    justify-content: center;
+}
 
 
+.titleDiv {
+    padding: calc(var(--d-head-height) + 20px) 20px 30px;
+}
 
 
+.popUp {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border-radius: 5px;
+    background-color: var(--b-pop);
+    color: var(--t-pop);
+    z-index: 10;
+    box-shadow: 0 0 10px 1px var(--b-pop);
+}
 
 
-/* --------------------  LINKS  ------------------- */
+.userFeedback {
+    display: none;
 
+    padding: 20px;
+    margin: 20px;
+    border-radius: 5px;
+    background-color: var(--b-info); 
+    border: 1px dotted var(--t-light);
+    color: var(--t-group);  
+    font-size: 1.2rem;
+    letter-spacing: 0.2rem;
+    text-align: center;
 
-
-    p a { 
-        text-decoration: none;
-        color: var(--a-text);}
-
-    a:hover {
-        cursor: pointer;
-        text-decoration: underline;}
-
-    a:visited, a:active {
-        color: inherit;
-        background-color: inherit;}
-
-
-
-
-
-/* -------------------  BUTTONS  ------------------ */
-
-
-
-
-
-
-
-
-/* --------------------  TABS  -------------------- */
-
-
-    .tab {
-        overflow: hidden;
-        background-color: var(--b-tab);
-        border-radius: 5px;
-        border-bottom: 1px solid var(--o-std);
-        }
-        
-    .tab button {
-        background-color: inherit;
-        float: left;
-        margin: 0px 5px;
-        cursor: pointer;
-        padding: 14px 16px;
-        transition: 0.3s;
-        font-size: 14px;
-        color: var(--t-tab);
-        font-weight: bold;
-        letter-spacing: 2px;
-        border: 1px solid var(--o-std);
-        border-radius: 5px;}
-        
-    .tab button:hover {
-        border: 1px solid var(--c-2);}
-        
-    .tab button.active {
-        background-color: var(--c-2);
-        border: 1px solid var(--o-tab-a);}
-        
-    .tabcontent {
-        display: none;
-        padding: 6px 12px;
-        background-color: var(--b-std);} 
-
-
-
-
-
-
-
-
-/* -------------------  TABLES  ------------------- */
-
-
-    table, th, td {
-        width: 100%;
-        text-align: center;
-        letter-spacing: 2px;
-        border-radius: 5px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        color: var(--t-light);}
-
-    th {
-        font-weight: bold; 
-        padding-top: 10px;
-        padding-bottom: 10px;
-        color: var(--t-input);
-        text-transform:capitalize;
-        font-size: 1.2em;
-        letter-spacing: 2px;
-        background-color: var(--b-tab);
-        border-bottom: 1px solid var(--o-std);}
-    
-    table {
-        border-collapse: collapse;
-        width: 100%;
-        padding: 5pt;
-        background-color: var(--b-basic);
-        table-layout: fixed ; }
-    
-    tr.active-row {
+    button {
+        border-color: var(--t-light);
         color: var(--t-light);
-        line-height: 3em;
-        border: 1px solid var(--o-std);
-        border-radius: 10px;}
+    }
+}
+
+
+.infoShow {
+    display: block !important;
+}
+
+
+
+
+/* ------------------  LINKS  ------------------ */
+
+
+
+p a { 
+    text-decoration: none;
+    color: var(--a-text); 
+}
+
+
+a:hover {
+    cursor: pointer;
+    text-decoration: underline; 
+}
+
+
+a:visited, a:active {
+    color: inherit;
+    background-color: inherit; 
+}
+
+
+.pageLink {     
+    border: 1px solid var(--o-std);
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+
+    color: var(--t-std);
+    background-color: transparent;
+    border-color: var(--t-std);
+
+    font-size: 1.2em;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-decoration: none; 
+    text-align: center;
+    align-content: center;
+}
+
+
+
+
+
+/* --------------------  TABS  ------------------- */
+
+
+.tab {
+    overflow: hidden;
+    background-color: var(--b-tab);
+    border-radius: 5px;
+    border-bottom: 1px solid var(--o-std); 
+}
+
+
+.tab button {
+    background-color: inherit;
+    float: left;
+    margin: 0px 5px;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 14px;
+    color: var(--t-tab);
+    font-weight: bold;
+    letter-spacing: 2px;
+    border: 1px solid var(--o-std);
+    border-radius: 5px; 
+}
+    
+
+.tab button:hover {
+    border: 1px solid var(--c-2); 
+}
+
+
+.tab button.active {
+    background-color: var(--c-2);
+    border: 1px solid var(--o-tab-a); 
+}
+
+
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    background-color: var(--b-std);
+} 
 
 
 
@@ -164,69 +212,237 @@
 
 
 
-/* -------------------  FORMS  ------------------- */
+
+/* -------------------  TABLES  ------------------ */
+
+
+table, th, td {
+    width: 100%;
+    text-align: center;
+    letter-spacing: 2px;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: var(--t-light);
+}
+
+
+th {
+    font-weight: bold; 
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: var(--t-input);
+    text-transform:capitalize;
+    font-size: 1.2em;
+    letter-spacing: 2px;
+    background-color: var(--b-tab);
+    border-bottom: 1px solid var(--o-std);
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    padding: 5pt;
+    background-color: var(--b-basic);
+    table-layout: fixed ; 
+}
+
+
+tr.active-row {
+    color: var(--t-light);
+    line-height: 3em;
+    border: 1px solid var(--o-std);
+    border-radius: 10px;
+}
 
 
 
-    input.up {
-        background-color: var(--h-green);}
-
-    input.del {
-        background-color: var(--h-red);}
-
-    input {
-        background-color: var(--b-input);
-        min-width:50px;
-        max-width: 80%;
-        margin: 0 20px;
-
-        color: var(--t-input);
-        font-weight: bold;
-        font-size: 1.2em;
-        text-align: center;
-
-        cursor: text;
-        }      
 
 
 
 
+/* -------------------  FORMS  ------------------ */
 
+
+
+input.up {
+    background-color: var(--h-green);
+}
+
+
+input.del {
+    background-color: var(--h-red);
+}
+
+
+input {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    text-align: center;
+    background-color: var(--b-input);
+    color: var(--t-input);
+    font-style: italic;
+    font-size: 1.2em;
+    border: 1px solid var(--o-input);
+    
+    cursor: text;
+}      
+
+
+
+
+
+
+/*  ############################################
+
+                        PAGES 
+
+    ############################################  */
+
+
+
+
+/* -------------------  ERROR  ----------------- */
+
+
+
+#errorPage {
+    display: block;
+    padding: 0;
+    
+    div {
+        border-radius: 0;}
+}
+
+
+#errorText {
+    display: block;
+    text-align: center;    
+    padding: 20px;
+    align-items: top;
+    
+    p {
+        text-align: space-around;
+        font-size: 5em;
+        padding: 30px 0;
+        margin: 0;
+        font-weight: bold; }
+    
+    a {
+        display: inline-block;
+
+        margin: 20px;
+        height: 4em;
+        width: 67%;
+
+        background-color: var(--b-foot);
+        color: var(--t-head); 
+}}
+
+
+@media screen and (min-width: 800px) {
+
+    #errorPage {
+        display: flex;
+        height: 100vh;
+        
+        div {
+            width: 50%;
+            align-items: stretch;}}
+        
+    #errorText p {
+        font-size: 10em;
+        padding: 80px 0;
+
+        a {
+            display: inline-block;
+            width: 30%;
+}}}
+
+
+
+
+
+
+/*  ############################################
+
+                     OTHER 
+                     
+    ############################################  */
+
+
+
+
+/* ------------------  MEDIA  ------------------ */
+
+
+
+.giphy {
+    background-color: transparent;
+    padding: 0;
+    height: 100%;
+    
+    img {
+        width: 100%;
+        object-fit: cover; }
+    
+    p {
+        position: absolute;
+        z-index: 1;
+        top: 10px;
+        left: 10px;     
+}}
+
+
+/* ----------------  Color Choices  -------------- */
+
+.displayColors {
+    display: inline-flex; 
+    width: 100px; 
+    height: 30px; 
+    margin: 5px; 
+    padding: 5px; 
+    justify-content: center;     
+    color: var(--t-head); 
+}
 
 
 /* ------------------  unknown  ------------------ */
 
 
+.location { grid-area: loc;}
 
-    .location { grid-area: loc;}
+.description { grid-area: desc; }
 
-    .description { grid-area: desc; }
+.loc-form { grid-area: frm; }
 
-    .loc-form { grid-area: frm; }
+.loc-container {
+    display: grid;
+    grid-template-areas: 
+    'loc loc  loc desc desc desc desc desc frm';
+    column-gap: 5px;
+    background-color: var(--b-basic);
+    padding: 5px; 
+    text-align: center;}
 
-    .loc-container {
-        display: grid;
-        grid-template-areas: 
-        'loc loc  loc desc desc desc desc desc frm';
-        column-gap: 5px;
-        background-color: var(--b-basic);
-        padding: 5px; 
-        text-align: center;}
+.rounds_chart {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 2px;
+    padding: 10pt 0pt;}
 
-    .rounds_chart {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-end;
-        gap: 2px;
-        padding: 10pt 0pt;}
-
-    .rounds_bar {
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-        border-radius: 0px;}
-
+.rounds_bar {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    border-radius: 0px;}
 
 
-    
+
+
 

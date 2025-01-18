@@ -27,8 +27,11 @@
         Your name should be between 5 and 40 characters.
         You can use numerics and space, but not as a start.</p><br>
     
-    <p> <b>{{ group_form.key.label }}</b> &emsp;&emsp;
+    <p> <b>Enter your group password:</b> &emsp;&emsp;
         {{ group_form.key(size=20) }}</p>
+    <p> <b>Confirm the password:</b> &emsp;&emsp;
+        {{ group_form.key_confirm(size=20) }}</p>
+        
     <p style = 'size:10pt; font-style:italic; left:20pt;'>
         Your key is an identifier to prevent your group's GameBook 
         to be accidentally used by other people.
@@ -40,29 +43,21 @@
         You can use numerics.</p><br>
 
     <p style = 'size:10pt;'>
-            You can have 2 to 8 players in this group.</p>
+            You can have 2 to 10 players in this group.</p>
+    
+    {% for i in range(10) %}
 
-    <p> <b>{{ group_form.p1.label }}</b> &emsp;&emsp;&emsp; &nbsp;
-        {{ group_form.p1(size=30) }}</p> 
-    <p> <b>{{ group_form.p2.label }}</b> &emsp;&emsp;&emsp; &nbsp;
-        {{ group_form.p2(size=30) }}</p> 
-    <p> <b>{{ group_form.p3.label }}</b> &emsp;&emsp;&emsp; &nbsp;
-        {{ group_form.p3(size=30) }}</p>
-    <p> <b>{{ group_form.p4.label }}</b> &emsp;&emsp;&emsp; &nbsp;
-        {{ group_form.p4(size=30) }}</p>
-    <p> <b>{{ group_form.p5.label }}</b> &emsp;&emsp;&emsp; &nbsp;
-        {{ group_form.p5(size=30) }}</p>
-    <p> <b>{{ group_form.p6.label }}</b> &emsp;&emsp;&emsp; &nbsp;
-        {{ group_form.p6(size=30) }}</p>
-    <p> <b>{{ group_form.p7.label }}</b> &emsp;&emsp;&emsp; &nbsp;
-        {{ group_form.p7(size=30) }}</p>
-    <p> <b>{{ group_form.p8.label }}</b> &emsp;&emsp;&emsp; &nbsp;
-        {{ group_form.p8(size=30) }}</p><br>
+        <p> <b> {{ group_form["p" + i|string].label }}   </b></p>
+        <p>     {{ group_form["p" + i|string](size=20) }}</p>
+        <p>     {{ group_form["c" + i|string] }}         </p><br>
 
-    <p> <b>{{ group_form.motto.label }}</b> (optional)</p>
-    <p> {{ group_form.motto(size=100) }}</p><br>     
+    {% endfor %}
 
-    <p>{{ group_form.submit() }}</p><br>
+    <p> <b>{{ group_form.slogan.label }}</b> (optional)</p>
+    <p> {{ group_form.slogan(size=100) }}</p><br>     
+
+    <p>{{ group_form.registration_submit() }}</p><br>
+
 </form>
 
 

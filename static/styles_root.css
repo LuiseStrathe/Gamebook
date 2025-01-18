@@ -5,12 +5,14 @@
 
 
 /* CONTENTS
-        > ROOT
+
+        > BODY
         > HEADER
         > FOOTER
         > NAVIGATION
         > HEADLINES
         > FOOTNOTE
+        
 */
  
 
@@ -19,37 +21,46 @@
 
 
 
-/* --------------------  ROOT  ------------------- */
+/* --------------------  BODY  ------------------- */
+
 
 
 html {
     height: 100%;       /* for background cover */   
     font-size: 12pt;    /* rem baseline */
     font-family: 'Dotum', sans-serif;
-    }
+}
+
 
 html * {
-    box-sizing: border-box;}
+    box-sizing: border-box;
+}
 
 
 body {
+
+    /* containers */
+    overflow-x: hidden;
+    padding: 0;
+    margin: 0;
+
+    /* text */
+    color:var(--t-std);
 
     /* background default */
     background: var(--b-basic);
     background: var(--b-basic-g);
 
     /* background image */
+    height: 100%;
     background-repeat: no-repeat;
     background-size: cover;
-    
-    /* containers */
-    overflow-x: hidden;
-    width: 100%;
-    padding: 0;
-    margin: 0;
+    background-position: center center;
+    background-attachment: fixed;
+}
 
-    /* text */
-    color:var(--t-std);}
+
+
 
 
 
@@ -73,8 +84,7 @@ header {
     #groupTitle {
         color: var(--t-group);
         font-size: 1rem;
-    }}
-
+}}
 
 
 #header {
@@ -94,16 +104,14 @@ header {
     
     a:hover {
             color: var(--h-1);
-            text-decoration: none;  }}
-
+            text-decoration: none;  
+}}
 
 
 .headerBox {
     display: inline-flex; 
     align-items: center;
 }
-
-
 
 
 /* Navigation Icons    */
@@ -117,18 +125,23 @@ header {
     padding: 0 10px;
     margin: 0;
     justify-items: center;
-    color: var(--t-head);}
+    color: var(--t-head);
+}
 
 
 #homeIcon {
     cursor: pointer;
     width: 1.7rem; 
     height: 1.7rem; 
-    filter: brightness(0) invert(1); }
+    filter: brightness(0) invert(1);
+}
+
 
 .menuText {
     font-size: 1.2rem;
-    letter-spacing: 0.2rem;}
+    letter-spacing: 0.2rem;
+}
+
 
 .goUp { 
         display: block;
@@ -138,7 +151,8 @@ header {
         right: 20px;
 
         transition: 0.3s;
-        color: var(--t-std) !important;}
+        color: var(--t-std) !important;
+}
 
 
 @media screen and (max-width: 480px) {
@@ -149,11 +163,13 @@ header {
         display: none;}
     
     #logIcon {
-        display: none;}}
+        display: none;
+}}
 
 
 
 /* -------------------  FOOTER  ------------------ */
+
 
 
 footer {
@@ -176,18 +192,24 @@ footer {
         min-width: 100px;
     
         a {
-            color: var(--t-head);}}}
+            color: var(--t-head);
+}}}
+
 
 @media screen and (max-width: 480px) {
     footer {
         min-height: 300px;
         display: block;
         padding-left: 20%;
-        }}
+}}
+
+
+
 
 
 
 /* -----------------  NAVIGATION  ---------------- */
+
 
 
 nav {
@@ -196,11 +218,14 @@ nav {
     right: 0;
     z-index: 99;
 
-    text-align: right;}
+    text-align: right;
+}
+
 
 nav .navMode {
       text-decoration: italic;
-      margin-left: 15px;}
+      margin-left: 15px;
+}
 
 
 /* Menu button */
@@ -212,7 +237,8 @@ nav .navMode {
     border: none;
     font-size: 1.8rem;
     cursor: pointer;
-    color: var(--t-head);}
+    color: var(--t-head);
+}
 
 
 /* Menu container */
@@ -226,7 +252,7 @@ nav .navMode {
     border-top: 1px solid var(--b-foot);
     border-bottom: 1px solid var(--b-foot);
     box-shadow: 0 0 10px 1px var(--b-head);
-    }
+}
 
 
 /* Menu head */
@@ -236,7 +262,8 @@ nav .navMode {
     letter-spacing: 0.2rem;
     font-weight: bold;
     padding: 20px;
-    margin: 0;}   
+    margin: 0;
+}   
 
 
 /* Menu items */
@@ -247,19 +274,22 @@ nav .navMode {
     margin: 10px 15px;    
 
     border-radius: 5px;
-    text-decoration: none;}
+    text-decoration: none;
+}
 
 
 .navContent a:hover {
     border: 1px solid var(--t-head);
-    text-decoration: none;}
+    text-decoration: none;
+}
 
 
 nav 
 
 /* Drop (show) the navigation content (menu links) */
 /* LEAVE ON BOTTOM of navContent */
-.show {display:block;}
+.navShow {display: block;
+}
 
 
 
@@ -268,23 +298,32 @@ nav
 /* ------------------  HEADLINES  ----------------- */
 
 
+
 h1 {
     text-align: left;
 
     color: var(--t-h1);
     text-shadow: 0 0 0.8rem var(--t-h1-s);
-    font-size: 3rem;
+    font-size: 2.5rem;
     letter-spacing: 0.2rem;
-    padding: 60px 15px 15px;}
+    padding: 0;
+    margin: 15px;
+    line-height: 1.6;
+}
+
 
 h2 {
     text-align: center;
     text-transform: capitalize;
-
+    padding: 0;
+    margin: 15px;
     color: var(--t-h2);
     size: 20pt;
     font-weight: bold;
-    letter-spacing: 0.4em;}
+    letter-spacing: 0.4em;
+    line-height: 1.6;
+}
+
 
 h3 {
     text-align: center;
@@ -293,7 +332,10 @@ h3 {
     color: var(--t-h3);
     size: 14pt;
     font-weight: bold;
-    letter-spacing: 0.2em;}
+    letter-spacing: 0.2em;
+    line-height: 1.6;
+}
+
 
 
 
@@ -302,15 +344,12 @@ h3 {
 /* ------------------  FOOTNOTE  ----------------- */
 
 
+
 .footNote {
     color: var(--t-light);
     font-size: 0.9rem;
     text-decoration: italic;
     text-align: center;
-    padding: 10px 20px 20px;}
-
-
-
-
-
+    padding: 10px 20px 20px;
+}
 

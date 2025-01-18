@@ -13,29 +13,44 @@ from Gamebook.src.routes_puzzle import *
 from Gamebook.src.routes_dice import *
 
 
-from flask import Flask, render_template, request, url_for, redirect, flash, session
+from flask import Flask, render_template, request, \
+  url_for, redirect, flash, session
+
+
+
+
 
 
 
 #### GROUP MAINS ####
 
+
+
 # Group page
+
 @app.route("/group/<string:group_id>", methods=["GET", "POST"])
 def group(group_id):
+  
   
     if check_key(session['username'], session['key']):
       group = load_group(group_id)
       
+      
       static = 'group.html'
-      return render_template(static, page=page_html(static, "in"), 
-                            descriptions=descriptions, modes=modes, 
-                            group=group)
+      return render_template(
+        static, page=page_html(static, "in"), 
+        descriptions=descriptions, modes=modes, 
+        group=group)
+      
     else:
       init_session()
       return redirect(url_for('login', retry=False))
 
 
+
+
 # enter GameBook
+
 @app.route("/gamebook")
 def enter_gamebook():
   
@@ -48,7 +63,10 @@ def enter_gamebook():
     return redirect(url_for('login', retry=False))
 
 
-# GameBook
+
+
+# Statistics  
+
 @app.route("/gamebook/<string:group_id>", methods=["GET", "POST"])
 def gamebook(group_id):
   
@@ -66,10 +84,11 @@ def gamebook(group_id):
         stats[m] = wins
     
     static = 'gamebook.html'  
-    return render_template(static, page=page_html(static, "in"),
-                           descriptions=descriptions, modes=modes, 
-                           group=group, giphs=mode_giphs, stats=stats,
-                           num_modes=len(modes), mode_key=mode_key)
+    return render_template(
+      static, page=page_html(static, "in"),
+      descriptions=descriptions, modes=modes, 
+      group=group, giphs=mode_giphs, stats=stats,
+      num_modes=len(modes), mode_key=mode_key)
     
   else: 
     init_session()
@@ -77,7 +96,11 @@ def gamebook(group_id):
     return redirect(url_for('login', retry=False))
   
   
+  
+  
+  
 # Random 
+
 @app.route("/random_group", methods=["GET", "POST"])
 def random_group():
   random_form = RandomGroup(csrf_enabled=False)
@@ -93,12 +116,17 @@ def random_group():
     return redirect(f"/start/rounds/random")
 
   static = 'random.html'
-  return render_template(static, page=page_html(static, "out"), 
-                         modes=modes, descriptions=descriptions,
-                         random_form=random_form)
+  return render_template(
+    static, page=page_html(static, "out"), 
+    modes=modes, descriptions=descriptions,
+    random_form=random_form)
+  
+  
+  
   
   
 # Start game
+
 @app.route("/start/<string:mode>/<string:group_id>",  methods=["GET", "POST"])
 def game_start(group_id, mode):
   
@@ -125,7 +153,10 @@ def game_start(group_id, mode):
 
 #### ADMIN ####
 
+
+
 # Login
+
 @app.route('/login', methods = ['GET', 'POST'])
 def login():
   
@@ -150,80 +181,120 @@ def login():
           return redirect(url_for('login', retry=True))
         
   static = 'group_login.html'    
-  return render_template(static, page=page_html(static, "out"), 
-                         retry=retry)
+  return render_template(
+    static, page=page_html(static, "out"), 
+    retry=retry)
+
+
 
 
 # Logout
+
 @app.route('/logout')
 def logout():
    init_session()
    return redirect(f"/")
 
 
+
 # Register
+
 @app.route("/create_group", methods=["GET", "POST"])
 def create_group():
+  
   group_form = GroupForm(csrf_enabled=False)
   
   if group_form.validate_on_submit():  
+    print('>> group form validated')
+    
     name = group_form.name.data
-    key = group_form.key.data
     check, id = check_name(name)  
     
+    print('>> check:', check)
+    
     if check:
-      players = create_players(group_form)
-      group = My_Group(name=group_form.name.data, motto=group_form.motto.data,
-                    key=group_form.key.data, players=players)
-      print(f'New group created: \n{group.name}({group.id})\n{players}')
+      
+      players, colors = create_players(group_form)
+      
+      group = My_Group(
+        name=group_form.name.data, 
+        slogan=group_form.slogan.data,
+        key=group_form.key.data, 
+        players=players, colors=colors)
+      
       session['username'] = group.id
       session['key'] = group.key
       session['num_players'] = group.n
       session['status'] = 'IN'
-      print(group.name, 'now logged in')
+      
       return redirect(f"/group/{group.id}")
     
     else: print("ERROR: group probably arleady exists")
   
   static = 'group_create.html'  
-  return render_template(static, page=page_html(static, "out"), 
-                         group_form=group_form)
+  return render_template(
+    static, page=page_html(static, "out"), 
+    group_form=group_form)
 
 
-# Delete
-@app.route('/delete/<string:group_id>', methods=["GET", "POST"])
-def delete(group_id):
-  delete_form = DeleteForm(csrf_enabled=False)
-  group_name = id_to_name(group_id)
+
+
+
+
+# Settings
+
+@app.route('/settings', methods=["GET", "POST"])
+def settings():
   
-  if delete_form.validate_on_submit():
-    if check_key(group_id, delete_form.key.data):
-        init_session()
-        delete_group(group_id)
-        return redirect('/')
-  
-  static = 'group_delete.html'
-  return render_template(static, page=page_html(static, "out"), 
-                         group_name=group_name, delete_form=delete_form)
-
-
-# Motto
-@app.route('/motto', methods=["GET", "POST"])
-def motto():
   
   if check_key(session['username'], session['key']):
-    
-    group = load_group(session['username'])
-    motto_form = MottoForm(csrf_enabled=False)
   
-    if motto_form.validate_on_submit():
+    # init page  
+    group = load_group(session['username'])
+    info = ""
+    static = 'group_settings.html'
+    
+    settings_form = SettingsForm(csrf_enabled=False)
+    delete_form = DeleteForm(csrf_enabled=False)    
       
-          group.motto = motto_form.motto.data
-          group.update_group()
-          return redirect(f'/group/{group.id}')
+  
+    # update settings
+    if settings_form.validate_on_submit():
+      
+      if check_key(group.id, settings_form.changePassword.data):
 
-    static = 'group_motto.html'
-    return render_template(static, page=page_html(static, "in"), 
-                         group=group, motto_form=motto_form)
+        group = group.update_settings(settings_form)
+        group.update_group()
+        
+        return redirect('/settings') 
+        
+      else: 
+        info = "Wrong password"
+      
+    else: 
+      print(settings_form.errors)
+
+    
+    # delete group
+    if delete_form.validate_on_submit():    
+      
+        if check_key(group.id, delete_form.deletePassword.data):
+
+          delete_group(group.id)
+          init_session()
+          
+          return redirect('/') 
+        
+        else: 
+          info = "Wrong password"
+                  
+
+    return render_template(
+      static, page=page_html(static, "in"), 
+      group=group, info=info,
+      settings_form=settings_form, 
+      delete_form=delete_form)
   
   else: redirect('/')
+  
+  

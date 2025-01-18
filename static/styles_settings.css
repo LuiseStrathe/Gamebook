@@ -1,0 +1,332 @@
+
+/*  ############################################
+
+                    Settings Page 
+                     
+    ############################################  */
+
+
+
+/* -----------------  SLOGAN  ------------------ */
+
+
+#changeSlogan {
+    display: flex;
+    border-radius: 5px;
+    background-color: var(--b-std);
+    display: flex;
+    margin: 30px auto;
+    max-width: var(--d-full-max);
+    text-align: center;
+    
+
+    div {
+        display: inline-block;
+        flex-grow: 1;
+        justify-items: left;
+
+        p, h2 {
+            display: block;
+            margin: 10px;
+            text-align: left;
+            padding: 0;
+}}}
+
+
+#groupSlogan {
+    font-style: italic;
+    font-size: 1.2em;
+}
+
+#sloganChange {
+    width: calc(100% - 20px);
+}
+
+
+@media screen and (max-width: 800px) {
+    #changeSlogan, #changeSlogan div {
+
+        display: block;
+ 
+}}
+
+
+
+/* -------------------  TEAM  ------------------ */
+
+#changeTeam {
+    background-color: var(--b-white);
+    margin: 30px 0;
+    padding: 20px;
+    text-align: center;
+    justify-items: center;
+
+    hr {
+        max-width: var(--d-full-max);}
+
+    h3 {
+        margin: 10px 5px 0;}
+}
+
+
+.settingsPlayerDiv {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: var(--d-full-max);
+
+    padding: 0;
+    margin: 20px 0;
+}
+
+
+.settingsPlayerMain {
+        display: inline-flex;
+
+        width: 30%;
+        height: var(--d-settings-player);
+        padding: 0;
+        margin: 0;
+        justify-content: center;
+        color: var(--t-head);
+        word-break: break-word;
+}
+
+
+.settingsPlayerInput {
+    display: inline-flex;
+    justify-content: space-between;
+
+    width: 65%;
+    height: var(--d-settings-player);
+    padding: 0;
+    margin: 0;
+
+
+}
+
+
+.settingsPlayerInput div {
+        display: inline-flex;
+
+        width: 45%;
+        align-content: center;
+        margin:0;
+        padding: 0;
+
+        input {
+            width: 100%;
+            height: var(--d-settings-player);
+            padding: 0;
+            margin: 0;           
+
+            text-align: center;    
+        }} 
+
+.settingsColorCheck {
+    display: flex;
+    width: 45%;
+    padding: 0;
+    margin: 0;
+}
+
+
+.settingsColorCheck input, .settingsColorCheck select {
+        display: inline-flex;
+        height: var(--d-settings-player);
+        padding: 5px;
+}
+
+
+@media  screen and (max-width: 800px) {
+    .settingsPlayerInput {
+        display: flex;  
+        flex-direction: column;
+        width: 47%;
+        
+        div {
+            display: block  ;
+            width: 100%;
+            margin: 5px 0;
+        
+        input, select{
+            display: block;
+            width: 100%;
+            margin: 0;
+            height: calc(var(--d-settings-player) - 10px);      
+        }
+    }}
+
+    .settingsPlayerMain {
+        width: 47%;
+        height: calc(3 * var(--d-settings-player));
+}}
+
+
+
+/* -------------  CHANGE SETTINGS  ------------ */
+
+
+#settingsBtnDiv {
+    display: inline-flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 20px;
+    padding: 0;
+    width: calc(100% - 40px);
+    max-width: var(--d-full-max);
+
+    a, button {
+        color: var(--t-std);
+        background-color: transparent; 
+        border: 1px solid var(--t-std);
+        width: 45%;
+        margin: 0;
+}}
+
+
+.settingsBtn {
+    background-color: var(--t-group) !important;
+    color: var(--t-head);
+    border:none;
+}
+
+.settingsBtn:hover {
+        cursor: pointer;
+    }
+
+
+
+#settingsID {
+    
+    a, input {
+        display: block;
+        padding: 15px;
+        margin: 10px 0;   
+        width: 100%;
+
+        color: var(--t-pop);
+        font-weight: normal;
+        border-radius: 5px;
+        font-weight: bold;             
+        border: none; }
+}
+
+
+#settingsConfirm {
+    padding: 0;
+    
+    input { 
+        background-color: var(--t-group);
+        color: var(--t-std);}
+
+    input:hover {
+        cursor: pointer;
+}}
+
+
+/* --> LEAVE ON BOTTOM of settings */
+.settingsShow{
+    display: block !important;
+}
+
+
+
+/* ---------------  DELETE GROUP  -------------- */
+
+
+#deleteDiv {
+    background-color: var(--b-head);
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 30px;
+
+
+    h2, a, p, button {
+        color: var(--t-head); }
+
+    a, button {
+        background-color: var(--h-red);
+        width: 67%;
+        max-width: var(--d-full-max);}
+    
+    a:hover, button:hover {
+        cursor: pointer;
+}}
+
+
+#delGroupID {
+    display: none;
+    flex-grow: column;
+    text-align: center;
+    
+
+    a, button {
+        display: block;
+        justify-content: stretch;
+        padding: 15px;
+        margin: 10px 0;  
+        width: 100%;
+        min-width: 200px;
+        text-align: center;
+        background-color: transparent;
+        border:none;};
+
+    form input {
+        color: var(--t-input);
+        font-style: none; 
+}}
+
+
+#delGroupID input {
+    padding: 15px;
+    margin: 10px 0;   
+    max-width: 100%;
+    min-width: 200px;
+
+    color: var(--t-pop);
+    font-style: none;
+    font-weight: bold;      
+    text-align: center;
+    border-radius: 5px;
+}
+
+
+#delGroupConfirm {
+    padding: 0;
+
+    input { 
+        background-color: var(--h-red);
+        color: var(--t-head) !important;
+        letter-spacing: 0.2rem;
+        font-weight: bold;
+        font-style: normal;
+}}
+
+
+
+/* --> LEAVE ON BOTTOM  */
+.delGroupShow {
+    display: block !important;
+}
+
+
+@media  screen and (max-width: 450px) {
+    #settingsBtnDiv {
+        display: block;
+        text-align: center  ;
+
+
+
+        a, button {
+            display: block; 
+            width: 100%;
+            margin: 20px 0;
+    }}
+    
+    #deleteDiv a, #deleteDiv button {
+        width: 100%;
+}}
+
+
+

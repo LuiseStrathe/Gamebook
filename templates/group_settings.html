@@ -1,0 +1,267 @@
+
+{% set page_html = page %}
+{% extends page[0] %}
+
+
+{% block content %} 
+
+<link rel="stylesheet" href="../static/styles_settings.css">
+    
+    {# User info box #}
+    <div class="titleDiv"
+        style="background-color: var(--b-head); ">
+
+        <h1 style="color: var(--t-group);">
+            {{  page[2]  }}</h1>
+        <h2 style="color: var(--t-head); text-align: left;">
+            Group Settings</h2><br>
+        
+    </div>
+
+
+    {% if info != "" %}
+
+        <div id="infoID" class="userFeedback infoShow">
+            {{ info }} <br><br>
+            <button 
+                class='pageLink' 
+                onclick="close_user_info()">
+                    X
+            </button>
+        </div>
+
+    {% endif %}
+
+
+    {# Settings form  #}
+    <div class="fullDiv"
+        style="background-color: transparent;
+        padding: 0px; ">
+
+        <form action="" method="POST" style =''>
+            {{ settings_form.hidden_tag() }}
+
+
+            {# Slogan #}
+            <section id="changeSlogan">
+
+                <div>
+                    <h2>Slogan</h2> 
+                    <p id="groupSlogan">
+                        {{ group.slogan }}<br>
+                    </p>
+                </div>
+
+
+                <div>
+                    <br><br>
+                    <p>Change slogan:</p>
+                    <p id="sloganChange">{{ settings_form.slogan() }}</p>
+                </div>
+
+            </section>
+
+
+            <section id="changeTeam" class="fullDiv">
+
+                {# Team head #}
+                <div class="settingsPlayerDiv">
+
+                    <div class="settingsPlayerMain">
+                        <h3>Players</h3>
+                    </div>
+
+                    <div class="settingsPlayerInput">
+                        <div 
+                            style="display: block; align-content: center; 
+                            justify-content:center;">
+                                Change name
+                        </div>
+
+
+                        <div 
+                            style="display: block; align-content: center; 
+                            justify-content:center;">
+                                Choose color
+                        </div>
+                    </div>
+
+                </div>
+
+                <hr>
+
+                {# Players #}
+
+                {% set players = group.players %}
+                {% set player_color = group.colors %}
+                {% set colors = page[3] %}
+
+                {% for i in range(players |length) %}
+
+
+                    <div class="settingsPlayerDiv">
+
+                        <div class="settingsPlayerMain"
+                            style="{{ 'background-color: ' + 
+                            player_color[i] + ';'}}">
+
+                            <h3 style="color: var(--t-head); "> {{ players[i] }} </h3>
+                        
+                        </div>
+
+                        <div class="settingsPlayerInput">
+
+                            <div> {{ settings_form["p" + i|string](size=20) }} </div>
+
+                            <div class="settingsColorCheck"> 
+                                <div> {{ settings_form["c" + i|string] }} </div>
+                                <div> {{ settings_form["x" + i|string] }} </div>
+                            </div>
+                        
+                        </div>
+
+                    </div>
+                
+                {% endfor %}
+
+                <hr>
+
+                {# Add player #}
+                
+                {% if group.players |length < 10 %}
+                    <div class="settingsPlayerDiv">
+
+                        <div class="settingsPlayerMain">
+                            <h3>+ Player</h3>
+                        </div>
+
+
+                        <div class="settingsPlayerInput">
+                            <div>{{ settings_form.pNew() }}</div>
+                            <div class="settingsColorCheck">
+                                <div>{{ settings_form.cNew() }}</div>
+                                <div>{{ settings_form.xNew() }}</div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                {% endif %}
+
+                <hr>
+
+                {# Info #}
+                <p style="font-size: 1.5rem;">&#x1F6C8;</p>
+                <p>You can have a maximum of 10 players in your group.
+                    <b>Players can not be removed </b>once they are added
+                    to your group.
+                    Names and assigned colors can be edited here anytime, 
+                    no data will be lost by that.</p>
+                <p>To change settings for a player: hit the player-checkbox 
+                    and click "Safe Changes" below.</p>
+
+                <div> 
+                    {% for j in range(colors|length) %}
+
+                        {% set bg_color = 
+                            "background-color: " + (colors[j][0]|string) + ";" %}
+
+                        <div class="displayColors" style='{{ bg_color }}' >
+                            {{ colors[j][1] }}
+                        </div>
+                    
+                    {% endfor %}
+                </div>
+
+            </section>
+
+            {# Change settings popUp #}
+            <div id="settingsID" class="popUp settingsContent">
+                
+                <p>Confirm changes?</p>
+                
+                <p>Enter your password:</p>
+                {{ settings_form.changePassword(size=20) }}
+
+                <div id="settingsConfirm">
+                    {{ settings_form.settings_submit() }}
+                </div>  
+
+                <a class='pageLink' 
+                    href="/settings">
+                    X
+                </a>
+
+            </div>
+        </form>
+
+        {# Buttons - submit #}
+        <section id="settingsBtnDiv"> 
+
+            <a  class='pageLink' 
+                href="/settings">
+                    Discard Changes
+            </a>
+
+
+            <button 
+                class='pageLink settingsBtn' 
+                onclick="toggle_change_settings()">
+                    Save Changes
+            </button>
+            
+        </section>
+
+    </div>  
+
+
+
+    {# Delete group #}
+    <section class="fullDiv" id="deleteDiv">
+
+        <h2>Delete Group<br></h2>
+        
+        <button class='pageLink delGroupBtn'
+            onclick="toggle_group_delete()">
+                Delete this group and all data
+        </button>
+
+
+        <p><br> Are you sure you want to delete this group?  
+            All records will be deleted as well.
+        </p>
+
+
+        <div id="delGroupID" class="popUp delGroupContent">
+                
+            <p>Are you sure you want to <br>
+                delete <b>{{  page[2]  }} </b><br>
+                including all data?<br><br>
+                <span style="font-size: 3em;">
+                    &#x1F571;</p></span><br>
+
+            <p>Enter your password:</p>
+
+            <form action="" method="POST">
+            
+                {{ delete_form.hidden_tag() }}
+                
+                {{ delete_form.deletePassword(size=20) }}
+                
+                <div id="delGroupConfirm">
+                    {{ delete_form.delete_submit() }}
+                </div>    
+                    
+            </form>
+
+            <button class='pageLink'
+                onclick="toggle_group_delete()">
+                X
+            </button>
+
+        </div>
+
+
+    </section>
+
+
+{% endblock %}

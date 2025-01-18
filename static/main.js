@@ -1,30 +1,19 @@
 
-// Navigation drop-down menu
+/*  
+    Contains all the JavaScript functions used 
+  
+    Buttons, Navigation Drop-down menu, Pop-up windows, etc.
+*/
 
 
-/* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
-
-function toggle_nav() {
-  document.getElementById("navDrop").classList.toggle("show");
-}
 
 
-// Close the dropdown menu if the user clicks outside of it
 
-window.onclick = function(event) {
-  if (!event.target.matches('#navButton')) {
-    var dropdowns = document.getElementsByClassName("navContent");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
+/*  ####################################
 
+    Buttons
+
+    #################################### */ 
 
 
 
@@ -40,3 +29,80 @@ function topFunction() {
 function goBack() {
   window.history.back();
 }
+
+
+
+
+
+
+
+/*  ####################################
+
+    Navigation drop-down menu
+
+    #################################### */ 
+
+
+
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+
+function toggle_nav() {
+  document.getElementById("navDrop").classList.toggle("navShow");
+}
+
+
+// Close the dropdown menu if the user clicks outside of it
+
+window.onclick = function(event) {
+  if (!event.target.matches('#navButton')) {
+    var dropdowns = document.getElementsByClassName("navContent");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('navShow')) {
+        openDropdown.classList.remove('navShow');
+      }
+    }
+  }
+}
+
+
+
+
+
+/*  ####################################
+
+    Pop-up & Info Windows
+
+    #################################### */ 
+
+
+// Close user INFO
+function close_user_info() {
+  document.getElementById("infoID").classList.remove("infoShow");
+}
+
+
+
+
+
+// Change SETTINGS confirmation
+
+function toggle_change_settings() {
+  document.getElementById("settingsID").classList.toggle("settingsShow");
+}
+
+
+
+
+// DELETE group confirmation
+
+function toggle_group_delete() {
+  document.getElementById("delGroupID").classList.toggle("delGroupShow");
+}
+
+
+
+
+

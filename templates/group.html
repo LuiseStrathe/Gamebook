@@ -39,27 +39,15 @@
 
 
 
-  <h2>ADMIN</h2>
+  <hr>
+
   <div class='div-1'> 
 
-    <a class='a-small-2'
-      style = "border-color:var(--c-danger);" 
-      href="/logout">
-      &emsp;&emsp;&emsp;&emsp;&emsp; LOGOUT &emsp;&emsp;&emsp;&emsp;&emsp;</a><br>
-
-
-    <a class='a-small-2'  
-      style = "border-color:transparent;" 
-      href="/motto">
-      Change your group motto</a><br><br><br><br><br>
-
-    <h2 style='color:var(--c-danger);'>Delete Group</h3>
-    
-    <a class='a-small-2'
+    <a class='pageLink'
       style = "color: var(--c-danger); border-color:var(--c-danger);" 
-      href="/delete/{{ group.id }}">
-      Delete this group and its GameBook</a>
-      <p> Are you sure you want to delete this group? All records will be deleted as well.</p>
-  </div><br><br>
+      href="/settings">
+      Go to Group Settings</a>
+  
+    </div><br><br>
 
 {% endblock %}

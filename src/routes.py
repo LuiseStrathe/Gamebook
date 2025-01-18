@@ -16,18 +16,17 @@ from flask import Flask, render_template, request, url_for, redirect, flash, ses
 
 
 
+#################  MAIN  #################
+
 
 # INDEX
 @app.route("/")
 def index():
   
-  if session['status'] == 'IN':
+  if verify_session():
+    id = name_to_id(session['username'])
     
-    username = session['username']
-    id = name_to_id(username)
-    
-    group = load_group(id)
-    return redirect(f'/group/{group.id}')
+    return redirect(f'/group/{id}')
   
   init_session()
   
@@ -39,7 +38,7 @@ def index():
 
 
 
-# about
+# ABOUT
 @app.route("/about")
 def about():
  
@@ -49,17 +48,32 @@ def about():
 
 
 
-# ERRORS
-@app.errorhandler(400) 
-def not_found0(e): 
-  return render_template("_400.html") 
+#################  ERRORS  #################
 
 
+# Page not found
 @app.errorhandler(404) 
-def not_found1(e): 
+def not_found_page(e): 
   return render_template("_404.html") 
 
 
-@app.errorhandler(500) 
-def not_found2(e): 
-  return render_template("_404.html") 
+# Bad request - user input/page request
+@app.errorhandler(400) 
+def error400(e): 
+  return render_template("error.html") 
+
+# Unauthorized
+@app.errorhandler(401) 
+def error401(e): 
+  return render_template("error.html") 
+
+
+# Method not allowed
+@app.errorhandler(405) 
+def error405(e): 
+  return render_template("error.html") 
+
+# Request Timeout
+@app.errorhandler(408) 
+def error408(e): 
+  return render_template("error.html") 

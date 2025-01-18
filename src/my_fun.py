@@ -48,9 +48,21 @@ def verify_session():
 
 def page_html(static, force_in_out="no"):
     
+    ''' 
+    "page" delivers general data into hmtl 
+    and is passed on to head.html base.
+
+    0 -     html head file path
+    1 -     page title (for html head)
+    2 -     group name (or NaN)
+    3 -     player colors
+    '''
+    
+    
     page_html = ["__head_out.html", 
                 page_titles[static], 
-                "NaN"]
+                "NaN",
+                player_colors]
     
     if verify_session():    
         
@@ -130,14 +142,24 @@ def check_key(id, key):
 
 def create_players(group_form):
 
-    players = [group_form.p1.data, group_form.p2.data,
-                group_form.p3.data, group_form.p4.data, 
-                group_form.p5.data, group_form.p6.data,
-                group_form.p7.data, group_form.p8.data]
+    inputs = [ 
+        [group_form.p0.data, group_form.c0.data],
+        [group_form.p1.data, group_form.c1.data],
+        [group_form.p2.data, group_form.c2.data],
+        [group_form.p3.data, group_form.c3.data],
+        [group_form.p4.data, group_form.c4.data],
+        [group_form.p5.data, group_form.c5.data],
+        [group_form.p6.data, group_form.c6.data],
+        [group_form.p7.data, group_form.c7.data],
+        [group_form.p8.data, group_form.c8.data],
+        [group_form.p9.data, group_form.c9.data]
+    ]
+    
                 
-    players = [p for p in players if p != '']
+    players =   [i[0] for i in inputs if i[0] != '']
+    colors =    [i[1] for i in inputs if i[0] != '']
 
-    return players
+    return players, colors
 
 
 
@@ -158,7 +180,11 @@ def gen_game_id(mode):
 
 def create_random_group():
 
-    group = My_Group(name='random', key='random', players=session['random_players'], motto='random')
+    group = My_Group(name='random', 
+        key='random', 
+        players=session['random_players'], 
+        colors=[c[0]for c in player_colors],
+        slogan ='This is a small test version of the gamebook. Enjoy!')
 
     return group
 
