@@ -71,6 +71,16 @@ div {
 }
 
 
+.lightDiv {
+    padding: 20px;
+    margin: 20px;
+    border-radius: 5px;
+    background-color: var(--b-std);
+    color: var(--t-std);
+    text-align: center;
+}
+
+
 .titleDiv {
     padding: calc(var(--d-head-height) + 20px) 20px 30px;
 }
@@ -380,7 +390,6 @@ input {
 /* ------------------  MEDIA  ------------------ */
 
 
-
 .giphy {
     background-color: transparent;
     padding: 0;
@@ -398,7 +407,9 @@ input {
 }}
 
 
+
 /* ----------------  Color Choices  -------------- */
+
 
 .displayColors {
     display: inline-flex; 
@@ -409,6 +420,7 @@ input {
     justify-content: center;     
     color: var(--t-head); 
 }
+
 
 
 /* ------------------  unknown  ------------------ */

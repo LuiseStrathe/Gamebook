@@ -1,5 +1,5 @@
 
-/*  This file contains stky for the generic elements, such
+/*  This file contains styles for the generic elements, such
     as body, div, h1, div etc. */ 
 
 
@@ -57,7 +57,10 @@ body {
     background-size: cover;
     background-position: center center;
     background-attachment: fixed;
-}
+
+    hr {
+        border-color: var(--t-std);
+}}
 
 
 

@@ -22,7 +22,7 @@ from Gamebook.src.my_params import player_colors
 class GroupForm(FlaskForm):
   
   name =        StringField("Group Name", 
-    validators=[DataRequired()])
+    validators=[DataRequired(), Length(max=20)])
   
   key =         PasswordField("Group Key", 
     validators=[DataRequired(), Length(min=5, max=20)])
@@ -30,7 +30,9 @@ class GroupForm(FlaskForm):
   key_confirm = PasswordField("Confirm Key", 
     validators= [DataRequired(), EqualTo('key'), Length(min=5, max=20)])
   
-  slogan =      TextAreaField("What is your group slogan?")  
+  slogan =      TextAreaField("slogan")  
+  
+  num =         IntegerField("Number of Players",)
   
   p0 = StringField("Player 1", 
     validators=[DataRequired(), Length(max=20)])
@@ -56,7 +58,7 @@ class GroupForm(FlaskForm):
   c8 = SelectField("c8", choices=player_colors,)
   c9 = SelectField("c9", choices=player_colors,)
   
-  registration_submit = SubmitField("Save this group and proceed")
+  registration_submit = SubmitField("Register this Group")
 
 
 

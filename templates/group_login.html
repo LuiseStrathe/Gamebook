@@ -3,28 +3,113 @@
 {% extends page[0] %}
 
 
+
+
 {% block content %}
 
-  <h1>Login your Group</h1><br>
+
+  {# CSS #}
+  <link rel="stylesheet" href="../static/styles_admin.css">
+  <style type="text/css">
+
+    body { 
+      background-image: 
+      linear-gradient(to bottom right, 
+    #80ff6d, #ff8138) !important;    }
+
+  </style>
+
+
+
+
+  {# Head #}
+
+  <div 
+    style="height: 60px;">
+  </div>
+
 
   {% if retry %}
-    <p style = "color: red;">Your ground name or key were incorrect <br>
-    -,-<br>
-    Please, try again.</p>
+
+    <div id="infoID" class="userFeedback infoShow">
+    
+      {{ info }} 
+    
+      <p> Your group name or password were incorrect. 
+        <br> &#x2639; <br>
+        Please, try again.
+      </p><br><br>
+      
+      <button 
+          class='pageLink' 
+          onclick="close_user_info()">
+            X
+      </button>
+
+    </div>
+    
   {% endif %}
 
 
-  <form action = "" method = "post">
 
-    <h3 style='color:var(--light); font-weight: medium;'>Group Name:</h3>
-    <p><input type = text name = username></p>
-    <h3 style='color:var(--light); font-weight: medium;'>Group Key:</h3>
-    <p><input type = text name = key></p><br>
-    <p><input type = submit value = Login></p>
+  <div class="adminBody">
 
-  </form>
+    {# Login form -- GRID #}
+    <form action = "" method = "post">
 
-  <br><br>
-  <h3><a  href = "/create_group">Or register a new group here</a></h3>
+      <section class="loginDiv">
+
+        
+        <h1
+          style="grid-column: 2; grid-row: 1;">
+          LOGIN
+        </h1>
+
+
+        <p style="grid-column: 1; grid-row: 2;"> 
+          Group Name 
+        </p> 
+    
+        <input type = text name = username
+          style="grid-column: 2; grid-row: 2;">
+        
+        
+        <p style="grid-column: 1; grid-row: 3;"> 
+          Password 
+        </p>
+
+        <input type = text name = key
+          style="grid-column: 2; grid-row: 3;">
+        
+
+        <input 
+          style="grid-column: 2; grid-row: 4;"
+          class="pageLink adminConfirm" 
+          type = submit value = Login>
+        
+
+      </section>
+    </form>
+
+    
+
+
+
+    {# Register link #}
+
+    <hr>
+
+    <div style="height: 100px;"></div>
+    
+    <a class="pageLink" 
+      href = "/register">
+        Register a new Group
+    </a>
+    
+    <div style="height: 200px;"></div>
+
+
+
+  </div>
 
 {% endblock %}

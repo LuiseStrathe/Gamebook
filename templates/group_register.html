@@ -1,0 +1,280 @@
+
+{% set page_html = page %}
+{% extends page[0] %}
+
+
+{% block content %}
+
+
+{# CSS #}
+<link rel="stylesheet" href="../static/styles_admin.css">
+<style type="text/css">
+
+body { 
+    background-image: 
+    linear-gradient(to bottom right, 
+#80ff6d, #ff8138) !important;    }
+
+</style>
+
+{% set colors = page[3] %}
+
+
+
+
+
+{# Head #}
+
+<div 
+    style="height: 60px;">
+</div>
+
+
+{% if retry %}
+
+<div id="infoID" class="userFeedback infoShow">
+
+    {{ info }} 
+
+    <p> Your ground name or key were incorrect 
+    <br> &#x2639; <br>
+    Please, try again.
+    </p><br><br>
+    
+    <button 
+        class='pageLink' 
+        onclick="close_user_info()">
+        X
+    </button>
+
+</div>
+
+{% endif %}
+
+
+
+
+<div class="adminBody">
+
+
+    {# Registration form #}
+
+    <form action="" method="POST"
+            style = 'text-align:left;'>
+        {{ group_form.hidden_tag() }}
+
+
+        <h1 style="text-align: center; padding: 40px 0;">Register a new Group</h1>
+
+        <div class="registerInfo">
+            <p> 
+                <b>Why register a group?</b><br>
+                A group allows you to actually use GamesBook!
+                In this group you can document the games you play
+                and over time see the statistics of your group.<br>
+                
+                All members of a group, called players can access 
+                your group's GameBook by these login credentials 
+                (group name and password). An e-mail-address is not needed.
+                Your data will not be used outside of GamesBook.
+            </p>  
+        </div>
+
+        <div class="spacer">
+            <div style="grid-column: 1;"><hr></div> 
+            <p><span class="boldDie">&#x2680;</span> &#x2681; &#x2682;</p> 
+            <div style="grid-column: 3;"><hr></div>
+        </div>
+
+
+
+        {# Credentials #}
+
+        <div class="credentialsDiv">
+
+            <p style="grid-row: 1; grid-column: 1;"> 
+                <b>Group Name</b> 
+            </p>
+            
+            <p style="grid-row: 1; grid-column: 2;">    
+                {{ group_form.name(size=20) }}
+            </p>
+
+            
+            <p style="grid-row: 2; grid-column: 1;"> 
+                <b>Group Password</b> 
+            </p>
+            
+            <p style="grid-row: 2; grid-column: 2;">    
+                {{ group_form.key(size=20) }} 
+            </p>
+            
+            <p style="grid-row: 3; grid-column: 1;"> 
+                <b>Confirm Password</b> 
+            </p>
+            
+            <p style="grid-row: 3; grid-column: 2;">    
+                {{ group_form.key_confirm(size=20) }} 
+            </p>
+
+        </div>
+
+        <div class="registerInfo">
+
+            <p style="font-size: 1.5rem; text-align: center;">&#x1F6C8;</p>
+
+            <p> <b>Name</b><br>
+                Your name should be between 5 and 20 characters.
+                You can use numerics and space, but not at the start.</p>
+                
+            <p> <b>Password</b><br>
+                Your key is an identifier to prevent your group's GameBook 
+                to be accidentally used by other people.
+                Your group has one key only. Please, make it easy enough 
+                to remember as you can not retrieve or reset it.</p>
+                
+            <p> <b>Security</b><br>
+                The passwrod should be between 5 and 20 characters long 
+                and can contain letters and numbers.
+                Imagine a password that is easy to remember, 
+                but hard to guess. Do not use your group name.
+                You share this password with your group.
+                <b>DO NOT PICK A PASSWORD YOU USE ELSEWHERE! </b></p>
+        </div>
+
+        <div class="spacer">
+            <div style="grid-column: 1;"><hr></div> 
+            <p>&#x2680; <span class="boldDie"> &#x2681;</span> &#x2682;</p> 
+            <div style="grid-column: 3;"><hr></div>
+        </div>
+
+
+        {# Players #}
+
+        
+
+        <div id="playerCount">
+            
+            <p></p>
+            <input type="number" id="numberPlayers" value="2"
+                name="num"
+                style="height:30px; width:30px;">
+            
+            <p><b> PLAYERS </b></p>
+            
+
+            <a href="javascript:remove_player()"
+                class="pageLink">-</a>
+
+            <a href="javascript:add_player()"
+                class="pageLink">+</a>
+
+            <a id="updatePlayers" href="javascript:show_players()"
+                class="pageLink">
+                show</a>
+        </div>   
+
+        <div>
+            <div  class="registerPlayer showing" style="margin-top: 0;">
+                <p style="grid-column: 1;">Name</p>
+
+                <p style="grid-column: 2;">Color</p>
+            </div>
+
+
+            {% for i in range(2) %}
+                <div id="player{{ i + 1 }}" class="registerPlayer showing">
+                    <div style="grid-row: 1;"> 
+                        {{ group_form["p" + i|string](size=20) }} 
+                    </div>
+
+                    <div class="settingsColorCheck" style="grid-row: 1;"> 
+                        {{ group_form["c" + i|string] }} 
+                    </div>
+                </div>
+            {% endfor %}
+
+
+            {% for i in range(2, 10) %}
+                <div id="player{{ i + 1 }}" class="registerPlayer">
+                    <div style="grid-row: 1;"> 
+                        {{ group_form["p" + i|string](size=20) }} 
+                    </div>
+
+                    <div class="settingsColorCheck" style="grid-row: 1;"> 
+                        {{ group_form["c" + i|string] }} 
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        
+
+
+        {# Info player section #}
+
+        <div class="registerInfo"> 
+
+            <p style="font-size: 1.5rem; text-align: center;">&#x1F6C8;</p>
+
+            <p><br>
+                You can have 2 to 10 players in this group. 
+                New players can be added, names and colors changed.
+                Players can not be removed once they are in your group.
+            </p><br>    
+            
+            {% for j in range(colors|length) %}
+
+                {% set bg_color = 
+                    "background-color: " + (colors[j][0]|string) + ";" %}
+
+                <div class="displayColors" style='{{ bg_color }}' >
+                    {{ colors[j][1] }}
+                </div>
+            
+            {% endfor %}
+        </div>
+
+
+        <div class="spacer">
+            <div style="grid-column: 1;"><hr></div> 
+            <p>&#x2680; &#x2681; <span class="boldDie"> &#x2682;</span></p> 
+            <div style="grid-column: 3;"><hr></div>
+        </div>
+
+
+        {# Confirm #}
+
+        <div>
+            <p style="display: inline-block; margin: 60px 0 20px;"> 
+                <b>What is your groups's slogan?</b> (optional)
+            </p>
+
+            <p id="sloganChange" style="display: inline-block;">
+                {{ group_form.slogan(size=100) }}
+            </p>
+    
+            <input class="pageLink adminConfirm"
+                {{ group_form.registration_submit() }} >
+        </div>
+
+
+
+
+        {# Login Link #}
+
+        <div style="height: 100px;"></div>
+
+        <a style="display: block; margin: 20px auto;" class="pageLink" 
+            href = "/login">
+            Already have a group? Login here.
+        </a>
+            
+        <div style="height: 200px;"></div>
+
+    </form>
+</div>
+
+
+
+{% endblock %}

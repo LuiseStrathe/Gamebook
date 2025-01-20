@@ -37,6 +37,38 @@ player_colors = [
 mode_giphs = ["https://giphy.com/embed/3tEFVAbfzzcwo", 'https://giphy.com/embed/l2JdUMnCDg6qs368g', 
               'https://giphy.com/embed/3o6Mbr1blVD5KKQBxK', 'https://giphy.com/embed/3o7btPCcdNniyf0ArS']
               
+            
+puzzle_cols = ['id', 'title', 'description', 'pcs']
+
+
+dice_rows = ["1's", "2's", "3's", "4's", "5's", "6's", '3 of a kind',
+                '4 of a kind', 'full house', 'small straight', 'large straight', 'YEAHA', 'chance']
+
+
+
+path_data = 'data/'
+
+
+page_titles = {
+    "_about.html": "About GamesBook",
+    "_index.html": "Home",
+    "dice_page.html": "Dice Game",
+    "dice_start.html": "Dice Game",
+    "dice.html": "Dice Game",
+    "gamebook.html": "Overview",
+    "group_register.html": "Register",
+    "group_login.html": "Login",
+    "group_settings.html": "Settings",
+    "group.html": "Overview",
+    "puzzle_list.html": "Puzzles",
+    "puzzle_record.html": "Puzzle Records",
+    "puzzle_stats.html": "Puzzle Stats",
+    "random.html": "Test GamesBook",
+    "rounds_page.html": "Rounds",
+    "rounds.html": "Rounds",
+}
+
+
 
 descriptions = ["Play in rounds with your group.\n\n \
                 In each round, you can enter points for each player.\n \
@@ -70,35 +102,4 @@ about_info = str(' '.join([
     "With your group GameBook you have access to statistics of all your group's games."]))
 
                 
-                
-puzzle_cols = ['id', 'title', 'description', 'pcs']
-
-
-dice_rows = ["1's", "2's", "3's", "4's", "5's", "6's", '3 of a kind',
-                '4 of a kind', 'full house', 'small straight', 'large straight', 'YEAHA', 'chance']
-
-
-
-path_data = 'data/'
-
-
-page_titles = {
-    "_about.html": "About GamesBook",
-    "_index.html": "Home",
-    "dice_page.html": "Dice Game",
-    "dice_start.html": "Dice Game",
-    "dice.html": "Dice Game",
-    "gamebook.html": "Overview",
-    "group_create.html": "Create Group",
-    "group_login.html": "Login",
-    "group_settings.html": "Settings",
-    "group.html": "Overview",
-    "puzzle_list.html": "Puzzles",
-    "puzzle_record.html": "Puzzle Records",
-    "puzzle_stats.html": "Puzzle Stats",
-    "random.html": "Test GamesBook",
-    "rounds_page.html": "Rounds",
-    "rounds.html": "Rounds",
-}
-
-
+    

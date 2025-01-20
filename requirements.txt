@@ -3,10 +3,10 @@ charset-normalizer
 click
 DateTime
 Flask
+Flsak-Login
 Flask-SQLAlchemy
 Flask-WTF
 greenlet
-gunicorn
 idna
 itsdangerous
 Jinja2

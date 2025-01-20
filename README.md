@@ -64,6 +64,7 @@
 <h3>Group Accounts</h3>
 <p>A group account with up to 8 players can be registered. Once the account is created, everyone with the shared credentials has full access. The group can hold up to 8 individual players, each identified by an alias (eg. their name). </p>
 <p> With the group name and password a user can start a session by logging into the shared group space. There is no verification (e.g. with an email address) and therefore a the login credentials can not be retrieved after the account creation. This basic registration is due to the non-sensitivity of content and to ease the access to the side for multiple individuals.</p>
+<p>The password is encrypted and stored in the database. The group name is stored in plain text and can be accessed by all group members when logged in.</p>
 
 
 

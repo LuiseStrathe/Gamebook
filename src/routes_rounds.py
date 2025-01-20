@@ -43,7 +43,7 @@ def rounds(group_id, game_id, round):
   
   if group_id == 'random': 
                       group = create_random_group()
-  else:               group = load_group(group_id)
+  else:               group = load_group(group_id)[0]
   
   
   # generate table
@@ -102,7 +102,7 @@ def rounds_page(group_id, game_id):
   if session['status'] == 'OUT':
     return redirect('/')
   
-  group = load_group(group_id)
+  group = load_group(group_id)[0]
   game_entry = group.results[group.results['game_id'] == game_id]
   
   static = 'rounds_page.html'

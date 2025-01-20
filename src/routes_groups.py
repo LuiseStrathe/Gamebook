@@ -15,14 +15,16 @@ from Gamebook.src.routes_dice import *
 
 from flask import Flask, render_template, request, \
   url_for, redirect, flash, session
+from flask_login import LoginManager
 
 
 
 
 
 
-
-#### GROUP MAINS ####
+###############################################
+#                     GROUP 
+###############################################
 
 
 
@@ -33,7 +35,7 @@ def group(group_id):
   
   
     if check_key(session['username'], session['key']):
-      group = load_group(group_id)
+      group = load_group(group_id)[0]
       
       
       static = 'group.html'
@@ -71,7 +73,7 @@ def enter_gamebook():
 def gamebook(group_id):
   
   if check_key(session['username'], session['key']):
-    group = load_group(group_id)
+    group = load_group(group_id)[0]
     
     stats = [[0 for _ in range(group.n + 1)] for _ in modes]
     for m, mode in enumerate(modes):
@@ -151,7 +153,9 @@ def game_start(group_id, mode):
 
 
 
-#### ADMIN ####
+###############################################
+#                     ADMIN 
+###############################################
 
 
 
@@ -165,17 +169,26 @@ def login():
   else: retry = False
   
   if request.method == 'POST':
+    
       name, key = request.form['username'], request.form['key']
+      
       id = name_to_id(name)
+      key = encrypt_key(key)
+      
       if check_key(id, key):
+
           session['username'] = id
           session['key'] = key
           session['status'] = 'IN'
-          session['num_players'] = load_group(id).n
+          session['num_players'] = load_group(id)[0].n
           session['round'] = 0
           session['game_id'] = 0
-          print(name, 'now logged in')
+          
+          print(name, 'is now logged in')
+
           return redirect(f"/group/{id}")
+          
+        
       else: 
           init_session()
           return redirect(url_for('login', retry=True))
@@ -192,26 +205,28 @@ def login():
 
 @app.route('/logout')
 def logout():
-   init_session()
-   return redirect(f"/")
+  
+  if session['status'] == 'IN':
+    session.pop(session['username'], None)
+  
+  init_session()
+  
+  return redirect(f"/")
 
 
 
 # Register
 
-@app.route("/create_group", methods=["GET", "POST"])
-def create_group():
+@app.route("/register", methods=["GET", "POST"])
+def register():
   
   group_form = GroupForm(csrf_enabled=False)
   
   if group_form.validate_on_submit():  
-    print('>> group form validated')
     
     name = group_form.name.data
     check, id = check_name(name)  
-    
-    print('>> check:', check)
-    
+        
     if check:
       
       players, colors = create_players(group_form)
@@ -231,7 +246,7 @@ def create_group():
     
     else: print("ERROR: group probably arleady exists")
   
-  static = 'group_create.html'  
+  static = 'group_register.html'  
   return render_template(
     static, page=page_html(static, "out"), 
     group_form=group_form)
@@ -250,7 +265,7 @@ def settings():
   if check_key(session['username'], session['key']):
   
     # init page  
-    group = load_group(session['username'])
+    group = load_group(session['username'])[0]
     info = ""
     static = 'group_settings.html'
     
@@ -261,7 +276,11 @@ def settings():
     # update settings
     if settings_form.validate_on_submit():
       
-      if check_key(group.id, settings_form.changePassword.data):
+      key = encrypt_key(settings_form.changePassword.data)
+      print('Settings submitted:')
+      print(' > key: ', key)
+      
+      if check_key(group.id, key):
 
         group = group.update_settings(settings_form)
         group.update_group()
@@ -278,15 +297,17 @@ def settings():
     # delete group
     if delete_form.validate_on_submit():    
       
-        if check_key(group.id, delete_form.deletePassword.data):
+      key = encrypt_key(delete_form.deletePassword.data)
+      
+      if check_key(group.id, key):
 
-          delete_group(group.id)
-          init_session()
-          
-          return redirect('/') 
+        delete_group(group.id)
+        init_session()
         
-        else: 
-          info = "Wrong password"
+        return redirect('/') 
+      
+      else: 
+        info = "Wrong password"
                   
 
     return render_template(

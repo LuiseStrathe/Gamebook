@@ -27,6 +27,20 @@ def init_session():
     session['round'] = 0
     
     
+def encrypt_key(key):
+    
+    path = f'{path_data}/server/salt.txt'
+    with open(path, "rt") as f:
+        salt = str(f.readline())
+    
+    hash = 65
+    salted = key + salt
+    for ch in salted:
+        hashed = ( hash*281  ^ ord(ch)*987) & 0xFFFFFFFF
+    
+    return str(hashed)
+
+    
 def verify_session():    
     
     if session['status'] == "IN":
@@ -36,7 +50,6 @@ def verify_session():
         
         else: 
             if session['username'] not in ['random', '']:
-               
                 return True
         
     else: 
@@ -89,10 +102,17 @@ def page_html(static, force_in_out="no"):
 def load_group(id):
     
     path = f'{path_data}groups/{id}.pkl'
-    with open(path, "rb") as f:
-        group = pickle.load(f)
     
-    return group
+    if f'{id}.pkl' not in os.listdir(f'{path_data}groups/'):
+        success = False
+        group = None
+    
+    else:
+        success = True
+        with open(path, "rb") as f:
+            group = pickle.load(f)
+    
+    return group, success
 
 
 def delete_group(id):
@@ -115,7 +135,7 @@ def name_to_id(name):
 
 def id_to_name(id):
     
-    group = load_group(id)
+    group = load_group(id)[0]
     
     return group.name
 
@@ -135,7 +155,13 @@ def check_key(id, key):
 
     if id in ['random', '', None]:
             check = False
-    else: check = load_group(id).key == key
+          
+    elif load_group(id)[1] == False:
+        check = False
+        print('Group not found')
+    
+    else: 
+        check = load_group(id)[0].key == key
 
     return  check
 
@@ -155,11 +181,15 @@ def create_players(group_form):
         [group_form.p9.data, group_form.c9.data]
     ]
     
+    inputs = inputs[:group_form.num.data]
                 
     players =   [i[0] for i in inputs if i[0] != '']
     colors =    [i[1] for i in inputs if i[0] != '']
 
     return players, colors
+
+
+
 
 
 
@@ -221,7 +251,7 @@ def end_rounds(group, points, game_id, infos):
     
 def add_puzzle(group_id, add_puzzle_form):
     
-    group = load_group(group_id)
+    group = load_group(group_id)[0]
     
     record = {'id': int(group.puzzles.shape[0]),
                      'title': add_puzzle_form.title.data, 
@@ -239,7 +269,7 @@ def add_puzzle(group_id, add_puzzle_form):
 def submit_puzzle_record(group_id, puzzle_id,
                          puzzle_record_form):
     
-    group = load_group(group_id)
+    group = load_group(group_id)[0]
     game_id = gen_game_id('puzzle')
     duration =  puzzle_record_form.hours.data * 60^2 \
                 + puzzle_record_form.minutes.data * 60 \
@@ -319,7 +349,7 @@ def totals_dice(points):
 
 def end_dice(group_id, game_id, players, points, infos):
     
-    group = load_group(group_id)
+    group = load_group(group_id)[0]
     totals = totals_dice(points)
     winner = players[np.argmax(totals)]
     result = np.vstack([points, totals])

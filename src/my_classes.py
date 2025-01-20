@@ -9,6 +9,7 @@ import pandas as pd
 from flask import session
 
 from Gamebook.src.my_params import *
+from Gamebook.src.my_fun import encrypt_key
 
 
 
@@ -47,7 +48,14 @@ class My_Group():
         self.colors = colors
         self.player_info = pd.DataFrame(columns=player_cols)
         self.n = len(players)
-        self.key = key
+        
+        print(f'Group {self.id} created:')
+        print(f' > key received: {key}')
+        
+        
+        self.key = encrypt_key(key)
+        print(" > key stored: ", self.key)
+        
         
         self.slogan = slogan
         
@@ -87,9 +95,7 @@ class My_Group():
         # slogan
         if settings_form.slogan.data not in ['', None, " "]:
             self.slogan = settings_form.slogan.data
-            print(f'>> new slogan: {settings_form.slogan.data}')
-            print(f'>> slogan updated: {self.slogan}')
-            
+                        
         
         for p in range(self.n):           
             
