@@ -25,10 +25,23 @@
    --b-foot:   #252525;
    --b-basic:  #ffcaaa;
    --b-basic-g: linear-gradient(163deg, #ffcaaa 13%, #daffed 79%);
+   --b-grade-2: linear-gradient(to bottom right, 
+   rgb(126, 109, 255),rgba(255, 202, 145, 0.93));
+
 
    --b-std:    #ffffff86;  
    --b-white:  #ffffff;   
    --b-grey:   #d2d2d2;
+   --b-yellow: #f0ca40;
+   --b-yellow-dark: #98812c;
+   --b-dirty: #783906;
+   --b-purple: #6959e0;
+   --b-subtile: #ffedcd5c;
+
+ 
+   --b-tab:    #1d1d1d68;
+   --b-tab-a:  #181818;
+   --b-tab-h:  #000000;
    --b-button: #b3b3b3c7; 
    --b-pop:    #252525eb;
    --b-info:   #f9f9f9f1;
@@ -52,9 +65,6 @@
    --t-pop:    #ffffff;
    --t-table:  #000000;
 
-   --t-tab:    #000000;
-   --t-tab-a:  #000000;
-   --t-tab-h:  #000000;
 
 
 
@@ -79,9 +89,9 @@
 
    --o-std:    #000000;
    --o-input:  #505b84;
-   --o-tab:    #000000;
-   --o-tab-a:  #000000;
-   --o-tab-h:  #000000;
+   --o-tab:    #ffffff63;
+   --o-tab-a:  #ffffff;
+   --o-tab-h:  #ffe15b;
 
 
    /* data visualization */

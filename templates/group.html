@@ -5,34 +5,43 @@
 
 {% block content %}
 
+{# CSS #}
+<link rel="stylesheet" href="../static/styles_group.css">
+
+
+<div class="groupBody">
+
   <h1>{{ group.name }}</h1>
 
   <p style='font-style:italic; text-align:left; 
     font-size:14pt; color:var(--title);'>
-    "{{ group.motto }}"</p><br>
+    "{{ group.slogan }}"</p><br>
 
 
   <h2>PLAY</h2>
 
-  <div class='div-1' > 
+  <div class='' > 
     <p>Start a new game with {{ group.name }}</p>
     {% for i in [0, 1, 2] %}
       <a class='a-small-1' 
-        href = "/start/{{ modes[i] }}/{{ group.id }}">
-        Start {{ modes[i] }}</a>
+        href = "/start/{{ modes[i][0] }}/{{ group.id }}">
+        Start {{ modes[i][0] }}</a>
     {% endfor %}
     <p style='font-style:italic'>Dice, Puzzle and Skat not yet available.</p>
   </div><br><br><br>
 
 
   <h2>WINNER BOARD</h2>
-  <div class='div-1'> 
+  <div class=> 
+
     <p>You have {{ group.n }} competitors in the group</p>
     <p style = 'font-size:16; font-weight:bold; letter-spacing: 0.2em;'>
+
       {% for player in group.players %}
         {{ player }} &ensp;
       {% endfor %}</p>
-    <a class='a-small-3' 
+
+    <a class='pageLink' 
       href = "/gamebook/{{ group.id }}">Open group's GameBook</a>
   </div><br><br><br>
 
@@ -41,13 +50,14 @@
 
   <hr>
 
-  <div class='div-1'> 
+  <div class=''> 
 
-    <a class='pageLink'
-      style = "color: var(--c-danger); border-color:var(--c-danger);" 
+    <a class='pageLink' 
       href="/settings">
       Go to Group Settings</a>
   
     </div><br><br>
+
+</div>
 
 {% endblock %}

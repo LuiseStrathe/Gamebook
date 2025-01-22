@@ -5,60 +5,169 @@
 
 {% block content %}
 
+{# CSS #}
+<link rel="stylesheet" href="../static/styles_index.css">
+<style type="text/css">
+  body { 
+      background-image: var(--b-grade-2) !important;    }
+  
+</style>
 
 
-  <title>About</title>
-  <h1>About the GameBook Project</h1><br>
-    
-  <div style = 'text-align:justify; size:14pt;'>
-    <p style='text-align:block; white-space: pre-line;'>
-      {{ about_info }}</p><br>
-    <h3 style='text-align:left;'>Insights
-    </h3><p>
-      This is a non-commercial Data Science portfolio project. 
-      That is why it is fully free of fees and advertisements. 
-      The data you enter is stored non-personalized and only 
-      used for this one app. 
-      The app uses Flask frameworks and is hosted on a dedicated
-      VPS in Germany.
-    </p><br>
-    <h3 style = 'text-align:left; text-transform: none;'>
-      Have fun playing!!</h3>
-    <br><br><br>
 
-    <p>If you wish to learn more about this project or want to 
-      explore the source code you can visit the 
+<div class="homeBody">
+
+
+  <h1>About GamesBook</h1>
+
+
+  {# ABOUT #}
+
+  <section class="imgSplitDiv">
+
+    <div class="textDiv"
+      style="grid-column: 1/3;">
+
+      <h2 class="h2fat">
+        <span style="background-color: var(--b-dirty);"> 
+        What is GameBook?
+      </span></h2>      
+      <p>{{ about_info }}</p>
+      <br>
+      <a href='/register'
+        class="pageLink">
+        Start here!</a>
+    </div>
+
+
+    <div class="imgDiv"
+      style="grid-column: 3; background-image: 
+      url('../static/media/img_gaming_jumper.jpg');">
+    </div>    
+
+
+  </section>
+
+
+  {# INSIGHTS #}
+
+
+  <section class="imgSplitDiv">
+
+
+
+
+    <div class="imgDiv"
+      style="grid-column: 1; background-image: 
+      url('../static/media/img_coding.jpg');">
+    </div>
+
+
+    <div class="textDiv"
+      style="grid-column: 2/4; background-color: var(--b-purple);">
+      
+      <h2 class="h2fat">
+        <span style="background-color:  var(--b-yellow-dark);"> 
+          Insights</span></h2>
+      <p>
+        This is a non-commercial Data Science portfolio project. 
+        That is why it is fully free of fees and advertisements. 
+        The data you enter is stored non-personalized and only 
+        used for this one app. 
+        The app uses Flask frameworks and is hosted on a dedicated
+        VPS in Germany.
+      </p>
+
+      <p>If you wish to learn more about this project or want to 
+        explore the source code you can visit the GameBook repository
+        .</p>
+      <br>
       <a href='https://github.com/LuiseStrathe/Gamebook/blob/main/README.md'
-      target='blank'>GameBook repository here</a>.</p>
-    
-    <p>To find out more about the <a
+        class="pageLink" target='blank'>
+        Project Code</a>
+    </div>
+
+  </section>
+
+
+
+
+
+
+  {# CONTACT #}
+
+  <section class="imgSplitDiv">
+
+
+
+
+    <div class="textDiv"
+      style="grid-column: 1/3;">
+
+      <h2 class="h2fat">
+        <span style="background-color: var(--b-purple)"> 
+          Contact</span></h2>      
+      
+      <p>To find out more about the <a
         href = 'https://www.datascienceportfol.io/Luise_strathe'
         target="_blank" rel="noopener noreferrer">
-        developer or contact</a> you can visit my profile.</p>
+        developer or contact</a> you can visit my profile.
+      </p>
+      <br>
+      <a href='https://www.datascienceportfol.io/Luise_strathe'
+        class="pageLink" target='blank'>
+        Developer Profile</a>
 
-  </div><br><br><br>
-  
+    </div>
+
+    
+    <div class="imgDiv"
+      style="grid-column: 3; background-image: 
+      url('../static/media/img_contact.jpg');">
+    </div>
+
+  </section>
+
+
+
+
+
+
+  {# FOOTNOTE #}
+
   <section class="footNote" title="Legal Notes">
     
-      <p>GameBook is a project by Luise Strathe. <br>
-        It is a non-commercial Data Science portfolio project. 
-        It is fully free of fees and advertisements. 
-        The data you enter is stored non-personalized and only 
-        used for this one app. The app uses Flask frameworks and 
-        is hosted on a dedicated VPS in Germany. 
-        <br>Thanks goes out to the creators of the images and icons used:<br>
+    <p>GameBook is a project by Luise Strathe. <br>
+      It is a non-commercial Data Science portfolio project. 
+      It is fully free of fees and advertisements. 
+      The data you enter is stored non-personalized and only 
+      used for this one app. The app uses Flask frameworks and 
+      is hosted on a dedicated VPS in Germany. 
+      <br>Thanks goes out to the creators of the images and icons used:<br>
 
-        <a href='https://www.pexels.com/de-de/foto/rot-kunst-blau-abstrakt-20818851/' 
-          target='blank'>Артем Дворецкий</a>,
-        <a href='https://giphy.com/' 
-          target='blank'>Giphy</a> and
-        <a href='https://www.flaticon.com/free-icons/board-game' 
-          target='blank'>Freepik - Flaticon</a>.
-      </p>
-    </section><br>
+      <a href='https://www.pexels.com/de-de/foto/rot-kunst-blau-abstrakt-20818851/' 
+        target='blank'>Артем Дворецкий</a>,
+      <a href='https://www.pexels.com/de-de/foto/abstrakt-technologie-forschung-digital-18069695/'
+        target='blank'>Google Deepmind</a>,    
+      <a href='https://www.pexels.com/de-de/foto/zwei-weisse-nachrichtenballons-1111368/'
+        target='blank'>Miguel Á. Padriñán</a>,
+      <a href='https://www.pexels.com/de-de/foto/mosaik-alien-an-der-wand-1670977/'
+        target='blank'>Francesco Ungaro</a>,
+      <a href='https://giphy.com/' 
+        target='blank'>Giphy</a> and
+      <a href='https://www.flaticon.com/free-icons/board-game' 
+        target='blank'>Freepik - Flaticon</a>.
+    </p>
+  </section>
 
-  <a class='a-small-2' href='/'>
-    Back Home</a><br><br>
+
+
+  <br><br>
+  <a class='pageLink' href='/'>
+    Back Home</a>
+  
+
+</div>
 
 
 {% endblock %}

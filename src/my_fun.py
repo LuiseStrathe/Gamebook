@@ -43,14 +43,16 @@ def encrypt_key(key):
     
 def verify_session():    
     
-    if session['status'] == "IN":
-        
-        try: session['username']
-        except: pass
-        
-        else: 
-            if session['username'] not in ['random', '']:
-                return True
+    if 'status' in session:    
+    
+        if session['status'] == "IN":
+            
+            try: session['username']
+            except: pass
+            
+            else: 
+                if session['username'] not in ['random', '']:
+                    return True
         
     else: 
         init_session()

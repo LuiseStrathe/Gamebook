@@ -1,7 +1,6 @@
 
-/*  This file is used to style the elements of the 
-    gamebook app. It adds more specific styles to the
-    root styles using the variables from the var file. */
+/*  This file is used to style the general elements of the 
+    gamebook app used on most pages. */
 
 
 @import url("styles_root.css");
@@ -21,14 +20,12 @@
         > TABLES
         > FORMS
 
-        ----- Pages ------
 
-        > SETTINGS
+        ----- Specific ------
+
         > ERROR pages
-
-        ----- Other ------
-
         > media
+        > color choices
         > unknown
 */
 
@@ -51,14 +48,6 @@
 div {
     text-align: center;
     padding: 10px;
-}
-
-
-.div-1 {
-    display:block; 
-    height:100%; 
-    padding:20px; 
-    background-color:var(--c-dark); 
 }
 
 
@@ -177,49 +166,64 @@ a:visited, a:active {
 
 .tab {
     overflow: hidden;
-    background-color: var(--b-tab);
-    border-radius: 5px;
-    border-bottom: 1px solid var(--o-std); 
+    background-color: transparent;
+    padding: 0;
 }
 
+.tabButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+}
 
 .tab button {
-    background-color: inherit;
-    float: left;
-    margin: 0px 5px;
+    float: center;
+    margin: 15px;
+    padding: 10px 20px;
     cursor: pointer;
-    padding: 14px 16px;
     transition: 0.3s;
-    font-size: 14px;
-    color: var(--t-tab);
+    min-width: 150px;
+
+    background-color: var(--b-tab);
+    color: var(--t-head);
     font-weight: bold;
     letter-spacing: 2px;
-    border: 1px solid var(--o-std);
+    border: 1px solid var(--o-tab);
     border-radius: 5px; 
 }
     
 
 .tab button:hover {
-    border: 1px solid var(--c-2); 
+    border: 1px solid var(--o-tab-h); 
+    color: var(--o-tab-h);
 }
 
 
 .tab button.active {
-    background-color: var(--c-2);
+    background-color: var(--b-tab-a);
     border: 1px solid var(--o-tab-a); 
+    color: var(--t-head);
 }
 
 
 .tabcontent {
     display: none;
-    padding: 6px 12px;
-    background-color: var(--b-std);
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--o-tab-a);
 } 
 
 
-
-
-
+@media screen and (max-width: 480px) {
+    .tab button {
+        margin: 10px;
+        padding: 10px;
+    }
+    
+}
 
 
 
@@ -307,11 +311,60 @@ input {
 
 
 
+
 /*  ############################################
 
-                        PAGES 
-
+                     SPECIFIC 
+                     
     ############################################  */
+
+
+
+
+/* ------------------  MEDIA  ------------------ */
+
+
+.giphyImg {
+    background-color: transparent;
+    padding: 0;
+    height: 100%;
+    
+    img {
+        width: 100%;
+        object-fit: contain; }
+    
+    p {
+        position: absolute;
+        z-index: 1;
+        top: 10px;
+        left: 10px;     
+}}
+
+
+.giphyBg {
+    background-color: var(--b-foot);
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;  
+}
+
+
+
+/* ----------------  Color Choices  -------------- */
+
+
+.displayColors {
+    display: inline-flex; 
+    width: 100px; 
+    height: 30px; 
+    margin: 5px; 
+    padding: 5px; 
+    justify-content: center;     
+    color: var(--t-head); 
+}
 
 
 
@@ -372,54 +425,6 @@ input {
             display: inline-block;
             width: 30%;
 }}}
-
-
-
-
-
-
-/*  ############################################
-
-                     OTHER 
-                     
-    ############################################  */
-
-
-
-
-/* ------------------  MEDIA  ------------------ */
-
-
-.giphy {
-    background-color: transparent;
-    padding: 0;
-    height: 100%;
-    
-    img {
-        width: 100%;
-        object-fit: cover; }
-    
-    p {
-        position: absolute;
-        z-index: 1;
-        top: 10px;
-        left: 10px;     
-}}
-
-
-
-/* ----------------  Color Choices  -------------- */
-
-
-.displayColors {
-    display: inline-flex; 
-    width: 100px; 
-    height: 30px; 
-    margin: 5px; 
-    padding: 5px; 
-    justify-content: center;     
-    color: var(--t-head); 
-}
 
 
 

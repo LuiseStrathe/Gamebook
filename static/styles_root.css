@@ -29,11 +29,13 @@ html {
     height: 100%;       /* for background cover */   
     font-size: 12pt;    /* rem baseline */
     font-family: 'Dotum', sans-serif;
+    scroll-behavior: smooth !important; 
 }
 
 
 html * {
     box-sizing: border-box;
+
 }
 
 
@@ -96,6 +98,7 @@ header {
     left: 0;
     width: 100%;
     padding: 0 40px 0 0px;
+    z-index: 10;
 
     display: flex;
     align-items: center;
@@ -149,7 +152,7 @@ header {
 .goUp { 
         display: block;
         position: fixed; 
-        z-index: 10;
+        z-index: 20;
         bottom: 20px; 
         right: 20px;
 
@@ -327,6 +330,13 @@ h2 {
     line-height: 1.6;
 }
 
+.h2fat {
+    text-align: right;
+    letter-spacing: 0.2rem;
+    text-transform: uppercase;
+    font-size: 1.8rem;
+    color: white;
+}
 
 h3 {
     text-align: center;

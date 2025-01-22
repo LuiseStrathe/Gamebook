@@ -1,0 +1,61 @@
+
+/*  This file contains styles for group pages 
+    when signed in.  
+    
+*/ 
+
+
+
+/* CONTENTS
+
+        > Group Home 
+        > Statistics Main
+        
+*/
+
+
+
+
+/*  ############################################
+
+                    GROUP HOME
+                     
+    ############################################  */
+
+
+.groupBody {
+    display: block;
+    flex-direction: column;
+
+    margin: 0 0 100px;
+    padding: 0;
+
+    h1 {
+        text-shadow: none;
+        margin: 100px 0 80px;
+        color: var(--t-head);
+        text-align: center;
+
+
+    section {
+        display: block;
+        max-width: var(--d-full-max);
+        margin: 0 auto;
+        padding: 40px 20px;
+
+    }
+
+
+    
+}}
+
+
+
+
+
+
+/*  ############################################
+
+                    STATISTICS
+                     
+    ############################################  */

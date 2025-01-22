@@ -2,7 +2,12 @@
 /*  
     Contains all the JavaScript functions used 
   
-    Buttons, Navigation Drop-down menu, Pop-up windows, etc.
+    > Buttons
+    > Navigation drop-down menu
+    > Pop-up & Info Windows
+    > Tabs
+    > Register
+    
 */
 
 
@@ -28,129 +33,6 @@ function topFunction() {
 
 function goBack() {
   window.history.back();
-}
-
-
-function xadd_player() {
-  var count = document.getElementById("count");
-  var number = parseInt(count.value);
-  if (number < 10) {
-      number += 1;
-      count.value = number;
-  }
-}
-
-function xremove_player() {
-  var count = document.getElementById("count");
-  var number = parseInt(count.value);
-  if (number > 2) {
-      number -= 1;
-      count.value = number;
-  }
-}
-
-
-function showTest() {      
-
-  var count = document.getElementById("count");
-  var number = parseInt(count.value);
-
-  document.getElementById("test3").classList.remove("showing");
-  document.getElementById("test4").classList.remove("showing");
-  document.getElementById("test5").classList.remove("showing");
-  document.getElementById("test6").classList.remove("showing");
-  document.getElementById("test7").classList.remove("showing");
-  document.getElementById("test8").classList.remove("showing");
-  document.getElementById("test9").classList.remove("showing");
-  document.getElementById("test10").classList.remove("showing");
-
-
-  if (number > 2) {
-    document.getElementById("test3").classList.toggle("showing");}
-
-  if (number > 3) {
-    document.getElementById("test4").classList.toggle("showing");}
-
-  if (number > 4) {
-    document.getElementById("test5").classList.toggle("showing");}
-
-  if (number > 5) {
-    document.getElementById("test6").classList.toggle("showing");}
-
-  if (number > 6) {
-    document.getElementById("test7").classList.toggle("showing");}
-
-  if (number > 7) {
-    document.getElementById("test8").classList.toggle("showing");}
-
-  if (number > 8) {
-    document.getElementById("test9").classList.toggle("showing");}
-
-  if (number > 9) {
-    document.getElementById("test10").classList.toggle("showing");}
-  }
-
-
-function add_player() {
-  var count = document.getElementById("numberPlayers");
-  var number = parseInt(count.value);
-  if (number < 10) {
-      number += 1;
-      count.value = number;
-  }
-}
-
-function remove_player() {
-  var count = document.getElementById("numberPlayers");
-  var number = parseInt(count.value);
-  if (number > 2) {
-      number -= 1;
-      count.value = number;
-  }
-}
-  
-  
-
-function show_players() {
-
-  var count = document.getElementById("numberPlayers");
-  var number = parseInt(count.value);
-
-  document.getElementById("player3").classList.remove("showing");
-  
-  document.getElementById("player4").classList.remove("showing");
-  document.getElementById("player5").classList.remove("showing");
-  document.getElementById("player6").classList.remove("showing");
-  document.getElementById("player7").classList.remove("showing");
-  document.getElementById("player8").classList.remove("showing");
-  document.getElementById("player9").classList.remove("showing");
-  document.getElementById("player10").classList.remove("showing");
-
-  if (number > 2) {
-    document.getElementById("player3").classList.toggle("showing");}
-    
-  if (number > 3) {
-    document.getElementById("player4").classList.toggle("showing");}
-
-  if (number > 4) {
-    document.getElementById("player5").classList.toggle("showing");}
-
-  if (number > 5) {
-    document.getElementById("player6").classList.toggle("showing");}
-
-  if (number > 6) {
-    document.getElementById("player7").classList.toggle("showing");}
-
-  if (number > 7) {
-    document.getElementById("player8").classList.toggle("showing");}
-
-  if (number > 8) {
-    document.getElementById("player9").classList.toggle("showing");}
-
-  if (number > 9) {
-    document.getElementById("player10").classList.toggle("showing");}
-
-
 }
 
 
@@ -226,4 +108,104 @@ function toggle_group_delete() {
 
 
 
+
+
+/*  ####################################
+
+    Tabs
+
+    #################################### */ 
+
+
+// Open the default tab
+
+function openMode(evt, Mode) {
+
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  document.getElementById(Mode).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+
+
+
+
+/*  ####################################
+
+    Register
+
+    #################################### */ 
+
+
+
+function add_player() {
+  var count = document.getElementById("numberPlayers");
+  var number = parseInt(count.value);
+  if (number < 10) {
+      number += 1;
+      count.value = number;
+  }
+}
+
+
+function remove_player() {
+  var count = document.getElementById("numberPlayers");
+  var number = parseInt(count.value);
+  if (number > 2) {
+      number -= 1;
+      count.value = number;
+  }
+}
+
+  
+function show_players() {
+
+  var count = document.getElementById("numberPlayers");
+  var number = parseInt(count.value);
+
+  document.getElementById("player3").classList.remove("showing");
+  
+  document.getElementById("player4").classList.remove("showing");
+  document.getElementById("player5").classList.remove("showing");
+  document.getElementById("player6").classList.remove("showing");
+  document.getElementById("player7").classList.remove("showing");
+  document.getElementById("player8").classList.remove("showing");
+  document.getElementById("player9").classList.remove("showing");
+  document.getElementById("player10").classList.remove("showing");
+
+  if (number > 2) {
+    document.getElementById("player3").classList.toggle("showing");}
+    
+  if (number > 3) {
+    document.getElementById("player4").classList.toggle("showing");}
+
+  if (number > 4) {
+    document.getElementById("player5").classList.toggle("showing");}
+
+  if (number > 5) {
+    document.getElementById("player6").classList.toggle("showing");}
+
+  if (number > 6) {
+    document.getElementById("player7").classList.toggle("showing");}
+
+  if (number > 7) {
+    document.getElementById("player8").classList.toggle("showing");}
+
+  if (number > 8) {
+    document.getElementById("player9").classList.toggle("showing");}
+
+  if (number > 9) {
+    document.getElementById("player10").classList.toggle("showing");}
+}
 

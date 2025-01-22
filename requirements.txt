@@ -3,7 +3,7 @@ charset-normalizer
 click
 DateTime
 Flask
-Flsak-Login
+Flask-Login
 Flask-SQLAlchemy
 Flask-WTF
 greenlet

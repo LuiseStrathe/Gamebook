@@ -495,7 +495,8 @@
     a, button {
         background-color: var(--h-red);
         width: 67%;
-        max-width: var(--d-full-max);}
+        max-width: var(--d-full-max);
+        border: none;}
     
     a:hover, button:hover {
         cursor: pointer;

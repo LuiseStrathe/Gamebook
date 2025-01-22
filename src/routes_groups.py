@@ -41,7 +41,7 @@ def group(group_id):
       static = 'group.html'
       return render_template(
         static, page=page_html(static, "in"), 
-        descriptions=descriptions, modes=modes, 
+        modes=modes_info, 
         group=group)
       
     else:
@@ -88,8 +88,8 @@ def gamebook(group_id):
     static = 'gamebook.html'  
     return render_template(
       static, page=page_html(static, "in"),
-      descriptions=descriptions, modes=modes, 
-      group=group, giphs=mode_giphs, stats=stats,
+      modes=modes_info, 
+      group=group, stats=stats,
       num_modes=len(modes), mode_key=mode_key)
     
   else: 
@@ -120,7 +120,7 @@ def random_group():
   static = 'random.html'
   return render_template(
     static, page=page_html(static, "out"), 
-    modes=modes, descriptions=descriptions,
+    modes=modes_info,
     random_form=random_form)
   
   

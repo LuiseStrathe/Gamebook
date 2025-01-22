@@ -1,0 +1,281 @@
+
+/*  This file contains styles for index pages 
+    when not signed in. 
+    
+    This includes the index(home) and about page. 
+    
+*/ 
+
+
+
+/* CONTENTS
+
+        > ALL HOME PAGES 
+        > INDEX PAGE 
+        
+*/
+
+
+
+
+/*  ############################################
+
+                    For All
+                     
+    ############################################  */
+
+
+
+.homeBody {
+    display: block;
+    flex-direction: column;
+
+    margin: 0 0 100px;
+    padding: 0;
+
+    h1 {
+        text-shadow: none;
+        margin: 100px 0 80px;
+        color: var(--t-head);
+        text-align: center;
+
+
+    section {
+        display: block;
+        max-width: var(--d-full-max);
+        margin: 0 auto;
+        padding: 40px 20px;
+
+    }
+
+
+    
+}}
+
+.imgSplitDiv {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 0;
+    grid-gap: 0;
+    margin: 80px auto;
+
+    div {
+        display: inline;
+        width: 100%;
+        grid-row: 1;
+        min-height: 200px;
+}}
+
+
+.imgDiv {
+    height: auto;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+
+.textDiv {
+    text-align: center;
+    align-items: center;
+    background-color: var(--b-yellow);
+    height: 100%;
+    padding: 60px 40px;
+    font-size: 1.2rem;
+    line-height: 2rem;
+
+    a {
+        margin-top: 40px !important;
+    }
+}
+
+
+@media screen and (max-width: 800px) {
+    .homeBody {
+        h2 {
+            text-align: center !important;}
+    }
+
+    .imgSplitDiv {
+        display:block;
+        margin: 15px auto;
+        grid-auto-flow: row;
+    
+        div {
+            display:block;}
+
+        h2 {
+            text-align: center;}
+
+    }
+
+    .textDiv {
+        padding: 15px;
+
+        a {
+            display: block;
+            margin: 15px auto !important;}
+
+        p {
+            font-size: 1rem;
+            line-height: 1.5rem;}
+    }
+}
+
+
+
+/*  ############################################
+
+                    Index Page
+                     
+    ############################################  */
+
+
+.pageNav {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 80px auto 40px;
+    padding: 0 20px;
+    max-width: var(--d-full-max);
+    width: 80%;
+
+    a, p {
+        color: var(--t-head);
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        letter-spacing: 0.2rem;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+    .pageNavCurrent {
+        border-bottom: 1px solid var(--t-head);
+}}
+
+
+
+.howToDiv {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr;
+    grid-template-rows: 1fr 0;
+    grid-gap: 0;
+    margin: 0 auto;
+    padding: 40px 20px;
+    max-width: var(--d-full-max);
+
+    div {
+        width: 100%;
+        grid-row: 1;
+        min-height: 400px;}
+
+    .giphyBg {
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;}
+
+    .howToTextDiv {
+        background-color: var(--b-subtile);
+        padding: 20px !important;
+        text-align: left;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        
+        a {
+            display: block;
+            text-align: center;
+            margin: 20px auto;
+    }}
+
+    h3 {
+        text-align: center;
+        margin: auto;
+        padding: auto;
+}}
+
+
+
+#gamesDiv {
+    display: block;
+    margin: 0 auto;
+    padding: 40px 20px;
+    
+
+    .imgSplitDiv {
+        margin: 0;
+        padding: 0;
+    }
+
+    .giphyImg {
+        background-color: var(--b-subtile);
+
+        img {
+            padding: 10px;
+            max-width: 400px;
+            object-fit: contain;}
+}}
+
+
+.footHome {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    padding: 60px 20px 100px;
+    max-width: var(--d-full-max);
+    
+    a {min-width: 230px;
+}}
+
+
+
+
+@media screen and (max-width: 800px) {
+    .pageNav {
+        width: 100%;
+
+
+        a { padding: 5px 0;
+            margin: 20px auto;}
+
+        p {
+            display: none;}
+    }
+
+
+    .howToDiv {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 300px auto;
+        gap: 15px;
+
+        div {
+            min-height: 200px;
+            border-radius: 5px;
+        }
+
+        .giphyBg {
+            grid-column: 2;
+            grid-row: 1;}
+    }
+
+    .howToTextDiv {
+        grid-column: 1/3;
+        grid-row: 2 !important;
+    }
+}
+
+
+@media screen and (max-width: 400px) {
+    .pageNav {
+        display: block;
+
+        a {
+            display: block;
+            padding: 10px 5px 5px;}
+    }
+
+    .howToDiv {
+        grid-template-rows: 200px auto;
+    }
+
+}

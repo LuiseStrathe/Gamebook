@@ -48,8 +48,8 @@ def index():
   
   static = "_index.html"
   return render_template(static, page=page_html(static, "out"),
-                         modes=modes, descriptions=descriptions, 
-                         about_info=about_info, giphs=mode_giphs,
+                         modes=modes_info, 
+                         about_info=about_info, 
                          num_modes=len(modes))
 
 

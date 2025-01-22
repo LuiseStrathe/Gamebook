@@ -5,71 +5,260 @@
 
 {% block content %}
 
-  <h1>Welcome to GameBook</h1>
+{# CSS #}
+<link rel="stylesheet" href="../static/styles_index.css">
+<style type="text/css">
+  body { 
+      background-image: var(--b-grade-2) !important;    }
+  
+</style>
 
-  <p style="font-size:14pt;  white-space: pre-line; 
-    text-align:block; color:var(--light);">
-      {{ about_info }} 
-  </p><br><br><br><br>
 
+
+<div class="homeBody">
+
+
+  <h1>GamesBook</h1>
   
 
 
+  <div id='intro' class="pageNav">
 
-  <h2>play modes</h2>
-
-  <div class="tab">
-    {% for m in range(num_modes) %}
-      <button class="tablinks" onclick="openMode(event, '{{ modes[m] }}')"      
-      style='text-transform:capitalize;'>{{ modes[m] }}</button> 
-    {% endfor %} </div>
-
-
-  {% for m in range(num_modes) %}
-    <div id="{{ modes[m] }}"  class="tabcontent">
-      <p style='text-align:left; white-space: pre-line;'>{{ descriptions[m] }}</p> 
-      <iframe src="{{ giphs[m] }}" max_width="50%" height="100%"
-          style="position:left" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>  
-    </div>  
-  {% endfor %}
-
-  <script>
-  function openMode(evt, Mode) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(Mode).style.display = "block";
-    evt.currentTarget.className += " active";}
-  </script>
-
-
-
-
-  <br><br><br>
-  <h2>start here</h2>
-  <div class='div-1'> 
-
-    <a class='a-small-1' href="/login">
-        Login your Group</a>
-    <p> Continue with your registered group and open your group GameBook.</p><br><br>
+    <a class='pageNavCurrent' href='#intro'>Intro</a>
+    <p>></p>
+    <a href='#howto'>How To</a>
+    <p>></p>
+    <a href='#games'>Games</a>
     
-    <a class='a-small-1' href="/register">
-        Register a new Group</a>
-    <p> Create a new group and start your own GameBook. Each game you play adds a page.
-        You can always login and continue and check out earlier game results again. </p><br><br>
-    
-    <a class='a-small-2' href="/random_group">
-        Try GameBook without login</a>
-    <p> You will not be able to save your game notes.<br>
-        You can only try in the mode <b>rounds</b>.<br>
-        You can play with <b>2 to 4 persons</b>.</p><br>
-
   </div>
+
+
+
+
+  {# ABOUT #}
+
+  <section class="imgSplitDiv">
+
+    <div class="textDiv"
+      style="grid-column: 1/3;">
+
+      <h2 class="h2fat">
+        <span style="background-color: var(--b-dirty);"> 
+        What is GameBook?
+      </span></h2>      
+      <p>{{ about_info }}</p>
+      <br>
+      <a href='/about'
+        class="pageLink">
+        About</a>
+    </div>
+
+
+    <div class="imgDiv"
+      style="grid-column: 3; background-image: 
+      url('../static/media/img_gaming_jumper.jpg');">
+    </div>    
+
+
+  </section>
+
+
+  <div id="howto" class="pageNav">
+
+    <a href='#intro'>Intro</a>
+    <p>></p>
+    <a class='pageNavCurrent' href='#howto'>How To</a>
+    <p>></p>
+    <a href='#games'>Games</a>
+    
+  </div>
+
+
+
+  {# How To #}
+
+  <section class="FullDiv">
+
+    <h2 class="h2fat" style='text-align: right; '>
+      <span style="background-color: var(--b-yellow-dark);">
+        How to use GamesBook</span></h2>
+    
+
+
+    <div class='howToDiv'>
+
+      <div style="display: flex; flex-direction: column;">
+        <h3><span style="font-weight: bold; font-size: 2em;">
+          1</span><br>Start a Group</h3>
+      </div>
+
+
+      <div class='giphyBg' style='background-image: 
+        url("https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjEx\
+        ODc0ZzNxamczMjJzeTYzdHJiMmVybmtzanliejh2cmNwZGszNmsxNyZ\
+        lcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3orif2JK8DsUSxMShW/giphy.gif");'>
+      </div>
+      
+      
+      <div class='howToTextDiv'>
+
+        <p> Create a new group and start your own GameBook. 
+          Each game you play adds a page.
+          You can always login and continue and check out 
+          earlier game results again. </p>
+
+        <p> You will not be able to save your game notes.
+          You can only try in the mode <b>rounds</b>.
+          You can play with <b>2 to 4 persons</b>.
+        </p><br>
+      
+        <a class='pageLink' href="/register">
+          Register here</a>  
+      
+      </div>
+
+    </div>  
+
+
+
+    <div class='howToDiv'>
+
+      <div style="display: flex; flex-direction: column;">
+        <h3><span style="font-weight: bold; font-size: 2em;">
+          2</span><br>Play & Save</h3>
+      </div>
+
+
+      <div class='giphyBg' style='background-image: 
+        url("https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExN\
+        m4zazZwbmJ5ejV2ZmRjemlqcHkxdmZxOGxzaDZsZGVjdHlpNDlpaiZlcD\
+        12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o6Mbr1blVD5KKQBxK/giphy.gif");'>
+      </div>
+      
+      
+      <div class='howToTextDiv'>
+        <p> Create a new group and start your own GameBook. Each game you play adds a page.
+            You can always login and continue and check out earlier game results again. </p><br><br>
+
+        <p> You will not be able to save your game notes.<br>
+            You can only try in the mode <b>rounds</b>.<br>
+            You can play with <b>2 to 4 persons</b>.</p><br>
+                
+        <a class='pageLink' href="/random_group">
+          Try it</a>  
+      
+        </div>
+    </div>  
+
+
+
+    <div class='howToDiv'> 
+      
+      <div style="display: flex; flex-direction: column;">
+        <h3><span style="font-weight: bold; font-size: 2em;">
+          3</span><br>Remember & Analyze</h3>
+      </div>
+
+
+      <div class='giphyBg' style='background-image: 
+        url("https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExeHVpdn\
+        VtZ25oc2QxdXY4dDhwcXZzMDg2dmt2czZwNDFta3N3N3h6NiZlcD12MV9pbnR\
+        lcm5hbF9naWZfYnlfaWQmY3Q9Zw/l2JdTgYZ7VG4EeBVe/giphy.gif");'>
+      </div>      
+      
+
+      <div class='howToTextDiv'>
+        <p> Create a new group and start your own GameBook. 
+          Each game you play adds a page.
+          You can always login and continue and check out , 
+          earlier game results again. 
+        </p>
+
+      </div>
+
+    </div>  
+  </section>
+
+
+
+
+  <div id="games" class="pageNav">
+
+    <a href='#intro'>Intro</a>
+    <p>></p>
+    <a href='#howto'>How To</a>
+    <p>></p>
+    <a class='pageNavCurrent' href='#games'>Games</a>
+    
+  </div>
+
+
+
+  {# Game Modes #}
+
+  <section id="gamesDiv" class="FullDiv"
+    style="background-color: var(--b-purple);">
+
+
+    <h2 style="text-align: left;" class="h2fat">
+      <span style="background-color: var(--b-yellow-dark);">
+        Game Modes</span></h2>
+
+    <p>Choose a mode to see the description and a giph.</p>
+
+
+
+    <div class="tab">
+
+      <div class="tabButtons">
+        {% for m in range(num_modes) %}
+          
+          <button class="tablinks" 
+              onclick="openMode(event, '{{ modes[m][0] }}')"      
+              style='text-transform:capitalize;'>
+                {{ modes[m][0] }}
+          </button>
+
+        {% endfor %} 
+      </div>
+
+
+
+      {% for m in range(num_modes) %}
+        <div id="{{ modes[m][0] }}"  class="tabcontent">
+          <div class="imgSplitDiv">
+
+            <div class="textDiv" 
+              style="grid-column: 1/3; 
+              background-color: var(--b-subtile);">
+              <h3> {{ modes[m][0] }} </h3>
+
+              <p> {{ modes[m][2] }} </p> 
+            </div>  
+
+
+            <div class="giphyImg"
+              style="grid-column: 3;">
+              <img src="{{ modes[m][3] }}">
+            </div>
+
+          </div>
+        </div>
+      {% endfor %}
+
+    </div>
+  </section>
+</div>
+
+
+
+<div class='footHome'>
+
+  <a class='pageLink' href='/register'>Register a Group</a>
+  <a class='pageLink' href='/random_group'>Try GamesBook</a>
+  <a class='pageLink' href='/about'>About & Insights</a>
+
+</div>
+
 
 {% endblock %}
