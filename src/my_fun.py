@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 from flask_wtf import FlaskForm
 from flask import Flask, render_template, request, url_for, redirect, flash, session
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from Gamebook.src.my_params import *
 from Gamebook.src.my_classes import *
@@ -87,7 +87,7 @@ def page_html(static, force_in_out="no"):
     if force_in_out == 'no':
         pass
     
-    elif force_in_out == 'in':
+    elif force_in_out == 'IN':
         page_html[0] = "__head_in.html"
         
     else:
@@ -228,13 +228,11 @@ def create_random_group():
 def end_rounds(group, points, game_id, infos):
 
     winner = group.players[np.argmax(points[-1])]
-    print('winner: ', winner)
           
     result = {'game_id':game_id, 'g_mode': 'rounds', "group_id":group.id, 
          "result":points, "n_rounds":points.shape[0], 
          "winner_name":winner, 'time':datetime.now(),
          'info_1':infos[0], 'info_2': infos[1], 'info_3':infos[2]}
-    print(result)
     
     # save in group
     group.results = pd.concat([group.results, pd.DataFrame([result])])
@@ -250,50 +248,115 @@ def end_rounds(group, points, game_id, infos):
 
 # PUZZLES
 
+def gen_puzzle_logs(id):
+    
+    group = load_group(id)[0]
+    logs = []
+    results = group.results[group.results['g_mode']=='puzzle'] 
+    
+    for i in range(len(results)):
+        result = results.iloc[i]
+        
+        # cols: date, winner, puzzle, pcs, time, comment
+        log = [result.time.strftime("%d/%m/%y"), 
+               result.winner_name,  
+               result.info_1, 
+               result.n_rounds, 
+               str(timedelta(seconds=result["result"])),
+               result.info_3]
+        logs.append(log)
+    
+    return logs
+
+    
     
 def add_puzzle(group_id, add_puzzle_form):
     
     group = load_group(group_id)[0]
+    info = ''
     
-    record = {'id': int(group.puzzles.shape[0]),
-                     'title': add_puzzle_form.title.data, 
-                     'pcs': add_puzzle_form.pcs.data, 
-                     'description': add_puzzle_form.description.data}
-
-    group.puzzles = pd.concat([group.puzzles, 
-                               pd.DataFrame([record])])
-
-    group.update_group()
-    pass
-
-
-
-def submit_puzzle_record(group_id, puzzle_id,
-                         puzzle_record_form):
+    # avoid 0 & add 1 new puzzle with id n:
+    n = int(group.puzzles.shape[0]) + 1 
     
-    group = load_group(group_id)[0]
-    game_id = gen_game_id('puzzle')
-    duration =  puzzle_record_form.hours.data * 60^2 \
-                + puzzle_record_form.minutes.data * 60 \
-                + puzzle_record_form.seconds.data
-    pcs = group.puzzles.iloc[puzzle_id, 3]
+    if add_puzzle_form.title.data not in group.puzzles.title.values:
+        
+        record = {
+            'id': n,
+            'title': add_puzzle_form.title.data, 
+            'pcs': add_puzzle_form.pcs.data, 
+            'description': add_puzzle_form.description.data}
+
+        group.puzzles = pd.concat([group.puzzles, 
+                                pd.DataFrame([record])])
+
+        group.update_group()
+        info = ""
+        
+    else:
+        info = f"Puzzle {add_puzzle_form.title.data} already exists."
     
-    result = {'game_id':game_id, 'g_mode': 'puzzle', "group_id":group.id, 
+    return info
+
+
+
+def submit_puzzle_record(id, form):
+    
+    group = load_group(id)[0]
+    game_id = gen_game_id('puzzle')        
+    duration =  form.hours.data * 60 * 60 \
+                + form.minutes.data * 60 \
+                + form.seconds.data
+    puzzle_id = int(form.puzzle.data.split(':')[0])
+    pcs = group.puzzles.pcs.iloc[puzzle_id - 1]
+    
+    result = {'game_id':game_id, 'g_mode': 'puzzle', "group_id":id, 
          "result": duration, "n_rounds": pcs, 
-         "winner_name":puzzle_record_form.player.data[0], 
+         "winner_name":form.player.data, 
          'time':datetime.now(),
-         'info_1':puzzle_record_form.comment.data, 'info_2': '', 'info_3':''}
-    print(result)
+         'info_1':puzzle_id, 'info_2': '', 'info_3':form.comment.data, }
+
     
     # save in group
-    group.results = pd.concat([group.results, pd.DataFrame([result])])
+    group.results = pd.concat([group.results, pd.DataFrame([result])], ignore_index=True)
     group.update_group()
     
     # save in all results
     results = pd.read_csv(f'{path_data}modes/results.csv')
     results = pd.concat([results, pd.DataFrame([result])])
     results.to_csv(f'{path_data}modes/results.csv', index=False)    
+    
+    
+def change_puzzle(id, form):
+    
+    group = load_group(id)[0]
+    puzzle_id = int(form.puzzle_change.data.split(':')[0])
+    df_puzzles = group.puzzles
+    df_results = group.results
+    
+
+    if form.delete.data:
+        
+        df_puzzles = df_puzzles[df_puzzles['id'] != puzzle_id]
+        
+        df_results = df_results[df_results['info_1'] != puzzle_id]
+        group.results = df_results
+        
+        
+    else:
+        if form.title_change.data not in [None, '']:
+            df_puzzles.title.iloc[puzzle_id - 1] = form.title_change.data
+            
+        if form.description_change.data not in [None, '']:
+            df_puzzles.description.iloc[puzzle_id - 1] = form.description_change.data
+
+            
+    # update id
+    df_puzzles['id'] = range(1, df_puzzles.shape[0] + 1)
+    
+    group.puzzles = df_puzzles 
+    group.update_group()
     pass
+
 
 
 

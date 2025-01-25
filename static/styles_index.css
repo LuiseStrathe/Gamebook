@@ -12,6 +12,7 @@
 
         > ALL HOME PAGES 
         > INDEX PAGE 
+        > GROUP PAGE
         
 */
 
@@ -36,21 +37,10 @@
     h1 {
         text-shadow: none;
         margin: 100px 0 80px;
-        color: var(--t-head);
-        text-align: center;
+        text-align: center;}
+}
 
 
-    section {
-        display: block;
-        max-width: var(--d-full-max);
-        margin: 0 auto;
-        padding: 40px 20px;
-
-    }
-
-
-    
-}}
 
 .imgSplitDiv {
     display: grid;
@@ -67,18 +57,11 @@
 }}
 
 
-.imgDiv {
-    height: auto;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-}
-
 
 .textDiv {
     text-align: center;
     align-items: center;
-    background-color: var(--b-yellow);
+    background-color: var(--c-yellow);
     height: 100%;
     padding: 60px 40px;
     font-size: 1.2rem;
@@ -123,14 +106,6 @@
 }
 
 
-
-/*  ############################################
-
-                    Index Page
-                     
-    ############################################  */
-
-
 .pageNav {
     display: flex;
     justify-content: space-around;
@@ -142,7 +117,7 @@
     width: 80%;
 
     a, p {
-        color: var(--t-head);
+        color: var(--t-white);
         font-size: 1.2rem;
         text-transform: uppercase;
         letter-spacing: 0.2rem;
@@ -151,8 +126,16 @@
     }
 
     .pageNavCurrent {
-        border-bottom: 1px solid var(--t-head);
+        border-bottom: 1px solid var(--t-white);
 }}
+
+
+
+/*  ############################################
+
+                    Index Page
+                     
+    ############################################  */
 
 
 
@@ -277,5 +260,154 @@
     .howToDiv {
         grid-template-rows: 200px auto;
     }
+}
 
+
+
+/*  ############################################
+
+                    Group Page
+                     
+    ############################################  */
+
+
+
+.groupHeader {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr auto;
+    max-width: var(--d-full-max);
+    gap: 20px;
+    padding: 40px;
+
+    h1 {
+        display: block;
+        grid-column: 1;
+        grid-row: 1;
+        text-align: left;}
+
+    a   {
+        grid-row: 2;
+        display: inline-block;
+
+        color: var(--t-white);
+        text-decoration: none;
+        text-align: left;
+        letter-spacing: 0.2rem;
+        border: none;
+        padding: 10px;}
+    
+    p {
+        display: block;
+        margin-top: 100px;
+        grid-column: 2;
+        grid-row: 1;
+        line-height: 2rem;
+        text-align: right;}
+}
+
+
+.playDiv {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+
+.modePlayDiv {
+    display: inline-block;
+    background-color: var(--b-dark);
+    box-shadow: 10px 10px 2px 1px var(--s-shadow);
+    border-bottom: 5px solid var(--b-dark);
+    width: 300px;
+    margin: 40px;
+
+    h3 {
+        display: block;
+        margin: 20px;
+        text-align: center;
+        color: var(--t-white);
+        text-transform: uppercase;
+        letter-spacing: 0.3rem;}
+    
+    .imgDiv {
+        width: 100%;
+        height: 300px;
+        position: relative;
+        background-position: left top;
+    }
+
+    p {
+        display: block;
+        margin: 20px;
+        text-align: center;
+        color: var(--t-white);
+        text-decoration: none !important;}
+}
+
+
+.modePlayDiv:hover div, .modePlayDiv:hover h3 {
+    color: var(--c-yellow) !important;
+
+    .imgDiv {
+        border: 1px solid var(--c-yellow);}
+    
+    p {
+        color: var(--c-yellow);}
+}
+
+
+
+.statsDiv {
+    color: var(--t-white);
+
+    div {
+        margin: 10px auto;
+        border-radius: 5px;
+        padding: 10px;
+        max-width: 100px;
+    }
+}
+
+
+
+
+
+@media screen and (max-width: 800px) {
+    .groupHeader {
+        display: block;
+
+        h1 {
+            margin: 60px 0 30px;}
+        
+        p {
+            margin: 20px 0;}
+
+        h1, p, a {
+            display: block;}
+    }
+
+    .modePlayDiv {
+        width: 200px;
+        margin: 20px;
+
+        .imgDiv {
+            height: 200px;}
+    }
+}
+
+
+@media screen and (max-width: 400px) {
+    .modePlayDiv {
+        width: 250px;
+
+        h3, p {
+            font-size: 1rem;
+            margin: 10px;}
+
+        .imgDiv {
+            height: 130px;}
+    }
 }

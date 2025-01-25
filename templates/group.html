@@ -6,58 +6,192 @@
 {% block content %}
 
 {# CSS #}
-<link rel="stylesheet" href="../static/styles_group.css">
-
-
-<div class="groupBody">
-
-  <h1>{{ group.name }}</h1>
-
-  <p style='font-style:italic; text-align:left; 
-    font-size:14pt; color:var(--title);'>
-    "{{ group.slogan }}"</p><br>
-
-
-  <h2>PLAY</h2>
-
-  <div class='' > 
-    <p>Start a new game with {{ group.name }}</p>
-    {% for i in [0, 1, 2] %}
-      <a class='a-small-1' 
-        href = "/start/{{ modes[i][0] }}/{{ group.id }}">
-        Start {{ modes[i][0] }}</a>
-    {% endfor %}
-    <p style='font-style:italic'>Dice, Puzzle and Skat not yet available.</p>
-  </div><br><br><br>
-
-
-  <h2>WINNER BOARD</h2>
-  <div class=> 
-
-    <p>You have {{ group.n }} competitors in the group</p>
-    <p style = 'font-size:16; font-weight:bold; letter-spacing: 0.2em;'>
-
-      {% for player in group.players %}
-        {{ player }} &ensp;
-      {% endfor %}</p>
-
-    <a class='pageLink' 
-      href = "/gamebook/{{ group.id }}">Open group's GameBook</a>
-  </div><br><br><br>
-
-
-
-
-  <hr>
-
-  <div class=''> 
-
-    <a class='pageLink' 
-      href="/settings">
-      Go to Group Settings</a>
+<link rel="stylesheet" href="../static/styles_index.css">
+<style type="text/css">
+  body { 
+      background-image: var(--b-grade-2) !important;    }
   
-    </div><br><br>
+</style>
 
+
+
+<div class="homeBody">
+
+
+  {# Header #}
+  <div class="groupHeader">
+
+    <h1>{{ group.name }}</h1>
+
+    <p style='font-style:italic; text-align:left; 
+      font-size:14pt; color:var(--t-light);'>
+      "{% if group.slogan == "" %}
+        Damn, we are lazy enough to not have a slogan.
+      {% else %}
+        {{ group.slogan }}  
+      {% endif %}"
+    </p>
+
+    <a href="/settings">>>> to Settings</a>
+    <a href="/statistics">>>> to Statistics</a>
+  </div>
+
+
+
+  <div id='play' class="pageNav">
+
+    <a class='pageNavCurrent' href='#play'>Play</a>
+    <p>></p>
+    <a href='#stats'>Statistics</a>
+    <p>></p>
+    <a href='#games'>Game Info</a>
+    
+  </div>
+
+
+
+  {# Play #}
+  <section class="FullDiv" 
+    style="background-color: var(--b-white-tr);">
+
+    <h2 class="h2fat"><span style="background-color: var(--c-yellow-dark);">
+      Play & Save a Game</span></h2>
+
+    <div class='playDiv'>
+      
+      {% for i in range(num_modes) %}
+        <a class='modePlayDiv'
+          href = "/{{ modes[i][0] }}"> 
+          <div>
+
+            <h3> {{ modes[i][0] }} </h3>
+
+            <div class="imgDiv" style="background-image: 
+              url('{{ modes[i][5] }}')">
+            </div>
+
+            <p>>>> Start >>></p>
+
+          </div>
+        </a>
+      {% endfor %}
+    
+    </div>
+
+    
+    <p style='font-style:italic color: var(--s-red);'>
+      Dice, Puzzle and Skat not yet available.
+    </p><br>
+
+  </section>
+
+
+
+  <div id='stats' class="pageNav">
+
+    <a href='#play'>Play</a>
+    <p>></p>
+    <a class='pageNavCurrent' href='#stats'>Statistics</a>
+    <p>></p>
+    <a href='#games'>Game Info</a>
+    
+  </div>
+
+
+
+
+  {# Statistics #}
+  <section class="FullDiv" 
+    style="background-color: var(--c-blueish-dark);">
+
+    <h2 class="h2fat"><span style="background-color: var(--c-yellow-dark);">
+      Statistics</span></h2>
+
+    <div class='statsDiv'>
+
+      <p>You have {{ group.n }} competitors in the group:</p>
+    
+      <p style = 'font-size:16; font-weight:bold; letter-spacing: 0.2em;'>
+
+        {% for p in range(group.n) %}
+          <div style="background-color: {{ group.colors[p] }};">
+            {{ group.players[p] }}
+          </div>
+        {% endfor %}</p>
+
+      <a href="/statistics">>>> to Statistics</a>
+
+    </div>
+  </section>
+
+
+
+  <div id='games' class="pageNav">
+
+    <a href='#play'>Play</a>
+    <p>></p>
+    <a href='#stats'>Statistics</a>
+    <p>></p>
+    <a class='pageNavCurrent' href='#games'>Game Info</a>
+    
+  </div>
+
+
+
+  {# Game Modes #}
+  <section id="gamesDiv" class="FullDiv"
+    style="background-color: var(--c-purple);">
+
+
+    <h2 style="text-align: left;" class="h2fat">
+      <span style="background-color: var(--c-blue-dark);">
+        Game Modes</span></h2>
+
+    <p>Choose a mode to see the description and a giph.</p>
+
+
+
+    <div class="tab">
+
+      <div class="tabButtons">
+        {% for m in range(num_modes) %}
+          
+          <button class="tablinks" 
+              onclick="openMode(event, '{{ modes[m][0] }}')"      
+              style='text-transform:capitalize;'>
+                {{ modes[m][0] }}
+          </button>
+
+        {% endfor %} 
+      </div>
+
+
+      {% for m in range(num_modes) %}
+        <div id="{{ modes[m][0] }}"  class="tabcontent">
+          <div class="imgSplitDiv">
+
+            <div class="textDiv" 
+              style="grid-column: 1/3; 
+              background-color: var(--b-subtile);">
+              <h3> {{ modes[m][0] }} </h3>
+
+              <p> {{ modes[m][2] }} </p> 
+            </div>  
+
+
+            <div class="giphyImg"
+              style="grid-column: 3;">
+              <img src="{{ modes[m][3] }}">
+            </div>
+
+          </div>
+        </div>
+      {% endfor %}
+
+    </div>
+  </section>
 </div>
+
+
 
 {% endblock %}

@@ -23,10 +23,11 @@
 
         ----- Specific ------
 
-        > ERROR pages
         > media
         > color choices
         > unknown
+        > ERROR pages
+
 */
 
 
@@ -64,7 +65,7 @@ div {
     padding: 20px;
     margin: 20px;
     border-radius: 5px;
-    background-color: var(--b-std);
+    background-color: var(--b-white-tr);
     color: var(--t-std);
     text-align: center;
 }
@@ -81,12 +82,14 @@ div {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    min-width: 300px;
+
     padding: 20px;
     border-radius: 5px;
-    background-color: var(--b-pop);
-    color: var(--t-pop);
+    background-color: var(--b-dark);
+    color: var(--t-white);
     z-index: 10;
-    box-shadow: 0 0 10px 1px var(--b-pop);
+    box-shadow: 0 0 10px 1px var(--s-shadow);
 }
 
 
@@ -98,7 +101,7 @@ div {
     border-radius: 5px;
     background-color: var(--b-info); 
     border: 1px dotted var(--t-light);
-    color: var(--t-group);  
+    color: var(--t-light);  
     font-size: 1.2rem;
     letter-spacing: 0.2rem;
     text-align: center;
@@ -121,15 +124,16 @@ div {
 
 
 
-p a { 
+a { 
     text-decoration: none;
-    color: var(--a-text); 
+    color: var(--t-std);
 }
 
 
-a:hover {
+a:hover, button:hover {
     cursor: pointer;
-    text-decoration: underline; 
+    text-decoration: none; 
+    color: var(--s-hover);
 }
 
 
@@ -140,7 +144,7 @@ a:visited, a:active {
 
 
 .pageLink {     
-    border: 1px solid var(--o-std);
+    border: 1px solid var(--t-std);
     border-radius: 5px;
     padding: 15px;
     margin: 5px;
@@ -149,7 +153,7 @@ a:visited, a:active {
     background-color: transparent;
     border-color: var(--t-std);
 
-    font-size: 1.2em;
+    font-size: 1rem;
     font-weight: bold;
     letter-spacing: 2px;
     text-decoration: none; 
@@ -187,25 +191,25 @@ a:visited, a:active {
     transition: 0.3s;
     min-width: 150px;
 
-    background-color: var(--b-tab);
-    color: var(--t-head);
+    background-color: var(--b-dark-tr);
+    color: var(--t-white);
     font-weight: bold;
     letter-spacing: 2px;
-    border: 1px solid var(--o-tab);
+    border: 1px solid var(--b-grey-tr);
     border-radius: 5px; 
 }
     
 
 .tab button:hover {
-    border: 1px solid var(--o-tab-h); 
-    color: var(--o-tab-h);
+    border: 1px solid var(--s-hover); 
+    color: var(--s-hover);
 }
 
 
 .tab button.active {
-    background-color: var(--b-tab-a);
-    border: 1px solid var(--o-tab-a); 
-    color: var(--t-head);
+    background-color: var(--b-dark);
+    border: 1px solid var(--s-hover); 
+    color: var(--s-hover);
 }
 
 
@@ -213,7 +217,6 @@ a:visited, a:active {
     display: none;
     padding: 0;
     margin: 0;
-    border-top: 1px solid var(--o-tab-a);
 } 
 
 
@@ -230,46 +233,45 @@ a:visited, a:active {
 /* -------------------  TABLES  ------------------ */
 
 
-table, th, td {
-    width: 100%;
-    text-align: center;
-    letter-spacing: 2px;
-    border-radius: 5px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    color: var(--t-light);
-}
-
-
-th {
-    font-weight: bold; 
-    padding-top: 10px;
-    padding-bottom: 10px;
-    color: var(--t-input);
-    text-transform:capitalize;
-    font-size: 1.2em;
-    letter-spacing: 2px;
-    background-color: var(--b-tab);
-    border-bottom: 1px solid var(--o-std);
-}
-
-
 table {
     border-collapse: collapse;
     width: 100%;
-    padding: 5pt;
-    background-color: var(--b-basic);
+    padding: 15pt;
     table-layout: fixed ; 
+    overflow: scroll;
+    max-width: var(--d-full-max);
+
+    caption {
+        font-size: 0.9rem;
+        font-weight: bold;
+        padding: 20px auto;
+        text-align: center;
+    }
 }
 
+
+td {
+    text-align: left;
+    padding: 5px;
+    font-size: 0.9rem;
+}
+
+th {
+    text-align: center;
+    padding: 20px auto 10px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--t-white);
+}
+
+tr {
+    border-bottom: 1px solid var(--c-grey-tr);
+}
 
 tr.active-row {
-    color: var(--t-light);
-    line-height: 3em;
-    border: 1px solid var(--o-std);
-    border-radius: 10px;
+    line-height: 2rem;
+    border: 1px solid var(--s-hover);
+    border-radius: 5px;
 }
-
 
 
 
@@ -297,11 +299,10 @@ input {
     padding: 0;
 
     text-align: center;
-    background-color: var(--b-input);
-    color: var(--t-input);
-    font-style: italic;
+    background-color: var(--i-background);
+    color: var(--i-text);
     font-size: 1.2em;
-    border: 1px solid var(--o-input);
+    border: 1px solid var(--i-border);
     
     cursor: text;
 }      
@@ -324,6 +325,17 @@ input {
 /* ------------------  MEDIA  ------------------ */
 
 
+
+.imgDiv {
+    height: auto;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+
+
+
 .giphyImg {
     background-color: transparent;
     padding: 0;
@@ -342,7 +354,7 @@ input {
 
 
 .giphyBg {
-    background-color: var(--b-foot);
+    background-color: var(--b-dark);
     padding: 0;
     height: 100%;
     width: 100%;
@@ -350,6 +362,9 @@ input {
     background-size: cover;
     background-position: center;  
 }
+
+
+
 
 
 
@@ -363,7 +378,7 @@ input {
     margin: 5px; 
     padding: 5px; 
     justify-content: center;     
-    color: var(--t-head); 
+    color: var(--t-white); 
 }
 
 
@@ -402,8 +417,8 @@ input {
         height: 4em;
         width: 67%;
 
-        background-color: var(--b-foot);
-        color: var(--t-head); 
+        background-color: var(--b-dark);
+        color: var(--t-white); 
 }}
 
 
@@ -442,7 +457,7 @@ input {
     grid-template-areas: 
     'loc loc  loc desc desc desc desc desc frm';
     column-gap: 5px;
-    background-color: var(--b-basic);
+    background-color: var(--b-dark-tr);
     padding: 5px; 
     text-align: center;}
 

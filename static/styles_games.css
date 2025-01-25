@@ -1,0 +1,170 @@
+
+/*  This file contains styles for game related pages. 
+    
+    This includes all modes - from starting a game to 
+    showing the results at the end. 
+    
+*/ 
+
+
+
+/* CONTENTS
+
+        > GENERAL
+        
+*/
+
+
+
+
+/*  ############################################
+
+                    General
+                     
+    ############################################  */
+
+
+
+.gameSection {
+    display: block;
+    max-width: var(--d-full-max);
+    margin: 0 auto;
+    padding: 40px 20px;
+
+    h2 {
+        margin: 0 0 20px;
+        text-align: center;}
+
+    button {
+        background-color: var(--b-dark-tr);
+        color: var(--t-white);
+        min-width: 150px;
+    }
+}
+
+
+#gameHead {
+    margin: 0;
+    padding: 0 0 80px;
+
+    h1 {
+        display: block;
+        margin: 80px auto 40px;
+        text-align: center;}
+
+    div {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+    div a {
+        color: var(--t-white);
+        border: 1px solid var(--t-white);}
+
+    div a:hover {
+        color: var(--s-hover);}
+}
+
+
+.inlInput {
+    text-align: right;
+
+    input {
+        display: inline-block;      
+        width: 80%;}
+}
+
+
+
+.submitBtn {
+    padding:0;
+    margin: 20px 0;
+    width: 100%;
+
+    input {
+        margin: 0;
+        height: 40px;
+        background-color: var(--t-white);
+        border-radius: 5px;
+        font-weight: bold;}
+}
+
+.deleteBtn {
+    background-color: var(--s-red);
+    color: var(--t-white);
+    padding: 15px;
+    border-radius: 5px;
+
+    input {
+        height: 40px;
+        border-radius: 5px;}
+}
+
+.closeBtn {
+    width: 100%;
+    margin: 20px 0 0;
+    color: var(--t-white);
+    border: 1px solid var(--t-white);
+}
+
+
+.gameShow {
+    display: block !important;
+}
+
+
+
+
+/*  ############################################
+
+                    Puzzle
+                     
+    ############################################  */
+
+
+#puzzleList {
+    margin: 20px auto;
+    padding: 0;
+    overflow: scroll;
+    max-height: 400px;
+
+    div {
+        padding: 0;
+        margin: 1px 0;
+        display: grid;
+        grid-template-columns: 30px 60px 1fr 2fr;
+        grid-template-rows: 1;
+
+        p { 
+            background-color: var(--i-background);
+            display: inline-block;
+            margin: 0;
+            padding: 5px;
+            text-align: left;
+            font-size: 0.9rem;
+            overflow-wrap: break-word;}
+        
+        .pPcs, .pName {
+            font-weight: bold;}
+
+        .pDesc, .pId {
+            overflow:hidden;
+            font-size: 0.8rem;
+            color: var(--t-light);}}
+}
+
+
+#puzzleLogList {
+    max-height: 800px;
+    overflow: scroll;
+    background-color: var(--b-dark-tr);
+    color: var(--t-white);
+}
+
+@media screen and (max-width: 800px) {
+    #puzzleLib, #puzzleLogList, #puzzleLogs {
+        padding: 20px 0;}
+}
+    

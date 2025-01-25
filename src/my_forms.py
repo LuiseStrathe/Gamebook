@@ -176,7 +176,7 @@ class CloseRoundForm(FlaskForm):
   pt7 = IntegerField("enter points")
   pt8 = IntegerField("enter points")
   
-  submit = SubmitField("Close this Round")
+  submit = SubmitField("Close Round")
   
   
   
@@ -184,9 +184,46 @@ class CloseRoundForm(FlaskForm):
 # PUZZLE
 class AddPuzzleForm(FlaskForm):
   
-  title = StringField("Title", validators=[DataRequired()])
-  pcs = IntegerField("Number of Pieces", validators=[DataRequired()])
+  title = StringField("Title", 
+                      validators=[DataRequired(), Length(min=3, max=20)])
+  pcs = IntegerField("Number of Pieces", 
+                     validators=[DataRequired()])
   description = StringField("Description (optional)")
   
-  submit = SubmitField("Add this puzzle to the GameBook")
+  submit_add_puzzle = SubmitField("Add Puzzle")
   
+  
+  
+class ChangePuzzleForm(FlaskForm):
+  
+  puzzle_change = SelectField("Puzzle change", 
+    choices=[], validators=[DataRequired()])
+  title_change = StringField("Title change")
+  description_change = StringField("Description change")
+  delete = BooleanField("Delete")
+  
+  submit_change_puzzle = SubmitField("Submit Changes")
+  
+  def __init__(self, puzzles, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+
+    self.puzzle_change.choices = puzzles
+  
+  
+  
+  
+class PuzzleRecordForm(FlaskForm):
+  player = SelectField("Player", 
+    choices=[], validators=[DataRequired()])
+  puzzle = SelectField("Puzzle ID",
+    choices=[], validators=[DataRequired()])
+  hours = IntegerField("Hours", default=0)
+  minutes = IntegerField("Minutes", default=0, validators=[DataRequired()])
+  seconds = IntegerField("Seconds", default=0)
+  comment = StringField("Comment (optional)")
+  submit_puzzle_log = SubmitField("Save Log")
+  
+  def __init__(self, players, choice_puzzles, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+    self.puzzle.choices = choice_puzzles
+    self.player.choices = players

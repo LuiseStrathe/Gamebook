@@ -1,0 +1,238 @@
+
+{% set page_html = page %}
+{% extends page[0] %}
+
+
+{% block content %}
+
+
+
+
+{# CSS #}
+<link rel="stylesheet" href="../static/styles_games.css">
+<style type="text/css">
+    body { 
+        background-image: var(--b-grade-2) !important;    }
+    
+  </style>
+
+
+
+<div id='gameHead'>
+   
+    <h1>Puzzles</h1> 
+
+    <div>
+        <a class="pageLink"
+            href="/">Home</a>
+        <a class="pageLink"
+            href="#puzzleLogs">View Logs</a>
+        <a class="pageLink"
+            href="/statistics">View Stats</a>
+    </div>
+
+</div>
+
+
+{% if info != "" %}
+
+    <div id="infoID" class="userFeedback infoShow">
+        {{ info }} <br><br>
+        <button 
+            class='pageLink' 
+            onclick="close_user_info()">
+                X
+        </button>
+    </div>
+
+{% endif %}
+
+
+<div class='FullDiv' style="background-color: var(--c-white);">
+    <section id='puzzleLib' class="gameSection">
+
+        <h2 class="h2fat"><span style="background-color: black;">
+            Puzzle Library</span></h2>
+
+        <p> You have {{ puzzles.shape[0] }} puzzles in the library:</p>
+        
+        <div id="puzzleList">
+            {% for i in range(puzzles.shape[0]) %}    
+                <div class="puzzleList">
+
+                    <p class="pId"> {{ puzzles["id"].iloc[i] }} </p>
+                    <p class="pPcs"> {{ puzzles["pcs"].iloc[i] }} </p>
+                    <p class="pName"> {{ puzzles["title"].iloc[i] }} </p>
+                    <p class="pDesc"> {{ puzzles["description"].iloc[i] }} </p>
+
+                </div> 
+            {% endfor %}
+        </div>
+
+        
+
+        <div id='puzzleChange'>
+
+            <button class='pageLink puzzleBtn' 
+                onclick='puzzle_add()'>
+                + add puzzle
+            </button>
+
+            <button class='pageLink puzzleBtn' 
+                onclick='puzzle_change()'>
+                change
+            </button>
+
+
+            <div id='puzzleAddForm' class='popUp'>
+                <form action="" method="POST">
+                    {{ add_puzzle_form.hidden_tag() }}
+
+                    <table cellpadding="10px">
+                        <tr><td style='text-align:right;'>
+                                Puzzle Title</td>
+                            <td style='text-align:left;'>
+                                {{ add_puzzle_form.title() }}</td></tr>
+                        <tr><td style='text-align:right;'>
+                                Description</td>
+                            <td style='text-align:left;'>
+                                {{ add_puzzle_form.description() }}</td></tr>
+                        <tr><td style='text-align:right;'>
+                                # Pieces</td>
+                            <td style='text-align:left;'>
+                                {{ add_puzzle_form.pcs() }}</td></tr></table>
+                        <div  class='pageLink submitBtn' >
+                            {{ add_puzzle_form.submit_add_puzzle() }}</div>
+                </form>
+
+                <button class='pageLink closeBtn' 
+                    onclick='puzzle_add()'>
+                    X
+                </button>
+            </div>
+
+            
+            <div id='puzzleChangeForm' class='popUp'>
+                <form action="" method="POST">
+                    {{ change_puzzle_form.hidden_tag() }}
+                    
+                    <table cellpadding="10px">
+                        <tr>Puzzle to change:<br></tr>
+                        <tr>{{ change_puzzle_form.puzzle_change() }}<br></tr>
+                        <tr><td style='text-align:right;'>
+                            New title:</td>
+                            <td style='text-align:left;'>
+                                {{ change_puzzle_form.title_change() }}</td></tr>
+                        <tr><td style='text-align:right;'>
+                            New description:</td>
+                            <td style='text-align:left;'>
+                                {{ change_puzzle_form.description_change() }}</td></tr>
+                    </table>
+
+                    <div>    
+                        <div class="submitBtn deleteBtn">
+                            <p>Delete this puzzle and all logs with it:</p>
+                            {{ change_puzzle_form.delete() }}
+                            <p>This action cannot be undone!</p>
+                        </div>
+
+                        <div  class='pageLink submitBtn' >
+                            {{ change_puzzle_form.submit_change_puzzle() }}</div>
+
+                        <button class='pageLink closeBtn' 
+                            onclick='puzzle_change()'>
+                            X
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>    
+    </section>
+</div>
+
+
+
+<section id="puzzleLogs" class="gameSection">
+
+    <h2 class="h2fat" id="puzzleLogs">
+        <span style="background-color: var(--c-blue);">
+        Puzzle Logs</span></h2>
+
+    <p>Here are the puzzles, which <b>{{ page[2] }}</b> has finished & logged.</p>
+
+    <button class='pageLink puzzleLogBtn' 
+        onclick='puzzle_log()'>
+        + add puzzle log
+    </button>
+
+
+    <div id='puzzleLogForm' class='popUp'>
+        <form action="" method="POST">
+            {{ puzzle_record_form.hidden_tag() }}
+
+            <div>
+                <p>Player</p>
+                <p>{{ puzzle_record_form.player() }}</p>
+                <p>Puzzle</p>
+                <p>{{ puzzle_record_form.puzzle() }}</p>
+
+                <p>Time to finish:</p>
+                <p class="inlInput">hr {{ puzzle_record_form.hours() }}</p>
+                <p class="inlInput">min {{ puzzle_record_form.minutes() }}</p>
+                <p class="inlInput">sec {{ puzzle_record_form.seconds() }}</p>
+                <p>Comment:</p>
+                <p>{{ puzzle_record_form.comment() }}</p>
+
+
+                <div  class='pageLink submitBtn' >
+                    {{ puzzle_record_form.submit_puzzle_log() }}</div>   
+                    
+                <button class='pageLink closeBtn' 
+                    onclick='puzzle_log()'>
+                    X
+                </button>
+            </div>            
+        </form>
+    </div>
+
+
+    {% if (logs|length == 0) %}
+        <p>&#x1F641; No logs yet.</p>
+
+    {% else %}
+        <div id="puzzleLogList">
+            <table>
+                <caption>Puzzle Logs</caption>
+                
+                <thead>
+                    <tr>
+                        <th>When</th>
+                        <th>Player</th>
+                        <th>Puzzle</th>
+                        <th>Comment</th>
+                    </tr>
+                </thead>
+
+
+                {% for i in range(logs|length) %}
+
+                    {% set player = logs[i][1] %}
+                    {% set color = colors[player] %}
+
+                    <tr style="border-left: 2px solid {{ color }};">
+                        <td style="color: var(--c-grey)"> {{ i+1 }} <br><b>{{ logs[1][0] }}<b> </td>
+                        <td style="color: {{color}}"> {{ puzzles.iloc[logs[i][2]|int-1].title }}<br>
+                            <b> {{ logs[i][3] }}</b> </td>
+                        <td style="color: {{color}}"> {{ player }} <br><b>{{ logs[i][4] }}</b> </td>
+                        <td style="color: var(--c-grey)"> {{ logs[i][5] }} </td>
+                    </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+    {% endif %}
+
+</section>
+
+
+{% endblock %}

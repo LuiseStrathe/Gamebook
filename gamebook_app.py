@@ -20,6 +20,6 @@ if __name__ == "__main__":
 import Gamebook.src.routes
 import Gamebook.src.routes_rounds
 import Gamebook.src.routes_groups
-import Gamebook.src.routes_puzzle
+import Gamebook.src.routes_games
 import Gamebook.src.routes_dice
 

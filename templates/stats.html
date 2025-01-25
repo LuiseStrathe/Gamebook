@@ -1,0 +1,71 @@
+
+{% set page_html = page %}
+{% extends page[0] %}
+
+
+{% block content %}
+
+
+{# CSS #}
+<link rel="stylesheet" href="../static/styles_stats.css">
+
+
+{# Header #}
+<section class="statsHeader">
+
+  <h1>Game Statistics</h1>
+
+  <a href="/">>>> back Home</a>
+
+  <div>
+    {% for mode in modes %}
+      <button class="tablinks" 
+      onclick="openMode(event, '{{ mode }}')">
+        {{ mode }}  
+      </button>
+    {% endfor %}
+  </div>
+
+</section>
+
+
+{# Stats #}
+<div id="statsAll" class="FullDiv">
+
+  {% for m in range(num_modes) %}
+    <section id="{{ modes[m] }}"  class="tabcontent">
+      
+      <p style='text-align:left; white-space: pre-line;'>
+        {{ group.results[group.results.g_mode == modes[m]].shape[0] }} pages of {{ modes[m] }}:
+      </p>
+
+
+      <table style="">
+        <tr>
+          <th>ID</th>
+          <th>Winner</th>
+          <th>Note</th>
+          <th>Time</th>
+        </tr>
+        
+
+        {% for index, row in group.results[group.results.g_mode == modes[m]].iterrows() %}
+          <tr>
+              <td><a style="color:var(--c-yellow); padding:0; font-weight:bold;"
+                href="/{{ group.id }}/{{ row.g_mode }}/{{ row.game_id }}">
+                {{ row.game_id[2:] }}</a></td>
+              <td style="color:var(--c-1);">{{ row.winner_name }}</td>
+              <td>{{ row.info_3 }}</td>
+              <td>{{ row.time.strftime("%m/%d/%Y, %H:%M") }}</td>
+          </tr>
+        {% endfor %}
+
+      </table>
+    
+    </section>  
+  {% endfor %}
+
+</div>
+
+
+{% endblock %}

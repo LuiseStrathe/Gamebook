@@ -87,16 +87,11 @@ function close_user_info() {
 }
 
 
-
-
-
 // Change SETTINGS confirmation
 
 function toggle_change_settings() {
   document.getElementById("settingsID").classList.toggle("settingsShow");
 }
-
-
 
 
 // DELETE group confirmation
@@ -105,6 +100,22 @@ function toggle_group_delete() {
   document.getElementById("delGroupID").classList.toggle("delGroupShow");
 }
 
+
+// Puzzles
+
+function puzzle_change() {
+  document.getElementById("puzzleChangeForm").classList.toggle("gameShow");
+}
+
+
+function puzzle_add() {
+  document.getElementById("puzzleAddForm").classList.toggle("gameShow");
+}
+
+
+function puzzle_log() {
+  document.getElementById("puzzleLogForm").classList.toggle("gameShow");
+}
 
 
 

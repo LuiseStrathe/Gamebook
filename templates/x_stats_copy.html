@@ -99,23 +99,7 @@
   </div>  
 {% endfor %}
 
-<br><br><br>
-
-<script>
-function openMode(evt, Mode) {
-  var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-  document.getElementById(Mode).style.display = "block";
-  evt.currentTarget.className += " active";}
-</script>
-
+<hr>
 
 <h2>modes</h2>
 <p>Only mode <b>rounds</b> available, yet.</p>
@@ -135,24 +119,11 @@ function openMode(evt, Mode) {
   </div>  
 {% endfor %}
 
-<br><br><br>
+<hr>
 
-<script>
-function openMode(evt, Mode) {
-  var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-  document.getElementById(Mode).style.display = "block";
-  evt.currentTarget.className += " active";}
-</script> <br>
 
-<a class='a-small-2' href='/group/{{ group.id }}'>
+
+<a class='pageLink' href='/group/{{ group.id }}'>
   Back Home</a><br><br>
 
 {% endblock %}

@@ -9,7 +9,7 @@ from Gamebook.src.my_classes import *
 from Gamebook.src.my_fun import *
 from Gamebook.src.routes import *
 from Gamebook.src.routes_rounds import *
-from Gamebook.src.routes_puzzle import *
+from Gamebook.src.routes_games import *
 from Gamebook.src.routes_dice import *
 
 
@@ -28,40 +28,40 @@ from flask_login import LoginManager
 
 
 
+
+# Enter group page
+
+#@app.route("/gamebook")
+#def enter_gamebook():
+  
+#  if check_key(session['username'], session['key']):    
+#    return redirect(f"/gamebook/{session['username']}")
+  
+#  else: 
+#    init_session()
+  
+#    return redirect(url_for('login', retry=False))
+
+
+
 # Group page
 
 @app.route("/group/<string:group_id>", methods=["GET", "POST"])
 def group(group_id):
   
   
-    if check_key(session['username'], session['key']):
-      group = load_group(group_id)[0]
-      
-      
-      static = 'group.html'
-      return render_template(
-        static, page=page_html(static, "in"), 
-        modes=modes_info, 
-        group=group)
-      
-    else:
-      init_session()
-      return redirect(url_for('login', retry=False))
-
-
-
-
-# enter GameBook
-
-@app.route("/gamebook")
-def enter_gamebook():
-  
-  if check_key(session['username'], session['key']):    
-    return redirect(f"/gamebook/{session['username']}")
-  
-  else: 
+  if check_key(session['username'], session['key']):
+    group = load_group(group_id)[0]
+    
+    static = 'group.html'
+    return render_template(
+      static, page=page_html(static, "IN"), 
+      modes=modes_info, num_modes=len(modes),
+      group=group)
+    
+  else:
     init_session()
-  
+    
     return redirect(url_for('login', retry=False))
 
 
@@ -69,28 +69,33 @@ def enter_gamebook():
 
 # Statistics  
 
-@app.route("/gamebook/<string:group_id>", methods=["GET", "POST"])
-def gamebook(group_id):
+@app.route("/statistics", methods=["GET", "POST"])
+def statistics():
   
-  if check_key(session['username'], session['key']):
-    group = load_group(group_id)[0]
-    
-    stats = [[0 for _ in range(group.n + 1)] for _ in modes]
-    for m, mode in enumerate(modes):
+  if verify_session():
+  
+    if check_key(session['username'], session['key']):
       
-      games = group.results[group.results.g_mode == mode]
-      n_games = games.shape[0]
-      print('>> num games in category', mode, ':', n_games)
-      if n_games > 0:
-        wins = [n_games, *[games[games.winner_name == p].shape[0] for p in group.players]]
-        stats[m] = wins
-    
-    static = 'gamebook.html'  
-    return render_template(
-      static, page=page_html(static, "in"),
-      modes=modes_info, 
-      group=group, stats=stats,
-      num_modes=len(modes), mode_key=mode_key)
+      group_id = name_to_id(session['username'])
+      group = load_group(group_id)[0]
+      
+      stats = [[0 for _ in range(group.n + 1)] for _ in modes]
+      for m, mode in enumerate(modes):
+        
+        games = group.results[group.results.g_mode == mode]
+        n_games = games.shape[0]
+        print('>> num games in category', mode, ':', n_games)
+        
+        if n_games > 0:
+          wins = [n_games, *[games[games.winner_name == p].shape[0] for p in group.players]]
+          stats[m] = wins
+      
+      static = 'stats.html'  
+      return render_template(
+        static, page=page_html(static, "IN"),
+        modes_info=modes_info, modes=modes,
+        group=group, stats=stats,
+        num_modes=len(modes), mode_key=mode_key)
     
   else: 
     init_session()
@@ -119,7 +124,7 @@ def random_group():
 
   static = 'random.html'
   return render_template(
-    static, page=page_html(static, "out"), 
+    static, page=page_html(static, "OUT"), 
     modes=modes_info,
     random_form=random_form)
   
@@ -146,10 +151,8 @@ def game_start(group_id, mode):
     session['game_id'] =  game_id
     return redirect(f"/{mode}/{group_id}/{game_id}/start")
   
-  if mode == 'puzzle' and check:
-    return redirect(f"/puzzle/{group_id}/0")
-  
   return redirect('/')
+
 
 
 
@@ -195,7 +198,7 @@ def login():
         
   static = 'group_login.html'    
   return render_template(
-    static, page=page_html(static, "out"), 
+    static, page=page_html(static, "OUT"), 
     retry=retry)
 
 
@@ -248,7 +251,7 @@ def register():
   
   static = 'group_register.html'  
   return render_template(
-    static, page=page_html(static, "out"), 
+    static, page=page_html(static, "OUT"), 
     group_form=group_form)
 
 
@@ -277,8 +280,6 @@ def settings():
     if settings_form.validate_on_submit():
       
       key = encrypt_key(settings_form.changePassword.data)
-      print('Settings submitted:')
-      print(' > key: ', key)
       
       if check_key(group.id, key):
 
@@ -311,7 +312,7 @@ def settings():
                   
 
     return render_template(
-      static, page=page_html(static, "in"), 
+      static, page=page_html(static, "IN"), 
       group=group, info=info,
       settings_form=settings_form, 
       delete_form=delete_form)

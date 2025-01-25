@@ -36,8 +36,8 @@
 
 
 .adminConfirm {
-    background-color: var(--b-foot);
-    color: var(--t-head);
+    background-color: var(--b-dark);
+    color: var(--t-white);
 }
 
 
@@ -173,8 +173,8 @@
         margin: 0;
         padding: 0;
         border: none;
-        background-color: var(--b-head);
-        color: var(--t-head);
+        background-color: var(--b-dark-tr);
+        color: var(--t-white);
         font-weight: bold;
         cursor: pointer;
     }
@@ -198,7 +198,7 @@
 
 
 #playerCount #updatePlayers {
-    background-color: var(--b-foot);
+    background-color: var(--b-dark);
     font-weight: normal;
     font-size: 1rem;
 }
@@ -232,7 +232,7 @@
         padding: 0 10px;
         margin: 0;
         font-size: 2.5rem;
-        color: var(--b-std);  
+        color: var(--b-white);  
 }}
 
 
@@ -260,7 +260,7 @@
 #changeSlogan {
     display: flex;
     border-radius: 5px;
-    background-color: var(--b-std);
+    background-color: var(--b-white-tr);
     display: flex;
     margin: 30px auto;
     max-width: var(--d-full-max);
@@ -302,7 +302,7 @@
 /* -------------------  TEAM  ------------------ */
 
 #changeTeam {
-    background-color: var(--b-white);
+    background-color: var(--c-white);
     margin: 30px 0;
     padding: 20px;
     text-align: center;
@@ -335,7 +335,7 @@
         padding: 0;
         margin: 0;
         justify-content: center;
-        color: var(--t-head);
+        color: var(--t-white);
         word-break: break-word;
 }
 
@@ -433,8 +433,8 @@
 
 
 .settingsBtn {
-    background-color: var(--t-group) !important;
-    color: var(--t-head);
+    background-color: var(--b-foot) !important;
+    color: var(--t-white) !important;
     border:none;
 }
 
@@ -452,7 +452,7 @@
         margin: 10px 0;   
         width: 100%;
 
-        color: var(--t-pop);
+        color: var(--t-white);
         font-weight: normal;
         border-radius: 5px;
         font-weight: bold;             
@@ -464,7 +464,7 @@
     padding: 0;
     
     input { 
-        background-color: var(--t-group);
+        background-color: var(--s-green);
         color: var(--t-std);}
 
     input:hover {
@@ -483,17 +483,17 @@
 
 
 #deleteDiv {
-    background-color: var(--b-head);
+    background-color: var(--b-dark);
     text-align: center;
     padding: 40px 20px;
     margin-top: 30px;
 
 
     h2, a, p, button {
-        color: var(--t-head); }
+        color: var(--t-white); }
 
     a, button {
-        background-color: var(--h-red);
+        background-color: var(--s-red);
         width: 67%;
         max-width: var(--d-full-max);
         border: none;}
@@ -521,7 +521,7 @@
         border:none;};
 
     form input {
-        color: var(--t-input);
+        color: var(--i-text);
         font-style: none; 
 }}
 
@@ -532,7 +532,7 @@
     max-width: 100%;
     min-width: 200px;
 
-    color: var(--t-pop);
+    color: var(--t-white);
     font-style: none;
     font-weight: bold;      
     text-align: center;
@@ -544,8 +544,8 @@
     padding: 0;
 
     input { 
-        background-color: var(--h-red);
-        color: var(--t-head) !important;
+        background-color: var(--s-red);
+        color: var(--t-white) !important;
         letter-spacing: 0.2rem;
         font-weight: bold;
         font-style: normal;
