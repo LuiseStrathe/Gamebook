@@ -224,15 +224,57 @@ def create_random_group():
 
 # ROUNDS
 
+def start_rounds(group_id, form):
+          
+    # check players
+    group = load_group(group_id)[0]
+    players = [p for p in range(group.n) if form[f'r_p_{p}'].data]
+            
+    if len(players) < 2:
+        info = 'Select at least 2 players for a rounds game.'
+        game_id = 0
+        
+    else:
+        # init game
+        info = ''
+        game_id = gen_game_id('rounds')
+        points = np.zeros((2, len(players)))  
+        group = load_group(group_id)[0]
+        results = group.results
+        session['round'] = 0
+        session['game_id'] = game_id
+        session['num_players'] = len(players)
 
-def end_rounds(group, points, game_id, infos):
+        
+        # delete open rounds game if no winner_name
+        drop_game_id = results[(results['g_mode']=='rounds') \
+            & (results['winner_name']=='')].game_id.values
+        
+        group.results = results.drop(results[results['game_id'].isin(drop_game_id)].index)
+         
+        
+        # group.results  > save in group
+        result = { \
+            'game_id':game_id, 'g_mode': 'rounds', "group_id":group.id, 
+            "result":points, "n_rounds": 0, 
+            "winner_name":'', 'time':datetime.now(),
+            'info_1':form.r_title.data, 'info_2': players, 'info_3':''}
+        
+        group.results = pd.concat([group.results, pd.DataFrame([result])])
+        group.update_group()
+    
+    return game_id, info
+          
+        
+
+def end_rounds(group, points, game_id, title, players, comment):
 
     winner = group.players[np.argmax(points[-1])]
           
     result = {'game_id':game_id, 'g_mode': 'rounds', "group_id":group.id, 
          "result":points, "n_rounds":points.shape[0], 
          "winner_name":winner, 'time':datetime.now(),
-         'info_1':infos[0], 'info_2': infos[1], 'info_3':infos[2]}
+         'info_1':title, 'info_2': players, 'info_3':comment}
     
     # save in group
     group.results = pd.concat([group.results, pd.DataFrame([result])])

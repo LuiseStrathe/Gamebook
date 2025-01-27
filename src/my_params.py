@@ -175,13 +175,13 @@ modes_info = [
 
 about_info = \
     "This GameBook is a simple and free online game notebook. \
-    You might have an analogue game book at home. \
+    You might have an analogue game book at home. \n\n \
     GamesBook a simple web application that allows you to save logs \
     of the games you play with others and even analyze them later on. \n\n \
     You can create a shared group account for up to 10 players. \
     Each game you play will add a log to your GamesBook with the final results. \
     This way you have access to statistics of all your group's games \
-    and never lose track of the scores again.\n\n "
+    and never lose track of the scores again. \n "
 
                 
     

@@ -18,93 +18,82 @@ from datetime import datetime
 
 
 # PLAY
-@app.route("/rounds/<string:group_id>/<string:game_id>/<int:round>", methods=["GET", "POST"])
-def rounds(group_id, game_id, round):
-  
-  # init
-  if session['status'] != 'IN':
-                      redirect_link = f"/rounds/random/{game_id}/{round}"   
-  else:               
-                      redirect_link = '/'
-  
+@app.route("/rounds/<string:game_id>", methods=["GET", "POST"])
+def rounds(game_id):
   
   # verify user
-  if round != session['round']:
-    return redirect(f"/rounds/{group_id}/{game_id}/{session['round']}")
-  if group_id != session['username']:
-    if group_id == 'random': pass
-    else: return redirect(f"{redirect_link}")
-
+  if verify_session() == False: 
+    if session['username'] == 'random': pass
+    else: return redirect("/")
+    
 
   # init params
-  n =                 int(session['num_players'])
-  rounds_form =       CloseRoundForm(csrf_enabled=False)
-  submit_game_form =  SubmitGameForm(csrf_enabled=False)
+  info = ""
+  group_id = session['username']
+  group = load_group(group_id)[0]
+  result = group.results[group.results.game_id == game_id]
+   
+  n = result.n_rounds.values[0]
+  player_ids = result.info_2.values[0]
+  points = result.result.values[0]
   
-  if group_id == 'random': 
-                      group = create_random_group()
-  else:               group = load_group(group_id)[0]
-  
-  
-  # generate table
-  if round == 0:      
-                      start = True
-                      points = np.zeros((2,n))
-  else:               
-                      start = False
-                      points = np.load(f"{path_data}tmp/rounds/{game_id}.npy") 
-                      
-  template_entries =  [rounds_form.pt1(), rounds_form.pt2(), rounds_form.pt3(), rounds_form.pt4(), 
-                      rounds_form.pt5(), rounds_form.pt6(), rounds_form.pt7(), rounds_form.pt8()]   
-  point_entries =     [e for e in template_entries[:n]]
-  
+  # game_info: 
+    #     0: game_id, 1: title, 2: date, 
+    #     3: player_names, 4: player_colors, 
+    #     5: comment
+  title = result.info_1.values[0]  
+  player_names = [group.players[id] for id in player_ids]
+  player_colors = [group.colors[id] for id in player_ids]
+  date = pd.to_datetime(result.time.values[0]).strftime("%d/%m/%y")
+  comment = result.info_3.values[0]
+  game_info = [game_id, title, date, player_names, player_colors, comment]
   
   
-  # input
-  if rounds_form.validate_on_submit():
+  # not finished game
+  if result.winner_name.values[0] == '': 
+    
+    finished = False
+    rounds_form = CloseRoundForm(csrf_enabled=False)
+    submit_game_form = SubmitGameForm(csrf_enabled=False)    
+    template_entries = [rounds_form[f"pt{str(i)}"]() for i in range(len(player_ids))]   
+    point_entries = [rounds_form[f"pt{str(i)}"].data for i in range(len(player_ids))]
+    commennt = ''    
+    
+    # input
+    if rounds_form.validate_on_submit():
 
-    template_data =   [rounds_form.pt1.data, rounds_form.pt2.data, rounds_form.pt3.data, rounds_form.pt4.data, 
-                      rounds_form.pt5.data, rounds_form.pt6.data, rounds_form.pt7.data, rounds_form.pt8.data]
-    new_points = np.array([template_data[:n]])
+      template_data =   [rounds_form.pt1.data, rounds_form.pt2.data, rounds_form.pt3.data, rounds_form.pt4.data, 
+                        rounds_form.pt5.data, rounds_form.pt6.data, rounds_form.pt7.data, rounds_form.pt8.data]
+      new_points = np.array([template_data[:n]])
+      
+      if n == 0: points = new_points
+      else: points = np.vstack([points[:-1], new_points])  
+                
+      points = np.vstack([points, np.sum(points, axis=0)])
+      group.result.loc[group.result.game_id == game_id, 'points'] = points
+      group.result.loc[group.result.game_id == game_id, 'n_rounds'] = n + 1 
+      
+      session['round']  = n + 1    
+      return redirect(f"/rounds/{game_id}")
     
-    if round == 0:    points = new_points
-    else:             points = np.vstack([points[:-1], new_points])  
-               
-    points =          np.vstack([points, np.sum(points, axis=0)])
-    np.save(f"{path_data}tmp/rounds/{game_id}", points)  
+      
+    # submit page
+    if submit_game_form.validate_on_submit():
+      
+      # info_3: user note
+      comment = submit_game_form.r_comment.data
+      end_rounds(group=group, points=points, game_id=game_id, \
+        title=title, players=player_ids, comment=comment)
+      
+      return redirect(f"/rounds/{game_id}")
     
-    session['round']  += 1    
-    return redirect(f"/rounds/{group_id}/{game_id}/{session['round']}")
   
-    
-  # submit page
-  if submit_game_form.validate_on_submit():
-    print(f"Game {game_id} submitted")
-    
-    # info_3: user note
-    infos = ['', '', submit_game_form.info.data]
-    end_rounds(group=group, points=points, game_id=game_id, infos=infos)
-    return redirect(f"/{group_id}/rounds/{game_id}")
+  else: finished = True
   
   static = 'rounds.html'
-  return render_template( static, page=page_html(static, "out"),
-                            modes=modes, descriptions=descriptions, 
-                            rounds_form=rounds_form, submit_game_form=submit_game_form, 
-                            group=group, game_id=game_id, n=n, start=start,  
-                            round=round, points=points,
-                            point_entries=point_entries)
-
-
-# PAGE
-@app.route("/<string:group_id>/rounds/<string:game_id>")
-def rounds_page(group_id, game_id):
-  
-  if session['status'] == 'OUT':
-    return redirect('/')
-  
-  group = load_group(group_id)[0]
-  game_entry = group.results[group.results['game_id'] == game_id]
-  
-  static = 'rounds_page.html'
-  return render_template(static, page=page_html(static, "out"),
-                         group=group, game_id=game_id, game_entry=game_entry)
+  return render_template( 
+    static, page=page_html(static, "IN"), info=info,
+    rounds_form=rounds_form, point_entries=point_entries, 
+    submit_game_form=submit_game_form,
+    game_info=game_info, finished=finished,  
+    round= n + 1, points=points)

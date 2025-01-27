@@ -81,6 +81,8 @@ window.onclick = function(event) {
     #################################### */ 
 
 
+//      GENERAL & ADMIN
+
 // Close user INFO
 function close_user_info() {
   document.getElementById("infoID").classList.remove("infoShow");
@@ -101,6 +103,33 @@ function toggle_group_delete() {
 }
 
 
+
+//     GROUP
+
+// Start Game
+
+function start_puzzle() {
+  window.location.href = "/puzzle";
+}
+
+function start_rounds() {
+  document.getElementById("roundsStart").classList.toggle("startShow");
+}
+
+function start_dice() {
+  document.getElementById("diceStart").classList.toggle("startShow");
+}
+
+function start_skat() {
+  document.getElementById("skatStart").classList.toggle("startShow");
+}
+
+
+
+
+
+//     GAMES
+
 // Puzzles
 
 function puzzle_change() {
@@ -118,6 +147,11 @@ function puzzle_log() {
 }
 
 
+// Rounds
+
+function finish_rounds() {
+  document.getElementById("roundsFinish").classList.toggle("gameShow");
+}
 
 
 

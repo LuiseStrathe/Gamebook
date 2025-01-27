@@ -7,19 +7,18 @@
 
 <link rel="stylesheet" href="../static/styles_admin.css">
     
-    {# User info box #}
+
     <div class="titleDiv"
         style="background-color: var(--b-dark-tr); ">
 
         <h1> {{  page[2]  }}</h1>
         <h2 style="color: var(--t-white); text-align: left;">
             Group Settings</h2><br>
-        
     </div>
 
-
+    
+    {# User info box #}
     {% if info != "" %}
-
         <div id="infoID" class="userFeedback infoShow">
             {{ info }} <br><br>
             <button 
@@ -28,7 +27,6 @@
                     X
             </button>
         </div>
-
     {% endif %}
 
 
@@ -37,7 +35,7 @@
         style="background-color: transparent;
         padding: 0px; ">
 
-        <form action="" method="POST" style =''>
+        <form action="" method="POST">
             {{ settings_form.hidden_tag() }}
 
 

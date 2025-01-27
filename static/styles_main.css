@@ -257,7 +257,7 @@ td {
 }
 
 th {
-    text-align: center;
+    text-align: left;
     padding: 20px auto 10px;
     text-transform: uppercase;
     border-bottom: 1px solid var(--t-white);
@@ -270,7 +270,7 @@ tr {
 tr.active-row {
     line-height: 2rem;
     border: 1px solid var(--s-hover);
-    border-radius: 5px;
+    background-color: inherit;
 }
 
 

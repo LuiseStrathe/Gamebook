@@ -53,11 +53,27 @@ def group(group_id):
   if check_key(session['username'], session['key']):
     group = load_group(group_id)[0]
     
+    info = ""
+    rounds_form = StartRoundsForm(csrf_enabled=False)
+    
+    if rounds_form.validate_on_submit():
+      print('>> rounds form validated')
+          
+      game_id, info = start_rounds(group_id, rounds_form)
+      
+      if info == '':      
+        return redirect(f"/rounds/{game_id}")
+    
+    else: print("> Submit ROUNDS - errors:", rounds_form.errors)
+    
+    
+    
     static = 'group.html'
     return render_template(
-      static, page=page_html(static, "IN"), 
+      static, page=page_html(static, "IN"), info=info,
       modes=modes_info, num_modes=len(modes),
-      group=group)
+      group=group, rounds_form=rounds_form)
+    
     
   else:
     init_session()
@@ -133,7 +149,7 @@ def random_group():
   
   
 # Start game
-
+'''
 @app.route("/start/<string:mode>/<string:group_id>",  methods=["GET", "POST"])
 def game_start(group_id, mode):
   
@@ -151,7 +167,7 @@ def game_start(group_id, mode):
     session['game_id'] =  game_id
     return redirect(f"/{mode}/{group_id}/{game_id}/start")
   
-  return redirect('/')
+  return redirect('/')'''
 
 
 

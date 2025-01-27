@@ -31,6 +31,10 @@
     margin: 0 auto;
     padding: 40px 20px;
 
+    p { 
+        margin-left: 15px;
+        color: var(--t-std);}
+
     h2 {
         margin: 0 0 20px;
         text-align: center;}
@@ -91,6 +95,20 @@
         font-weight: bold;}
 }
 
+.finishBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin: 20px auto;
+    height: 40px;
+
+    border-radius: 5px;
+    color: var(--s-yellow);
+    border: 1px solid var(--s-yellow);
+    font-weight: bold;
+}
+
 .deleteBtn {
     background-color: var(--s-red);
     color: var(--t-white);
@@ -104,7 +122,6 @@
 
 .closeBtn {
     width: 100%;
-    margin: 20px 0 0;
     color: var(--t-white);
     border: 1px solid var(--t-white);
 }
@@ -129,16 +146,21 @@
     padding: 0;
     overflow: scroll;
     max-height: 400px;
+    
+    p {
+        color: var(--t-std);}
 
     div {
         padding: 0;
-        margin: 1px 0;
+        margin: 2px 0;
         display: grid;
         grid-template-columns: 30px 60px 1fr 2fr;
         grid-template-rows: 1;
+        border-radius: 5px;
 
         p { 
-            background-color: var(--i-background);
+            color: var(--t-std);
+            background-color: var(--b-white-tr);
             display: inline-block;
             margin: 0;
             padding: 5px;
@@ -151,8 +173,7 @@
 
         .pDesc, .pId {
             overflow:hidden;
-            font-size: 0.8rem;
-            color: var(--t-light);}}
+            font-size: 0.8rem;}}
 }
 
 
@@ -168,3 +189,75 @@
         padding: 20px 0;}
 }
     
+
+
+/*  ############################################
+
+                    Rounds
+                     
+    ############################################  */
+
+
+#roundsMain {
+    h2 {
+        text-transform: uppercase;}
+
+    p {
+        color: var(--t-white);
+        text-align: left;}
+
+    table {
+        width: 100%;
+        padding: 15px;
+        border-collapse: separate;
+        border-spacing: 10px;
+        background-color: var(--b-black-tr);
+
+        th, td {
+            text-align: center;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;}
+
+        th {
+            border: none;}
+
+        td {
+            color: var(--t-white);
+            background-color: var(--b-dark);}
+
+        .roundsCol {
+            text-align: right; 
+            background-color: transparent;}
+    }
+}
+
+#roundsFinish {
+    border: 1px solid var(--s-yellow);
+    background-color: black;
+
+    p {
+        color: var(--t-white);
+    
+        input {
+            width: 100%;}}
+
+    h2 {
+        color: var(--s-yellow);}
+
+    div {
+        padding: 0;
+        height: 40px;
+
+        input {
+            margin: 0;
+            height: 40px;
+            width: 100%;
+            border: none;
+            color: var(--s-yellow);
+            background-color: transparent;}
+    }
+
+    button {
+        background-color: transparent;}
+}

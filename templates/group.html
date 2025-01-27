@@ -16,7 +16,8 @@
 
 
 <div class="homeBody">
-
+  {% set players = group.players %}
+  {% set colors = group.colors %}
 
   {# Header #}
   <div class="groupHeader">
@@ -49,6 +50,19 @@
   </div>
 
 
+  {# User info box #}
+  {% if info != "" %}
+      <div id="infoID" class="userFeedback infoShow">
+          {{ info }} <br><br>
+          <button 
+              class='pageLink' 
+              onclick="close_user_info()">
+                  X
+          </button>
+      </div>
+  {% endif %}
+
+
 
   {# Play #}
   <section class="FullDiv" 
@@ -60,21 +74,69 @@
     <div class='playDiv'>
       
       {% for i in range(num_modes) %}
-        <a class='modePlayDiv'
-          href = "/{{ modes[i][0] }}"> 
-          <div>
+        {% set mode = modes[i][0] %}
 
-            <h3> {{ modes[i][0] }} </h3>
+        <button class='modePlayDiv' onclick="start_{{ mode }}()"> 
+          <div>
+            <h3> {{ mode }} </h3>
 
             <div class="imgDiv" style="background-image: 
               url('{{ modes[i][5] }}')">
             </div>
 
             <p>>>> Start >>></p>
-
           </div>
-        </a>
+        </button>
+
       {% endfor %}
+
+      {# Popups #}
+      <div id='roundsStart' class="startPop popUp">
+        <form action="" method="POST">
+          {{ rounds_form.hidden_tag() }}
+          
+          <div>
+            <p>What game are you playing?</p>
+            <p>{{ rounds_form.r_title() }}</p>
+            <p><br>Who is joining?</p>
+
+            {% for p in range(group.n) %}
+              {% set player_tag = 'r_p_' + p|string %}
+              <div class='playerDiv'>
+                <p style='background-color: {{ colors[p] }};'>
+                  {{ players[p] }}</p>
+                <p>{{ rounds_form[player_tag]() }}</p>
+              </div>
+            {% endfor %}
+            </div>
+
+          <p class='startBtn'>{{ rounds_form.submit_rounds_start() }}</p>
+        </form>
+
+        <button onclick="start_rounds()" class='pageLink'>
+          x</button>
+      </div>
+
+      <div id='diceStart' class="startPop popUp">          
+        <div>
+          <p>Dice mode is not yet available</p>
+          <p>&#x1F641;</p>
+        </div>
+
+        <button onclick="start_dice()" class='pageLink'>
+          x</button>
+      </div>
+
+      <div id='skatStart' class="startPop popUp">          
+        <div>
+          <p>Skat mode is not yet available</p>
+          <p>&#x1F641;</p>
+        </div>
+
+        <button onclick="start_skat()" class='pageLink'>
+          x</button>
+      </div>
+
     
     </div>
 
@@ -114,8 +176,8 @@
       <p style = 'font-size:16; font-weight:bold; letter-spacing: 0.2em;'>
 
         {% for p in range(group.n) %}
-          <div style="background-color: {{ group.colors[p] }};">
-            {{ group.players[p] }}
+          <div style="background-color: {{ colors[p] }};">
+            {{ players[p] }}
           </div>
         {% endfor %}</p>
 

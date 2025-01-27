@@ -134,8 +134,8 @@ class DeleteForm(FlaskForm):
 
 
 
-
-
+  
+  
 ############################################
 
 #                    GAMES 
@@ -144,44 +144,49 @@ class DeleteForm(FlaskForm):
 
 
 
-# Submit Game
-class SubmitGameForm(FlaskForm):
-  
-  info = TextAreaField("Page Comment", validators=[DataRequired()])
-  submit = SubmitField("Finish this Page")
-
-
-
-# random_start 
-class RandomGroup(FlaskForm):
-  
-  p1 = StringField("Player 1", validators=[DataRequired()])
-  p2 = StringField("Player 2", validators=[DataRequired()])
-  p3 = StringField("Player 3")
-  p4 = StringField("Player 4")
-  
-  submit = SubmitField("Start without Login")
-  
-  
-  
 # ROUNDS
+
+class StartRoundsForm(FlaskForm):
+  
+  r_title = StringField("Rounds Game Title", 
+    validators=[DataRequired(), Length(min=3, max=20)])
+  
+  r_p_0 = BooleanField("Rounds Player 1")
+  r_p_1 = BooleanField("Rounds Player 2")
+  r_p_2 = BooleanField("Rounds Player 3")
+  r_p_3 = BooleanField("Rounds Player 4")
+  r_p_4 = BooleanField("Rounds Player 5")
+  r_p_5 = BooleanField("Rounds Player 6")
+  r_p_6 = BooleanField("Rounds Player 7")
+  r_p_7 = BooleanField("Rounds Player 8")
+  r_p_8 = BooleanField("Rounds Player 9")
+  r_p_9 = BooleanField("Rounds Player 10")
+  
+  submit_rounds_start = SubmitField("Start Rounds")
+  
+
+
 class CloseRoundForm(FlaskForm):
   
+  pt0 = IntegerField("enter points", validators=[DataRequired()])
   pt1 = IntegerField("enter points", validators=[DataRequired()])
-  pt2 = IntegerField("enter points", validators=[DataRequired()])
+  pt2 = IntegerField("enter points")
   pt3 = IntegerField("enter points")
   pt4 = IntegerField("enter points")
   pt5 = IntegerField("enter points")
   pt6 = IntegerField("enter points")
   pt7 = IntegerField("enter points")
   pt8 = IntegerField("enter points")
+  pt9 = IntegerField("enter points")
+  
+  r_comment = TextAreaField("Comment (optional)")
   
   submit = SubmitField("Close Round")
-  
-  
-  
+
+
   
 # PUZZLE
+
 class AddPuzzleForm(FlaskForm):
   
   title = StringField("Title", 
@@ -211,7 +216,6 @@ class ChangePuzzleForm(FlaskForm):
   
   
   
-  
 class PuzzleRecordForm(FlaskForm):
   player = SelectField("Player", 
     choices=[], validators=[DataRequired()])
@@ -227,3 +231,37 @@ class PuzzleRecordForm(FlaskForm):
     super().__init__(*args, **kwargs)
     self.puzzle.choices = choice_puzzles
     self.player.choices = players
+
+
+
+
+
+
+############################################
+
+#                    OLD 
+                     
+############################################
+
+
+
+# Submit Game
+class SubmitGameForm(FlaskForm):
+  
+  info = TextAreaField("Page Comment", validators=[DataRequired()])
+  submit = SubmitField("Finish this Page")
+
+
+
+# random_start 
+class RandomGroup(FlaskForm):
+  
+  p1 = StringField("Player 1", validators=[DataRequired()])
+  p2 = StringField("Player 2", validators=[DataRequired()])
+  p3 = StringField("Player 3")
+  p4 = StringField("Player 4")
+  
+  submit = SubmitField("Start without Login")
+  
+  
+  

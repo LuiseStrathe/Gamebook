@@ -6,15 +6,11 @@
 {% block content %}
 
 
-
-
 {# CSS #}
 <link rel="stylesheet" href="../static/styles_games.css">
 <style type="text/css">
-    body { 
-        background-image: var(--b-grade-2) !important;    }
-    
-  </style>
+    body {background-image: var(--b-grade-3) !important;}
+</style>
 
 
 
@@ -48,7 +44,7 @@
 {% endif %}
 
 
-<div class='FullDiv' style="background-color: var(--c-white);">
+<div class='FullDiv' style="background-color: var(--b-white-tr);">
     <section id='puzzleLib' class="gameSection">
 
         <h2 class="h2fat"><span style="background-color: black;">
@@ -158,7 +154,7 @@
         <span style="background-color: var(--c-blue);">
         Puzzle Logs</span></h2>
 
-    <p>Here are the puzzles, which <b>{{ page[2] }}</b> has finished & logged.</p>
+    <p style="color: var(--t-white);">Here are the puzzles, which <b>{{ page[2] }}</b> has finished & logged.</p>
 
     <button class='pageLink puzzleLogBtn' 
         onclick='puzzle_log()'>
@@ -218,10 +214,11 @@
 
                     {% set player = logs[i][1] %}
                     {% set color = colors[player] %}
+                    {% set puzzle_num = logs[i][2]|int - 1 %}
 
                     <tr style="border-left: 2px solid {{ color }};">
-                        <td style="color: var(--c-grey)"> {{ i+1 }} <br><b>{{ logs[1][0] }}<b> </td>
-                        <td style="color: {{color}}"> {{ puzzles.iloc[logs[i][2]|int-1].title }}<br>
+                        <td style="color: var(--c-grey)"> {{ i+1 }} <br><b>{{ logs[i][0] }}<b> </td>
+                        <td style="color: {{color}}">{{ puzzles.iloc[puzzle_num].title }}<br>
                             <b> {{ logs[i][3] }}</b> </td>
                         <td style="color: {{color}}"> {{ player }} <br><b>{{ logs[i][4] }}</b> </td>
                         <td style="color: var(--c-grey)"> {{ logs[i][5] }} </td>
