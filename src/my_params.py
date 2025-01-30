@@ -28,12 +28,10 @@ page_titles = {
     "group.html": "Overview",    
     "_index.html": "Home",
     "stats.html": "Stats",
-    
     "dice_page.html": "Dice",
     "dice_start.html": "Dice",
     "dice.html": "Dice",
     "puzzle.html": "Puzzles",
-    "puzzle_stats.html": "Stats",
     "random.html": "Test GamesBook",
     "rounds_page.html": "Rounds",
     "rounds.html": "Rounds",
@@ -87,10 +85,10 @@ dice_rows = [
 #############  MODES  ################
 
 
-modes = ["rounds", "dice", 'puzzle', 'skat']
+modes = ["rounds", "dice", 'puzzle']
 
 
-mode_key = {"rounds": "R", "dice": "D", "puzzle": "P", "skat": "S"}
+mode_key = {"rounds": "R", "dice": "D", "puzzle": "P"}
 
 
 # [0:mode_name, 1:description_short, 2:description_long, 3:description_img, 
@@ -148,20 +146,6 @@ modes_info = [
         "&#x1F9E9;",
         "../static/media/modes/scheme_puzzle.png",
         'https://giphy.com/embed/3o6Mbr1blVD5KKQBxK',
-    ],
-    
-    ["skat",
-     
-        "Cards game for 3 to 4 players.",
-        
-        "This game mode is not yet available.\n\n \
-        Play with your 32 cards set and 3 to 4 players.\n \
-        After each round, the winners ponts will be updated.",
-        
-        "../static/media/modes/desc_mode.png", 
-        "&#x1F0D4;",
-        "../static/media/modes/scheme_rounds.png", 
-        'https://giphy.com/embed/3o7btPCcdNniyf0ArS',
     ],
 ]      
 

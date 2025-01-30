@@ -11,24 +11,26 @@
     body {background-image: var(--b-grade-3) !important;}
 </style>
 
-
-<div id='gameHead'>
-   
-    <h1>Puzzles</h1> 
+<div id='gameHead'>   
+    <h1>Rounds</h1> 
 
     <div>
-        <a class="pageLink"
-            href="/">|| Pause game</a>
-        <a class="pageLink"
-            href="/">X Delete game</a>
+        {% if finished %}
+            <a class="pageLink" 
+            href="/">Home</a>
+            <a class="pageLink"
+                href="/statistics">Stats</a>
+        {% else %}
+            <a class="pageLink"
+                href="/">|| Pause game</a>
+            <a class="pageLink"
+                href="/">X Delete game</a>
+        {% endif %}
     </div>
-
 </div>
 
 
-
 {% if info != "" %}
-
     <div id="infoID" class="userFeedback infoShow">
         {{ info }} <br><br>
         <button 
@@ -37,8 +39,12 @@
                 X
         </button>
     </div>
-
 {% endif %}
+
+{% set players = game_info[3] %}
+{% set colors = game_info[4] %}
+
+
 
 
 <div class='FullDiv' style="background-color: var(--b-dark-tr);">
@@ -47,114 +53,163 @@
         <h2><span style='background-color: var(--s-yellow);'>
             {{ game_info[1] }} </span></h2>
         {% if not finished %}        
-            <p>Game {{ game_info[0] }} @ round {{ round }} <br>
+            <p>Game {{ game_info[0] }} <b>@ round {{ round }} </b><br>
             startet on {{ game_info[2] }}</p>
         {% else %}
-            <p>Game {{ game_info[0] }}<br>
-            finished on {{ game_info[2] }} @ {{ game_info[2] }} rounds </p>
-            <p>Your comment: <br>
-                {{ game_info[5] }}</p>
+            <p>Congratz to <b>{{ players[winner] }}</b> for winning!</p>
+            <p style="font-size: 0.9rem;">
+                Game {{ game_info[0] }} finished on {{ game_info[2] }} 
+                @ {{ round }} rounds </p>
+            <p><b> {{ game_info[5] }}</b></p>
         {% endif %}
 
 
         <form action="" method="POST">
-            {{ rounds_form.hidden_tag() }}
-            {% set players = game_info[3] %}
-            {% set colors = game_info[4] %}
+            {% if not finished %}  
+                {{ rounds_form.hidden_tag() }}
+            {% endif %}
+
 
             <table>
                 {# player row #}
                 <tr style='border-bottom: 1px solid var(--c-grey);'>
                     <th style='width: 40px;'> </th>
                     {% for p in range(players|length) %}
-                        <th style='background-color: {{ colors[p] }};'>
+                        <th style='background-color: {{ colors[p] }};
+                            letter-spacing: 0.1rem;'>
                             {{ players[p] }}</th>
                     {% endfor %}
                 </tr>
-                
+
+                <tr class="divider">
+                    <td colspan='{{ players|length + 1 }}'><hr></td>
+                </tr>
+
                 {# prior rounds #}
                 {% if round > 1 %}
                     {% for row in range(round - 1) %}
                         <tr>
                             <td class='roundsCol'>
-                                Round {{ row + 1 }}</td>
-                            {% for player in range(n) %}
+                                {{ row + 1 }}</td>
+                            {% for p in range(players|length) %}
                                 <td>{{ points[row][p] }}</td>
                             {% endfor %}
                         </tr>
                     {% endfor %}
                 {% endif %}
 
+
+
                 {# input round #}
                 {% if not finished %}
                     <tr class="active-row">
                         <td class='roundsCol'>
                             {{ round }}</td>
-                        {% for entry in point_entries %}
-                            <td>
-                                {{ entry }}</td>
+                        {% for p in range(players|length) %}
+                            <td class='roundsInput' 
+                                style='background-color: {{ colors[p] }}9b;'>
+                                {{ point_entries[p] }} </td>
                         {% endfor %}
                     </tr>
                 {% endif %}
-            
+
+
+
+                <tr class="divider">
+                    <td colspan='{{ players|length + 1 }}'><hr></td>
+                </tr>
+
                 {# sum row #}
                 {% if round > 1 %}
-                    <tr style='border-top: 1px solid var(--c-grey); font-weight: bold;'>
-                        <td class='roundsCol'>
-                            &sum;</td>
-                        {% for summe in points[-1] %}
-                            <td>{{ summe }}</td>
+                    <tr class="finalRow">
+                        <td class='roundsCol'>&sum;</td>
+
+                        {% for p in range(players|length) %}
+                            {% if finished and p == winner %}
+                                <td style='color: {{ colors[p] }};
+                                    background-color: transparent;
+                                    border: 1px solid {{ colors[p] }};'>
+                                        {{ points[-1][p] }}</td>
+                            {% else %}
+                                <td style='color: {{ colors[p] }};
+                                    background-color: transparent;'>
+                                        {{ points[-1][p] }}</td>
+                            {% endif %}
                         {% endfor %}
+
                     </tr>
                 {% endif %}
             </table>
 
-
-            <div class='pageLink submitBtn'>
-                {{ rounds_form.submit() }}</div>
+            {% if not finished %}
+                <div class='pageLink submitBtn'>
+                    {{ rounds_form.submitRound() }}</div>
+            {% endif %}
         </form>
     </section>
 </div>
 
 
 
-<section class="gameSection">
+{% if round > 1 %}
+    {% if not finished %}
+        <section class="gameSection">
 
-    <button class='finishBtn' 
-        style='background-color: black; color: var(--s-yellow);'
-        onclick='finish_rounds()'>
-        Finish Game
-    </button>
-
-
-    <div id="roundsFinish" class="popUp">
-
-        <h2>GAME OVER?</h2>
-
-        <div class='giphyBg' style='height: 250px; background-image: 
-            url("https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3B4bHB0\
-            ajNoYnd1YWUyam5nbDZib3UzMTYxbzhiZ2F4d253Z3YwbCZlcD12MV9pbnRlcm5\
-            hbF9naWZfYnlfaWQmY3Q9Zw/2afdli2NFvmq1KsIeS/giphy.gif");'>
-        </div>
-
-        <p>How do you want to remember this game?</p>
-        <form action="" method="POST">
-            {{ submit_game_form.hidden_tag() }}  
-
-            <p>{{ submit_game_form.info() }}</p>                              
-
-            <div class='finishBtn'>
-                {{ submit_game_form.submit() }}
-            </div>
-
-            <button class='pageLink'
+            <button class='finishBtn' 
+                style='background-color: black; color: var(--s-yellow);'
                 onclick='finish_rounds()'>
-                X
-            </button>        
-        </form>
-    </div>
-</section>
-    
+                Finish Game
+            </button>
+
+
+            <div id="roundsFinish" class="popUp">
+
+                <h2>GAME OVER?</h2>
+
+                <div class='giphyBg' style='height: 250px; background-image: 
+                    url("https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3B4bHB0\
+                    ajNoYnd1YWUyam5nbDZib3UzMTYxbzhiZ2F4d253Z3YwbCZlcD12MV9pbnRlcm5\
+                    hbF9naWZfYnlfaWQmY3Q9Zw/2afdli2NFvmq1KsIeS/giphy.gif");'>
+                </div>
+                <p> Your current entries will NOT be included. 
+                    'Close round' to fix this.<br></p>
+                <p>How do you want to remember this game?</p>
+                <form action="" method="POST">
+                    {{ submit_game_form.hidden_tag() }}  
+
+                    <p>{{ submit_game_form.comment() }}</p>                              
+
+                    <div class='finishBtn'>
+                        {{ submit_game_form.submit() }}
+                    </div>
+
+                    <button class='pageLink'
+                        onclick='finish_rounds()'>
+                        X
+                    </button>        
+                </form>
+            </div>
+        </section>
+    {% endif %}
+{% endif %}
+
+{% if round > 2 %}
+    <section class="gameSection" >
+        <h2 style='color: white;'>Player Performance</h2>     
+
+        <canvas id="rounds_chart" height='500px'     ></canvas>
+        <script src='../static/charts.js'></script> 
+        <script>
+            updateRoundsChart( 
+                {{ chart_data[0] | safe }},
+                {{ players | safe }}, {{ colors | safe }},
+                {{ chart_data[1] | safe }});
+        </script>    
+
+    </section>
+{% endif %}
+
+
 
 
 {% endblock %}

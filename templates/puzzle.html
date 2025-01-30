@@ -193,7 +193,7 @@
 
 
     {% if (logs|length == 0) %}
-        <p>&#x1F641; No logs yet.</p>
+        <p style='color: var(--t-white);'>&#x1F641; No logs yet.</p>
 
     {% else %}
         <div id="puzzleLogList">
@@ -217,18 +217,19 @@
                     {% set puzzle_num = logs[i][2]|int - 1 %}
 
                     <tr style="border-left: 2px solid {{ color }};">
-                        <td style="color: var(--c-grey)"> {{ i+1 }} <br><b>{{ logs[i][0] }}<b> </td>
-                        <td style="color: {{color}}">{{ puzzles.iloc[puzzle_num].title }}<br>
+                        <td style="color: var(--c-grey)"> {{ i+1 }} <br>
+                            <b>{{ logs[i][0] }}<b> </td>
+                        <td style="color: {{color}}">
+                            {{ puzzles.iloc[puzzle_num].title }}<br>
                             <b> {{ logs[i][3] }}</b> </td>
-                        <td style="color: {{color}}"> {{ player }} <br><b>{{ logs[i][4] }}</b> </td>
+                        <td style="color: {{color}}"> {{ player }} <br>
+                            <b>{{ logs[i][4] }}</b> </td>
                         <td style="color: var(--c-grey)"> {{ logs[i][5] }} </td>
                     </tr>
                 {% endfor %}
-
             </table>
         </div>
     {% endif %}
-
 </section>
 
 

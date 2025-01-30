@@ -32,7 +32,7 @@
 <p>GamesBook is a web application that allows users to record analogue games they play. The app is designed for groups of friends or families who play games together and want to keep track of their gaming records. You can simply access GameBook via the web browser on your smartphone, tablet or computer.</p>
 
 <h3>Technical Setup</h3>
-<p>The web application GamesBook is deployed on a project-dedicated Ubuntu VPS. The source code is accessible on the <a href='' target='_blank'>GitHub repository</a> and the deployment is done via SSH access. GameBook is served using Nginx and Gunicorn and built with Flask, Python, HTML, CSS and JavaScript.</p>
+<p>The web application GamesBook is deployed on a project-dedicated Ubuntu VPS. The source code is accessible on the <a href='' target='_blank'>GitHub repository</a> and the deployment is done via SSH access. GameBook is served using Nginx and Gunicorn and built with Flask, Python, Chart JS, HTML, CSS and JavaScript.</p>
 
 <h3>Privacy Policy</h3>
 <p>The app is free to use and does not require any or personal data. Also your data will not be forwarded or used to any other entities or services.</p>

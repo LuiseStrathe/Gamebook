@@ -106,8 +106,13 @@ class My_Group():
                           settings_form[f'c{p}'].data]
                 
                 if player[0] not in ['', None, " "]:
-                    self.players[p] = player[0]
                     
+                    if player[0] in self.players:
+                        return False
+                    
+                    else:
+                        self.players[p] = player[0]
+                
                 self.colors[p] = player[1]
         
         
@@ -115,8 +120,15 @@ class My_Group():
         if settings_form.xNew.data \
             and settings_form.pNew.data not in ["", None, " "]:
             
-            self.players.append(settings_form.pNew.data)
-            self.colors.append(settings_form.cNew.data)
-            self.n = len(self.players)
+            new_player = [settings_form.pNew.data, 
+                          settings_form.cNew.data]
+            
+            if new_player[0] not in self.players:
+                self.players.append(new_player[0])
+                self.colors.append(new_player[1])
+                self.n = len(self.players)
+                
+            else:
+                return False
         
         return self

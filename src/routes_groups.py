@@ -9,7 +9,7 @@ from Gamebook.src.my_classes import *
 from Gamebook.src.my_fun import *
 from Gamebook.src.routes import *
 from Gamebook.src.routes_rounds import *
-from Gamebook.src.routes_games import *
+from Gamebook.src.routes_puzzles import *
 from Gamebook.src.routes_dice import *
 
 
@@ -88,8 +88,11 @@ def group(group_id):
 @app.route("/statistics", methods=["GET", "POST"])
 def statistics():
   
-  if verify_session():
+  if verify_session() == False:
+    init_session()
+    return redirect(url_for('login', retry=False))  
   
+  else:
     if check_key(session['username'], session['key']):
       
       group_id = name_to_id(session['username'])
@@ -100,23 +103,19 @@ def statistics():
         
         games = group.results[group.results.g_mode == mode]
         n_games = games.shape[0]
-        print('>> num games in category', mode, ':', n_games)
         
         if n_games > 0:
           wins = [n_games, *[games[games.winner_name == p].shape[0] for p in group.players]]
           stats[m] = wins
       
-      static = 'stats.html'  
-      return render_template(
-        static, page=page_html(static, "IN"),
-        modes_info=modes_info, modes=modes,
-        group=group, stats=stats,
-        num_modes=len(modes), mode_key=mode_key)
+    static = 'stats.html'  
+    return render_template(
+      static, page=page_html(static, "IN"),
+      modes_info=modes_info, modes=modes,
+      group=group, stats=stats,
+      num_modes=len(modes), mode_key=mode_key)
     
-  else: 
-    init_session()
-  
-    return redirect(url_for('login', retry=False))
+
   
   
   
@@ -240,35 +239,39 @@ def logout():
 def register():
   
   group_form = GroupForm(csrf_enabled=False)
+  info = ""
   
   if group_form.validate_on_submit():  
     
-    name = group_form.name.data
-    check, id = check_name(name)  
-        
-    if check:
-      
-      players, colors = create_players(group_form)
-      
-      group = My_Group(
-        name=group_form.name.data, 
-        slogan=group_form.slogan.data,
-        key=group_form.key.data, 
-        players=players, colors=colors)
-      
-      session['username'] = group.id
-      session['key'] = group.key
-      session['num_players'] = group.n
-      session['status'] = 'IN'
-      
-      return redirect(f"/group/{group.id}")
+    # check if group name
+    name = str(group_form.name.data)
     
-    else: print("ERROR: group probably arleady exists")
+    check, id = check_name(name)    
+    if check:
+      players, colors = create_players(group_form)
+    
+      if len(players) == len(set(players)):
+      
+        group = My_Group(
+          name=group_form.name.data, 
+          slogan=group_form.slogan.data,
+          key=group_form.key.data, 
+          players=players, colors=colors)
+        
+        session['username'] = group.id
+        session['key'] = group.key
+        session['num_players'] = group.n
+        session['status'] = 'IN'
+        
+        return redirect(f"/group/{group.id}")
+      
+      else: info = "The players' names should be unique"
+    else: info="This group name arleady exists"
   
   static = 'group_register.html'  
   return render_template(
     static, page=page_html(static, "OUT"), 
-    group_form=group_form)
+    group_form=group_form, info=info)
 
 
 
@@ -300,9 +303,14 @@ def settings():
       if check_key(group.id, key):
 
         group = group.update_settings(settings_form)
-        group.update_group()
         
-        return redirect('/settings') 
+        if group == False:
+          info = 'The player names must be unique'
+          group = load_group(session['username'])[0]
+          
+        else:
+          group.update_group()    
+          return redirect('/settings') 
         
       else: 
         info = "Wrong password"

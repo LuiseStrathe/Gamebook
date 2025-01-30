@@ -29,26 +29,31 @@ body {
     style="height: 60px;">
 </div>
 
+{% if info != '' %}
+    <div id="infoID" class="userFeedback infoShow">
+        <p> {{ info }} </p><br><br>
+        
+        <button 
+            class='pageLink' 
+            onclick="close_user_info()">
+            X
+        </button>
+    </div>
+{% endif %}
 
 {% if retry %}
-
-<div id="infoID" class="userFeedback infoShow">
-
-    {{ info }} 
-
-    <p> Your ground name or key were incorrect 
-    <br> &#x2639; <br>
-    Please, try again.
-    </p><br><br>
-    
-    <button 
-        class='pageLink' 
-        onclick="close_user_info()">
-        X
-    </button>
-
-</div>
-
+    <div id="infoID" class="userFeedback infoShow">
+        <p> Your ground name or key were incorrect 
+        <br> &#x2639; <br>
+        Please, try again.
+        </p><br><br>
+        
+        <button 
+            class='pageLink' 
+            onclick="close_user_info()">
+            X
+        </button>
+    </div>
 {% endif %}
 
 
@@ -125,7 +130,7 @@ body {
             <p style="font-size: 1.5rem; text-align: center;">&#x1F6C8;</p>
 
             <p> <b>Name</b><br>
-                Your name should be between 5 and 20 characters.
+                Your name should be between 3 and 20 characters.
                 You can use numerics and space, but not at the start.</p>
                 
             <p> <b>Password</b><br>

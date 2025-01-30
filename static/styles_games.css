@@ -11,6 +11,8 @@
 /* CONTENTS
 
         > GENERAL
+        > PUZZLE
+        > ROUNDS
         
 */
 
@@ -54,7 +56,8 @@
     h1 {
         display: block;
         margin: 80px auto 40px;
-        text-align: center;}
+        text-align: center;
+        text-transform: uppercase;}
 
     div {
         display: flex;
@@ -176,11 +179,23 @@
             font-size: 0.8rem;}}
 }
 
+#puzzleLogForm {
+    div p {
+        color: var(--t-white);}
+}
+
+.puzzleLogBtn {
+    display: flex;
+    background-color: var(--b-white-tr) !important;
+    color: var(--t-std) !important;
+    margin: 15px auto;
+    text-align: center;
+}
 
 #puzzleLogList {
     max-height: 800px;
     overflow: scroll;
-    background-color: var(--b-dark-tr);
+    background-color: var(--b-black-tr);
     color: var(--t-white);
 }
 
@@ -206,6 +221,12 @@
         color: var(--t-white);
         text-align: left;}
 
+    .submitBtn input {
+        background-color: var(--b-black-tr);
+        border: 1px solid var(--c-grey);
+        color: var(--t-white);
+        font-size: 1rem;}
+    
     table {
         width: 100%;
         padding: 15px;
@@ -215,9 +236,9 @@
 
         th, td {
             text-align: center;
-            border-radius: 5px;
             padding: 10px;
-            margin: 10px;}
+            margin: 10px;
+            font-size: 1.1rem;}
 
         th {
             border: none;}
@@ -225,12 +246,30 @@
         td {
             color: var(--t-white);
             background-color: var(--b-dark);}
+        
+        .roundsInput input {
+            background-color: var(--b-white-tr);
+            height: 40px;
+            border: none;}
 
         .roundsCol {
             text-align: right; 
             background-color: transparent;}
-    }
+
+        .finalRow td {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .divider, .divider td {
+            background-color: transparent;
+            padding: 0;
+
+            hr {
+                border-color: var(--c-grey);}
+    }}
 }
+
 
 #roundsFinish {
     border: 1px solid var(--s-yellow);
@@ -260,4 +299,10 @@
 
     button {
         background-color: transparent;}
+}
+
+
+#rounds_chart {
+    max-width: 100%;
+    max-height: 500px;
 }

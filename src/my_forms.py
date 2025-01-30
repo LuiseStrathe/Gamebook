@@ -22,7 +22,7 @@ from Gamebook.src.my_params import player_colors
 class GroupForm(FlaskForm):
   
   name =        StringField("Group Name", 
-    validators=[DataRequired(), Length(max=20)])
+    validators=[DataRequired(), Length(min=3, max=20)])
   
   key =         PasswordField("Group Key", 
     validators=[DataRequired(), Length(min=5, max=20)])
@@ -143,6 +143,13 @@ class DeleteForm(FlaskForm):
 ############################################
 
 
+# Submit Game
+class SubmitGameForm(FlaskForm):
+  
+  comment = TextAreaField("Page Comment")
+  submit = SubmitField("Save Game (log)", validators=[DataRequired()])
+
+
 
 # ROUNDS
 
@@ -168,20 +175,18 @@ class StartRoundsForm(FlaskForm):
 
 class CloseRoundForm(FlaskForm):
   
-  pt0 = IntegerField("enter points", validators=[DataRequired()])
-  pt1 = IntegerField("enter points", validators=[DataRequired()])
-  pt2 = IntegerField("enter points")
-  pt3 = IntegerField("enter points")
-  pt4 = IntegerField("enter points")
-  pt5 = IntegerField("enter points")
-  pt6 = IntegerField("enter points")
-  pt7 = IntegerField("enter points")
-  pt8 = IntegerField("enter points")
-  pt9 = IntegerField("enter points")
+  pt0 = IntegerField("enter points", default=0)
+  pt1 = IntegerField("enter points", default=0)
+  pt2 = IntegerField("enter points", default=0)
+  pt3 = IntegerField("enter points", default=0)
+  pt4 = IntegerField("enter points", default=0)
+  pt5 = IntegerField("enter points", default=0)
+  pt6 = IntegerField("enter points", default=0)
+  pt7 = IntegerField("enter points", default=0)
+  pt8 = IntegerField("enter points", default=0)
+  pt9 = IntegerField("enter points", default=0)
   
-  r_comment = TextAreaField("Comment (optional)")
-  
-  submit = SubmitField("Close Round")
+  submitRound = SubmitField("Close Round", validators=[DataRequired()])
 
 
   
@@ -243,13 +248,6 @@ class PuzzleRecordForm(FlaskForm):
                      
 ############################################
 
-
-
-# Submit Game
-class SubmitGameForm(FlaskForm):
-  
-  info = TextAreaField("Page Comment", validators=[DataRequired()])
-  submit = SubmitField("Finish this Page")
 
 
 

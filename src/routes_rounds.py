@@ -16,7 +16,6 @@ import pandas as pd
 from datetime import datetime
 
 
-
 # PLAY
 @app.route("/rounds/<string:game_id>", methods=["GET", "POST"])
 def rounds(game_id):
@@ -35,7 +34,7 @@ def rounds(game_id):
    
   n = result.n_rounds.values[0]
   player_ids = result.info_2.values[0]
-  points = result.result.values[0]
+  
   
   # game_info: 
     #     0: game_id, 1: title, 2: date, 
@@ -46,54 +45,85 @@ def rounds(game_id):
   player_colors = [group.colors[id] for id in player_ids]
   date = pd.to_datetime(result.time.values[0]).strftime("%d/%m/%y")
   comment = result.info_3.values[0]
+  winner = result.winner_name.values[0]
   game_info = [game_id, title, date, player_names, player_colors, comment]
   
   
   # not finished game
-  if result.winner_name.values[0] == '': 
+  if winner in ['', None]: 
     
+    points = result.result.values[0][0]        
     finished = False
     rounds_form = CloseRoundForm(csrf_enabled=False)
     submit_game_form = SubmitGameForm(csrf_enabled=False)    
-    template_entries = [rounds_form[f"pt{str(i)}"]() for i in range(len(player_ids))]   
-    point_entries = [rounds_form[f"pt{str(i)}"].data for i in range(len(player_ids))]
-    commennt = ''    
+    point_entries = [rounds_form[f"pt{str(i)}"]() for i in range(len(player_ids))]   
     
     # input
     if rounds_form.validate_on_submit():
 
-      template_data =   [rounds_form.pt1.data, rounds_form.pt2.data, rounds_form.pt3.data, rounds_form.pt4.data, 
-                        rounds_form.pt5.data, rounds_form.pt6.data, rounds_form.pt7.data, rounds_form.pt8.data]
-      new_points = np.array([template_data[:n]])
+      # get new input points
+      new_points = [rounds_form[f"pt{str(i)}"].data for i in range(len(player_ids))]
+      new_points = np.array(new_points, dtype=int)
       
-      if n == 0: points = new_points
-      else: points = np.vstack([points[:-1], new_points])  
-                
-      points = np.vstack([points, np.sum(points, axis=0)])
-      group.result.loc[group.result.game_id == game_id, 'points'] = points
-      group.result.loc[group.result.game_id == game_id, 'n_rounds'] = n + 1 
+      # merge with existing points
+      if n == 0: 
+        points = np.vstack([new_points, new_points])
+      else: 
+        # remove & add total row  
+        points = np.vstack([points[:-1], new_points])          
+        points = np.vstack([points, np.sum(points, axis=0)])   
+      
+      # update group
+      result.loc[0, 'result'] = [points]
+      result.loc[0, 'n_rounds'] = n + 1   
+      group.results[group.results.game_id == game_id] = result
+      group.update_group()
       
       session['round']  = n + 1    
       return redirect(f"/rounds/{game_id}")
+    
+    else: print("> Submit ROUND - errors", rounds_form.errors)
+
     
       
     # submit page
     if submit_game_form.validate_on_submit():
       
-      # info_3: user note
-      comment = submit_game_form.r_comment.data
-      end_rounds(group=group, points=points, game_id=game_id, \
-        title=title, players=player_ids, comment=comment)
+      if n > 0:
+        
+        print("\n> submit game")
+        comment = submit_game_form.comment.data
+        end_rounds(group=group, points=points, game_id=game_id, \
+          title=title, players=player_ids, comment=comment)
+        
+        session['round'] = 0
+        session['game_id'] = ''
+        session['mode'] = ''
+        
+        return redirect(f"/rounds/{game_id}")
       
-      return redirect(f"/rounds/{game_id}")
+      else: 
+        print("> Submit GAME - errors", submit_game_form.errors)
+        info = "No rounds played yet."
     
+  # finished game
+  else: 
+    finished = True
+    points = result.result.values[0]
+    rounds_form = ''
+    submit_game_form = ''
+    point_entries = ''
+    
+    
+  # chart data
+  chart_data = create_rounds_chart(points, player_ids)
   
-  else: finished = True
   
   static = 'rounds.html'
   return render_template( 
     static, page=page_html(static, "IN"), info=info,
     rounds_form=rounds_form, point_entries=point_entries, 
     submit_game_form=submit_game_form,
-    game_info=game_info, finished=finished,  
-    round= n + 1, points=points)
+    game_info=game_info, finished=finished, winner=winner,
+    round= n + 1, points=points, 
+    chart_data=chart_data)

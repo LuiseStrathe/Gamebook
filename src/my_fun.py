@@ -14,7 +14,11 @@ from Gamebook.src.my_params import *
 from Gamebook.src.my_classes import *
 
 
-###############  SYSTEM  ##################
+
+
+###############################################
+#                     SYSTEM 
+###############################################
 
 
 def init_session():
@@ -97,7 +101,9 @@ def page_html(static, force_in_out="no"):
 
 
 
-###############  GROUP  ##################
+###############################################
+#                     GROUP 
+###############################################
 
 
 
@@ -148,8 +154,8 @@ def check_name(name):
     if id == 'random':
         check = False
     else:
-        check = id not in os.listdir(f'{path_data}groups/')
-    
+        check = f'{id}.pkl' not in os.listdir(f'{path_data}groups/')
+        
     return check, id
 
 
@@ -193,21 +199,30 @@ def create_players(group_form):
 
 
 
+###############################################
+#                     GAMES 
+###############################################
 
 
-###############  PLAY  ##################
-
+# GENERAL
 
 def gen_game_id(mode):
     
+    # mode-index
+    mode_idx = modes.index(mode)
+    print('> mode-index: ', mode_idx)
+    
     with open(f'data/max_id.txt', "rt") as f:
-        new_id = int(f.readline()) + 1
-        print(f'New game id: {new_id}')
+        ids = [int(i) for i in f.readline().split(sep=',')]
+        
+    new_id = ids[mode_idx] + 1
+    ids[mode_idx] = new_id
+    ids = ','.join([str(i) for i in ids])
 
     with open(f'data/max_id.txt', "wt") as f:  
-        f.write(str(new_id))
+        f.write(ids)
 
-    return str(mode_key[mode] + '_' + str(new_id).zfill(10)) 
+    return str(mode_key[mode] + str(new_id).zfill(10)) 
 
 
 def create_random_group():
@@ -238,7 +253,7 @@ def start_rounds(group_id, form):
         # init game
         info = ''
         game_id = gen_game_id('rounds')
-        points = np.zeros((2, len(players)))  
+        points = np.zeros((1, len(players)))  
         group = load_group(group_id)[0]
         results = group.results
         session['round'] = 0
@@ -256,7 +271,7 @@ def start_rounds(group_id, form):
         # group.results  > save in group
         result = { \
             'game_id':game_id, 'g_mode': 'rounds', "group_id":group.id, 
-            "result":points, "n_rounds": 0, 
+            "result":[points], "n_rounds": 0, 
             "winner_name":'', 'time':datetime.now(),
             'info_1':form.r_title.data, 'info_2': players, 'info_3':''}
         
@@ -269,15 +284,19 @@ def start_rounds(group_id, form):
 
 def end_rounds(group, points, game_id, title, players, comment):
 
-    winner = group.players[np.argmax(points[-1])]
+    winner = players[np.argmax(points[-1])]
           
-    result = {'game_id':game_id, 'g_mode': 'rounds', "group_id":group.id, 
-         "result":points, "n_rounds":points.shape[0], 
-         "winner_name":winner, 'time':datetime.now(),
-         'info_1':title, 'info_2': players, 'info_3':comment}
+    result = {'game_id': game_id, 'g_mode': 'rounds', "group_id": group.id, 
+         "result": points, "n_rounds": points.shape[0] - 1, 
+         "winner_name": winner, 'time': datetime.now(),
+         'info_1': title, 'info_2': players, 'info_3': comment}
+    
+    for col in result.keys():
+        print(col, result[col])
     
     # save in group
-    group.results = pd.concat([group.results, pd.DataFrame([result])])
+    group.results.drop(group.results[group.results['game_id'] == game_id].index, inplace=True)
+    group.results = pd.concat([group.results, pd.DataFrame([result])], ignore_index=True)
     group.update_group()
     
     # save in all results
@@ -285,6 +304,19 @@ def end_rounds(group, points, game_id, title, players, comment):
     results = pd.concat([results, pd.DataFrame([result])])
     results.to_csv(f'{path_data}modes/results.csv', index=False)
     
+   
+def create_rounds_chart(points, player_ids):
+    
+    n = points.shape[0] - 1
+    if n < 2:
+        chart_data = np.zeros((len(player_ids), 1))
+    else:
+        chart_points = np.transpose(points[:-1])
+        chart_points = np.cumsum(np.array(chart_points), axis=1)
+        chart_data = [[r for r in range(1, n + 1)],
+                    chart_points.tolist()]
+    
+    return chart_data
     
 
 
@@ -301,7 +333,7 @@ def gen_puzzle_logs(id):
         
         # cols: date, winner, puzzle, pcs, time, comment
         log = [result.time.strftime("%d/%m/%y"), 
-               result.winner_name,  
+               group.players[result.winner_name],  
                result.info_1, 
                result.n_rounds, 
                str(timedelta(seconds=result["result"])),
@@ -350,12 +382,13 @@ def submit_puzzle_record(id, form):
                 + form.seconds.data
     puzzle_id = int(form.puzzle.data.split(':')[0])
     pcs = group.puzzles.pcs.iloc[puzzle_id - 1]
+    player_index  = group.players.index(form.player.data)
     
-    result = {'game_id':game_id, 'g_mode': 'puzzle', "group_id":id, 
+    result = {'game_id': game_id, 'g_mode': 'puzzle', "group_id": id, 
          "result": duration, "n_rounds": pcs, 
-         "winner_name":form.player.data, 
-         'time':datetime.now(),
-         'info_1':puzzle_id, 'info_2': '', 'info_3':form.comment.data, }
+         "winner_name": player_index, 
+         'time': datetime.now(),
+         'info_1': puzzle_id, 'info_2': '', 'info_3': form.comment.data, }
 
     
     # save in group

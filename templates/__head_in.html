@@ -22,13 +22,16 @@
 
     <link rel="stylesheet" href="../static/styles_main.css">
     <script type="text/javascript" src="{{url_for('static', filename='main.js')}}"></script>
-    
+    <script type="text/javascript" src="{{url_for('static', filename='charts.js')}}"></script>    
+    <script 
+      src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js">
+    </script>
 
   </head>
 
 
   <body 
-    style="background-image: url('../static/media/gamebook_bg_o0.jpg');">
+    style="background-image: url('../static/media/gamebook_bg_c3r.jpg');">
 
 
     
@@ -96,17 +99,14 @@
           <a  style="color:var(--t-head);" 
             href="/about">&#x2023; About & Contact</a>
           <hr>
+          
           <a href="/">&#x2023; Overview</a>
+          <a href="/"><span class="navMode"> 
+            &#x1805; Start a game</a></span>
+          <a href="/puzzle"><span class="navMode"> 
+            &#x1805; Your Puzzles</a></span>          
           <a href="/statistics">&#x2023; Statistics</a>
           
-          <a href="/"><span class="navMode"> 
-            &#x1805; Play Rounds</a></span>
-          <a href="/"><span class="navMode"> 
-            &#x1805; Play Dice</a></span>
-          <a href="/puzzle"><span class="navMode"> 
-            &#x1805; Your Puzzles</a></span>
-          <a href="/"><span class="navMode"> 
-            &#x1805; Play Skat</a></span>
           <hr>
           <a style="color:var(--t-head);" 
             href="/settings">&#x2023; Settings</a>
