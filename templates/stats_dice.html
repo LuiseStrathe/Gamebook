@@ -1,0 +1,78 @@
+
+{% set page_html = page %}
+{% extends page[0] %}
+
+
+{% block content %}
+
+
+
+{# CSS #}
+<link rel="stylesheet" href="../static/styles_stats.css">
+<style type="text/css">
+  body {background-image: var(--b-grade-4) !important;}
+</style>
+
+
+
+{# Header #}
+<section class="statsHeader">
+
+  <h1>Game Statistics</h1>
+  <a class='mainLink' href="/">>>>  Home & Play  <<<</a>
+  <a href='#diceLogs'>>>>  Go to List of all dice games  <<<</a>
+  
+  <div>
+    {% for i in range(modes_info|length) %}
+      {% if modes[i]  == 'dice' %}
+        <a id="modeLinkActive"  
+          class="modeLink" href="/statistics">
+          <img height='50px' class='inlineImg'
+            src={{ modes_info[i][5] }}
+            style='margin-bottom: 10px;'><br> 
+              {{ modes[i]  }} </a>
+      {% else %}
+        
+        <a class="modeLink" href="/stats/{{ modes[i]  }}">
+          {{ modes[i]  }} </a>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+
+
+</section>
+
+
+
+
+{# Chart area #}
+<section class='fullDiv' style='background-color: white'>  
+
+  <h2 class='h2fat'>
+    <span style='background-color: var(--c-blue);'>
+      Winner Board Dice</span></h2>
+
+  <p>Not yet available</p>
+
+</section>
+
+
+
+{# Logs List #}
+<section id='diceLogs' class='midDiv'>  
+
+  <h2 class='h2fat'>
+    <span style='background-color: var(--c-blue);'>
+      All Dice Games Logged</span></h2>
+
+  <p>Not yet available</p>
+
+
+
+
+
+</section>
+
+
+{% endblock %}

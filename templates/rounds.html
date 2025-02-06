@@ -12,14 +12,16 @@
 </style>
 
 <div id='gameHead'>   
-    <h1>Rounds</h1> 
+    <h1><img height='30px' class='inlineImg'
+        src='../static/media/modes/rounds_icon.png'>
+        Rounds</h1> 
 
     <div>
         {% if finished %}
             <a class="pageLink" 
             href="/">Home</a>
             <a class="pageLink"
-                href="/statistics">Stats</a>
+                href="/stats/rounds">Stats</a>
         {% else %}
             <a class="pageLink"
                 href="/">|| Pause game</a>
@@ -198,7 +200,7 @@
         <h2 style='color: white;'>Player Performance</h2>     
 
         <canvas id="rounds_chart" height='500px'     ></canvas>
-        <script src='../static/charts.js'></script> 
+        <script src='../static/rounds_page.js'></script> 
         <script>
             updateRoundsChart( 
                 {{ chart_data[0] | safe }},

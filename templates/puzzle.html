@@ -16,7 +16,9 @@
 
 <div id='gameHead'>
    
-    <h1>Puzzles</h1> 
+    <h1><img height='30px' class='inlineImg'
+        src='../static/media/modes/puzzle_icon.png'>
+        Puzzles</h1> 
 
     <div>
         <a class="pageLink"
@@ -24,7 +26,7 @@
         <a class="pageLink"
             href="#puzzleLogs">View Logs</a>
         <a class="pageLink"
-            href="/statistics">View Stats</a>
+            href="/stats/puzzle">View Stats</a>
     </div>
 
 </div>
@@ -47,7 +49,7 @@
 <div class='FullDiv' style="background-color: var(--b-white-tr);">
     <section id='puzzleLib' class="gameSection">
 
-        <h2 class="h2fat"><span style="background-color: black;">
+        <h2><span style="background-color: black;">
             Puzzle Library</span></h2>
 
         <p> You have {{ puzzles.shape[0] }} puzzles in the library:</p>
@@ -150,7 +152,7 @@
 
 <section id="puzzleLogs" class="gameSection">
 
-    <h2 class="h2fat" id="puzzleLogs">
+    <h2 id="puzzleLogs">
         <span style="background-color: var(--c-blue);">
         Puzzle Logs</span></h2>
 
@@ -203,8 +205,8 @@
                 <thead>
                     <tr>
                         <th>When</th>
-                        <th>Player</th>
                         <th>Puzzle</th>
+                        <th>Player</th>
                         <th>Comment</th>
                     </tr>
                 </thead>

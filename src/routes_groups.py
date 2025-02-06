@@ -66,8 +66,6 @@ def group(group_id):
     
     else: print("> Submit ROUNDS - errors:", rounds_form.errors)
     
-    
-    
     static = 'group.html'
     return render_template(
       static, page=page_html(static, "IN"), info=info,
@@ -83,37 +81,23 @@ def group(group_id):
 
 
 
+
+
 # Statistics  
 
 @app.route("/statistics", methods=["GET", "POST"])
 def statistics():
   
-  if verify_session() == False:
-    init_session()
-    return redirect(url_for('login', retry=False))  
-  
-  else:
-    if check_key(session['username'], session['key']):
+  if (verify_session() == False) or \
+    not(check_key(session['username'], session['key'])):
+      init_session()
+      return redirect(url_for('login', retry=False))  
+    
       
-      group_id = name_to_id(session['username'])
-      group = load_group(group_id)[0]
-      
-      stats = [[0 for _ in range(group.n + 1)] for _ in modes]
-      for m, mode in enumerate(modes):
-        
-        games = group.results[group.results.g_mode == mode]
-        n_games = games.shape[0]
-        
-        if n_games > 0:
-          wins = [n_games, *[games[games.winner_name == p].shape[0] for p in group.players]]
-          stats[m] = wins
-      
-    static = 'stats.html'  
-    return render_template(
-      static, page=page_html(static, "IN"),
-      modes_info=modes_info, modes=modes,
-      group=group, stats=stats,
-      num_modes=len(modes), mode_key=mode_key)
+  static = 'stats.html'  
+  return render_template(
+    static, page=page_html(static, "IN"),
+    modes=modes, modes_info=modes_info,)
     
 
   
@@ -144,29 +128,6 @@ def random_group():
     random_form=random_form)
   
   
-  
-  
-  
-# Start game
-'''
-@app.route("/start/<string:mode>/<string:group_id>",  methods=["GET", "POST"])
-def game_start(group_id, mode):
-  
-  session['round'] =    0
-  check =               check_key(session['username'], session['key']) and (session['status'] == 'IN')
-  
-  if mode in ['rounds']:
-    game_id =             gen_game_id(mode)
-    session['game_id'] =  game_id
-    if group_id=='random' or check:
-      return redirect(f"/rounds/{group_id}/{game_id}/0")
-    
-  if mode in ['dice'] and check:
-    game_id =             gen_game_id(mode)
-    session['game_id'] =  game_id
-    return redirect(f"/{mode}/{group_id}/{game_id}/start")
-  
-  return redirect('/')'''
 
 
 

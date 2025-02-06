@@ -60,6 +60,24 @@ div {
     justify-content: center;
 }
 
+.midDiv {
+    max-width: var(--d-full-max);
+    width: 100%;
+    overflow: auto;
+    padding: 20px 0;
+    margin: 20px auto;
+    text-align: center;
+    justify-content: center;
+    border-radius: 5px;
+}
+
+@media screen and (max-width: 1024px) {
+    .midDiv {
+        padding: 20px 0;
+        margin: 20px 0;
+        border-radius: 0;}
+}
+
 
 .lightDiv {
     padding: 20px;
@@ -69,6 +87,19 @@ div {
     color: var(--t-std);
     text-align: center;
 }
+
+
+.canvasDiv {
+    display: block;
+    justify-items: center;
+    align-content: center;
+    min-width: 400px;
+    width: 100%;
+    overflow-x: hidden;
+    padding: 0;
+    margin: auto;
+}
+
 
 
 .titleDiv {
@@ -95,7 +126,6 @@ div {
 
 .userFeedback {
     display: none;
-
     padding: 20px;
     margin: 20px;
     border-radius: 5px;
@@ -142,6 +172,15 @@ a:visited, a:active {
     background-color: inherit; 
 }
 
+.mainLink {
+    display: flex;
+    justify-content: center;
+    color: var(--t-white) !important;
+    font-size: 1.1rem;
+    text-decoration: none;
+    font-weight: bold;
+    letter-spacing: 2px;
+    }
 
 .pageLink {     
     border: 1px solid var(--t-std);
@@ -172,6 +211,7 @@ a:visited, a:active {
     overflow: hidden;
     background-color: transparent;
     padding: 0;
+    border-radius: 5px;
 }
 
 .tabButtons {
@@ -334,6 +374,14 @@ input {
 }
 
 
+.inlineImg {
+    display: inline-block;
+    width: auto;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    filter: invert(1);
+}
 
 
 .giphyImg {
@@ -362,9 +410,6 @@ input {
     background-size: cover;
     background-position: center;  
 }
-
-
-
 
 
 

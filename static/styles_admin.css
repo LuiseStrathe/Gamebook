@@ -303,7 +303,7 @@
 
 #changeTeam {
     background-color: var(--c-white);
-    margin: 30px 0;
+    margin: 30px auto;
     padding: 20px;
     text-align: center;
     justify-items: center;
@@ -425,8 +425,8 @@
 
     a, button {
         color: var(--t-std);
-        background-color: transparent; 
-        border: 1px solid var(--t-std);
+        background-color: var(--b-white-tr); 
+        border: none;
         width: 45%;
         margin: 0;
 }}
@@ -434,7 +434,7 @@
 
 .settingsBtn {
     background-color: var(--b-foot) !important;
-    color: var(--t-white) !important;
+    color: var(--s-yellow) !important;
     border:none;
 }
 

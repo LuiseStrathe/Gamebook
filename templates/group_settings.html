@@ -43,9 +43,13 @@
             <section id="changeSlogan">
 
                 <div>
-                    <h2>Slogan</h2> 
+                    <h2 style='color: black;'>Slogan</h2> 
                     <p id="groupSlogan">
-                        {{ group.slogan }}<br>
+                        {% if group.slogan == "" %}
+                            No slogan fo far &#x1F641;<br>
+                        {% else %}
+                            {{ group.slogan }}<br>
+                        {% endif %}
                     </p>
                 </div>
 
@@ -59,7 +63,7 @@
             </section>
 
 
-            <section id="changeTeam" class="fullDiv">
+            <section id="changeTeam" class="midDiv">
 
                 {# Team head #}
                 <div class="settingsPlayerDiv">

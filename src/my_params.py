@@ -28,12 +28,12 @@ page_titles = {
     "group.html": "Overview",    
     "_index.html": "Home",
     "stats.html": "Stats",
-    "dice_page.html": "Dice",
-    "dice_start.html": "Dice",
+    "stats_rounds.html": "Stats",
+    "stats_dice.html": "Stats",
+    "stats_puzzle.html": "Stats",
     "dice.html": "Dice",
     "puzzle.html": "Puzzles",
     "random.html": "Test GamesBook",
-    "rounds_page.html": "Rounds",
     "rounds.html": "Rounds",
 }
 
@@ -109,7 +109,7 @@ modes_info = [
         
         "../static/media/modes/desc_mode.png", 
         "&#x270E;",
-        "../static/media/modes/scheme_rounds.png", 
+        "../static/media/modes/rounds_icon.png", 
         "https://giphy.com/embed/3tEFVAbfzzcwo",
     ],
     
@@ -127,7 +127,7 @@ modes_info = [
         
         "../static/media/modes/desc_mode.png",  
         "&#x2682;",
-        "../static/media/modes/scheme_dice.png", 
+        "../static/media/modes/dice_icon.png", 
         'https://giphy.com/embed/l2JdUMnCDg6qs368g',
     ],
     
@@ -144,7 +144,7 @@ modes_info = [
         
         "../static/media/modes/desc_mode.png", 
         "&#x1F9E9;",
-        "../static/media/modes/scheme_puzzle.png",
+        "../static/media/modes/puzzle_icon.png",
         'https://giphy.com/embed/3o6Mbr1blVD5KKQBxK',
     ],
 ]      
@@ -158,14 +158,22 @@ modes_info = [
 
 
 about_info = \
-    "This GameBook is a simple and free online game notebook. \
-    You might have an analogue game book at home. \n\n \
-    GamesBook a simple web application that allows you to save logs \
-    of the games you play with others and even analyze them later on. \n\n \
-    You can create a shared group account for up to 10 players. \
-    Each game you play will add a log to your GamesBook with the final results. \
-    This way you have access to statistics of all your group's games \
-    and never lose track of the scores again. \n "
+    [   "GamesBook is a simple and free notebook for game results. \
+        It allows you to save, share and analyize games you play with friends. \n \n \
+        You can create a shared group account for up to 10 players,  \
+        to then add logs with the results of the games you played with the group. \
+        Now you have access to all of the group's games and analytics \
+        in GamesBook to never lose track of scores again. \n ",
 
-                
-    
+        "GamesBook is a simple and free notebook for game results. \
+        It allows you to save, share and analyize games you play with friends. \n\n \
+        You can create a shared group account for up to 10 players,  \
+        to then add logs with the results of the games you played with the group. \
+        Now you have access to all of the group's games and analytics \
+        in GamesBook to never lose track of scores again.",
+        
+        "You can use GamesBook for all kinds of games. \
+        For most games you would choose 'rounds' which simply represents \
+        round-based games or even just the winner and participants of a game. \n \
+        Feel free to create several groups to separate their logs as they belong. \n ",
+]

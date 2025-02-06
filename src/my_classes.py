@@ -41,28 +41,20 @@ class My_Group():
     def __init__(self, name, key, players, colors, slogan=None):
 
         # Create group
-
+        
         self.name = name
         self.id = name_to_id_create(name)
         self.players = players
         self.colors = colors
         self.player_info = pd.DataFrame(columns=player_cols)
         self.n = len(players)
-        
-        print(f'Group {self.id} created:')
-        print(f' > key received: {key}')
-        
-        
-        self.key = encrypt_key(key)
-        print(" > key stored: ", self.key)
-        
-        
-        self.slogan = slogan
-        
-        self.filepath = f'{path_data}groups/{self.id}.pkl'
+        self.slogan = slogan       
         
         self.results = pd.DataFrame(columns=result_cols)
         self.puzzles = pd.DataFrame(columns=puzzle_cols)
+                
+        self.key = encrypt_key(key)        
+        self.filepath = f'{path_data}groups/{self.id}.pkl'
 
         try:
             check_name_create(self.name)

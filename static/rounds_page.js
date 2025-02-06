@@ -1,8 +1,7 @@
 
 /*  
-    Contains all Chart JS functions  
-  
-    > tbd
+    Contains all Chart JS functions for 
+    the Rounds Game page.
     
 */
 
@@ -12,7 +11,10 @@ Chart.defaults.font.family = "'Dotum', sans-serif";
 Chart.defaults.color = 'white';
 
 
-// Rounds Chart
+
+
+
+// Rounds Logs - for rounds game
 
 var ctx = document.getElementById('rounds_chart').getContext('2d');
 
@@ -75,3 +77,7 @@ function updateRoundsChart(rounds, players, colors, chart_data) {
 
     rounds_chart.update();
 }
+
+
+
+

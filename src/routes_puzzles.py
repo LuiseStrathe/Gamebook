@@ -98,11 +98,34 @@ def puzzle():
     
     
   static = 'puzzle.html'  
-  return render_template(static, page=page_html(static, "IN"), 
-                          add_puzzle_form=add_puzzle_form, 
-                          change_puzzle_form=change_puzzle_form,
-                          puzzle_record_form=puzzle_record_form,
-                          puzzles=puzzles, colors=player_colors,
-                          logs=logs, info=info)
+  return render_template(
+    static, page=page_html(static, "IN"), 
+    add_puzzle_form=add_puzzle_form, 
+    change_puzzle_form=change_puzzle_form,
+    puzzle_record_form=puzzle_record_form,
+    puzzles=puzzles, colors=player_colors,
+    logs=logs, info=info)
 
 
+
+
+@app.route("/stats/puzzle", methods=["GET", "POST"])
+def stats_puzzle():
+  
+  if verify_session() == False and \
+    check_key(session['username'], session['key']) == False:
+      init_session()
+      return redirect(url_for('login', retry=False))  
+  
+  # init
+  group_id = name_to_id(session['username'])
+  group = load_group(group_id)[0]
+  players = group.players
+  logs = gen_puzzle_logs(group_id)
+  
+    
+  static = 'stats_puzzle.html'  
+  return render_template(
+    static, page=page_html(static, "IN"),
+    players=players, logs=logs, 
+    modes=modes, modes_info=modes_info,)

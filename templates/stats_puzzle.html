@@ -1,0 +1,109 @@
+
+{% set page_html = page %}
+{% extends page[0] %}
+
+
+{% block content %}
+
+
+
+{# CSS #}
+<link rel="stylesheet" href="../static/styles_stats.css">
+<style type="text/css">
+  body {background-image: var(--b-grade-4) !important;}
+</style>
+
+
+
+{# Header #}
+<section class="statsHeader">
+
+  <h1>Game Statistics</h1>
+  <a class='mainLink' href="/">>>>  Home & Play  <<<</a>
+  <a href='#puzzleLogs'>>>>  Go to List of all Puzzles finished  <<<</a>
+  
+  <div>
+    {% for i in range(modes_info|length) %}
+      {% if modes[i]  == 'puzzle' %}
+        <a id="modeLinkActive"  
+          class="modeLink" href="/statistics">
+          <img height='50px' class='inlineImg'
+            src={{ modes_info[i][5] }}
+            style='margin-bottom: 10px;'><br> 
+              {{ modes[i]  }} </a>
+      {% else %}
+        <a class="modeLink" href="/stats/{{ modes[i]  }}">
+          {{ modes[i]  }} </a>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+
+
+</section>
+
+
+
+
+{# Chart area #}
+<section class='fullDiv' style='background-color: white'>  
+
+  <h2 class='h2fat'>
+    <span style='background-color: var(--c-blue);'>
+      Puzzles Logged</span></h2>
+
+  <p>Not yet available</p>
+
+</section>
+
+
+<section class='fullDiv' style='background-color: white'>  
+
+  <h2 class='h2fat'>
+    <span style='background-color: var(--c-blue);'>
+      Player Speed</span></h2>
+
+  <p>Not yet available</p>
+
+</section>
+
+
+
+<section class='fullDiv' style='background-color: white'>  
+
+  <h2 class='h2fat'>
+    <span style='background-color: var(--c-blue);'>
+      Compare Puzzles</span></h2>
+
+  <p>Not yet available</p>
+
+</section>
+
+
+{# Logs List #}
+<section id='puzzleLogs' class='midDiv'>  
+
+  <h2 class='h2fat'>
+    <span style='background-color: var(--c-blue);'>
+      All Rounds Logged</span></h2>
+
+  <p>Click on a game to open the game details</p>
+
+  <div>
+    {% for i in range(logs|length ) %}
+      <a class='roundsLog' href='/rounds/{{ logs[i][0] }}'>
+        <p>{{ i + 1 }}<br>{{ logs[i][1] }}</p>
+        <p>{{ logs[i][3] }}<br>{{ logs[i][5] }}</p>
+        <p>{{ logs[i][2] }}<br>{{ logs[i][4] }}</p>
+        <p>{{ logs[i][6] }}</p>
+
+      </a>
+    {% endfor %}
+  </div>
+
+
+
+</section>
+
+
+{% endblock %}

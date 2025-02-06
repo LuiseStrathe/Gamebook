@@ -16,6 +16,9 @@ import pandas as pd
 from datetime import datetime
 
 
+
+
+
 # PLAY
 @app.route("/rounds/<string:game_id>", methods=["GET", "POST"])
 def rounds(game_id):
@@ -127,3 +130,34 @@ def rounds(game_id):
     game_info=game_info, finished=finished, winner=winner,
     round= n + 1, points=points, 
     chart_data=chart_data)
+  
+  
+  
+  
+# STATS
+
+@app.route("/stats/rounds", methods=["GET", "POST"])
+def stats_rounds():
+  
+  if verify_session() == False and \
+    check_key(session['username'], session['key']) == False:
+      init_session()
+      return redirect(url_for('login', retry=False))  
+  
+  # init
+  group_id = name_to_id(session['username'])
+  group = load_group(group_id)[0]
+  players = group.players
+  logs, winner_chart = gen_rounds_logs(group_id)
+  colors = group.colors
+  
+  print('\n> winner logs:\n', winner_chart)
+  
+    
+  static = 'stats_rounds.html'  
+  return render_template(
+    static, page=page_html(static, "IN"),
+    players=players, modes=modes, modes_info=modes_info,
+    logs=logs, winner_chart=winner_chart, colors=colors,)
+  
+  

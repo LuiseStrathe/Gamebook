@@ -24,7 +24,6 @@ def dice_start(group_id, game_id):
   # init
   if session['status'] != 'IN' or group_id != session['username']:
       redirect('/')
-  print(f"Starting DICE ({game_id}) of {group_id}.")
   group =             load_group(group_id)
   
   class DiceStartForm(FlaskForm):
@@ -37,7 +36,6 @@ def dice_start(group_id, game_id):
   if start_form.validate_on_submit():
 
     players =   start_form.players.data
-    print(f"Players: {players[::1]}")
     session['players'] = players
     session['round']  = 1    
     points = np.full((13, len(players)), np.nan)
@@ -122,17 +120,20 @@ def dice(group_id, game_id, round):
 
 
 
-# PAGE
-@app.route("/<string:group_id>/dice/<string:game_id>")
-def dice_page(group_id, game_id):
+
+# STATS
+@app.route("/stats/dice", methods=["GET", "POST"])
+def stats_dice():
   
-  if session['status'] == 'OUT':
-    return redirect('/')
+  if verify_session() == False and \
+    check_key(session['username'], session['key']) == False:
+      init_session()
+      return redirect(url_for('login', retry=False))  
   
-  group = load_group(group_id)
-  game_entry = group.results[group.results['game_id'] == game_id]
-  
-  static = "dice_page.html"
-  return render_template(static, page=page_html(static, "in"), 
-                         group=group, game_id=game_id, 
-                         game_entry=game_entry)
+    
+  static = 'stats_dice.html'  
+  return render_template(
+    static, page=page_html(static, "IN"),
+    modes=modes, modes_info=modes_info,)
+
+

@@ -304,6 +304,7 @@ def end_rounds(group, points, game_id, title, players, comment):
     results = pd.concat([results, pd.DataFrame([result])])
     results.to_csv(f'{path_data}modes/results.csv', index=False)
     
+    
    
 def create_rounds_chart(points, player_ids):
     
@@ -318,6 +319,51 @@ def create_rounds_chart(points, player_ids):
     
     return chart_data
     
+    
+    
+def gen_rounds_logs(id):
+    
+    group = load_group(id)[0]
+    logs = []
+    results = group.results[group.results['g_mode']=='rounds'] 
+    results = results[results['winner_name'] != '']
+    winner_chart = np.zeros((group.n, 2)).astype(int)
+    
+    # logs with all games played
+    for i in range(len(results)):
+        
+        result = results.iloc[i]
+        sums = [str(p) for p in result.result[-1]]
+        
+        # cols: 0:id, 1:date , 2:winner name, 3:title of game, 
+        #       4:players, 5:rounds, 6:comment, 7:color of winner,
+        #       8:points per player
+        log = [ result.game_id,
+                result.time.strftime("%d/%m/%y"), 
+                group.players[result.winner_name], 
+                result.info_1, 
+                ', '.join([group.players[p] for p in result.info_2]),   
+                result.n_rounds, 
+                result.info_3,
+                group.colors[result.winner_name],
+                ' : '.join(sums)]
+        logs.append(log)
+    
+    # winner chart
+    if len(logs) > 2:
+        colors_faint = [group.colors[p] + '69' for p in range(group.n)]
+        
+        for p in range(group.n):
+            n_played = np.sum([p in r for r in results.info_2])
+            n_won = np.sum([p == r.winner_name for i, r in results.iterrows()])
+            winner_chart[p] = [n_won, n_played - n_won]
+            
+        winner_chart = winner_chart.T.tolist()
+        height = str(group.n * 30 + 200) + 'px'
+        winner_chart = [winner_chart, [group.colors, colors_faint], height]
+        
+    return logs, winner_chart
+
 
 
 # PUZZLES

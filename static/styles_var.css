@@ -12,7 +12,7 @@
    --d-head-height:     45px;
    --d-settings-player: 50px;
    --d-input-row:       40px;
-   --d-full-max:        1000px;
+   --d-full-max:        1024px;
 
 
 
@@ -44,13 +44,14 @@
 
    --c-yellow: #f0ca40;
    --c-yellow-dark: #98812c;
-   --c-dirty:  #783906;
+   --c-dirty:  #923908;
 
    --c-purple: #6959e0;
    --c-blue:   #0a22f2;
    --c-blueish: #125aa1;
    --c-blueish-dark: #0d2c4b;
    --c-blue-dark: #0c177f;
+   --c-deep-blue-tr: #100841ca;
 
 
 
@@ -59,11 +60,11 @@
 
    --b-white-tr: #ffffff86;
    --b-dark:   #252525;
-   --b-dark-tr: #252525c7;
-   --b-black-tr: #00000084;
+   --b-dark-tr: #00000091;
+   --b-black-tr: #000000a7;
    --b-subtile: #ffedcd5c;
 
-   --b-head:   #252525ce;
+   --b-head:   #00000091;
    --b-foot:   #252525;   
    --b-info:   #eaeaeaf1;
 
@@ -74,7 +75,8 @@
    rgb(126, 109, 255),rgba(255, 202, 145, 0.93));
    --b-grade-3: linear-gradient(to bottom right, 
    rgb(19, 30, 58),rgb(56, 23, 44));
-
+   --b-grade-4: linear-gradient(to bottom right, 
+   rgb(255, 164, 152),rgb(118, 88, 227));
 
 
 /* ############  text  ############ */
