@@ -6,7 +6,7 @@ from Gamebook.gamebook_app import app
 from Gamebook.src.my_forms import *
 from Gamebook.src.my_params import *
 from Gamebook.src.my_classes import *
-from Gamebook.src.my_fun import *
+from Gamebook.src.my_fun_games import *
 from Gamebook.src.routes import *
 from Gamebook.src.routes_groups import *
 
@@ -122,10 +122,11 @@ def stats_puzzle():
   group = load_group(group_id)[0]
   players = group.players
   logs = gen_puzzle_logs(group_id)
-  
+  puzzles = pd.DataFrame(group.puzzles, columns=['id', 'title'])
+    
     
   static = 'stats_puzzle.html'  
   return render_template(
     static, page=page_html(static, "IN"),
-    players=players, logs=logs, 
+    players=players, logs=logs, puzzles=puzzles,
     modes=modes, modes_info=modes_info,)

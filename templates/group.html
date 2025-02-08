@@ -20,8 +20,7 @@
 
     <h1>{{ group.name }}</h1>
 
-    <p style='font-style: italic; text-align: left; 
-      font-size: 2.5rem; color:var(--s-yellow); line-height: 1.5;'>
+    <p id='slogan'>
       "{% if group.slogan == "" %}
         Damn, we are lazy enough to not have a slogan.
       {% else %}
@@ -155,7 +154,9 @@
         <button class="tablinks" 
             onclick="openMode(event, '{{ modes[m][0] }}')"      
             style='text-transform:capitalize;'>
-              {{ modes[m][0] }}
+            <img height='50px' class='inlineImg'
+            src={{ modes[m][5] }}> 
+            &emsp; {{ modes[m][0] }}
         </button>
 
       {% endfor %} 
@@ -163,23 +164,24 @@
 
 
     {% for m in range(num_modes) %}
-      <div id="{{ modes[m][0] }}"  class="tabcontent">
+      <div id="{{ modes[m][0] }}"  class="tabcontent" 
+        style='border: 1px solid var(--b-subtile);'>
         <div class="imgSplitDiv">
 
           <div class="textDiv" 
-            style="grid-column: 1/3; 
-            background-color: var(--b-white-tr);">
+            style="grid-column: 1/3; background-color: var(--b-subtile);">
             <h3> {{ modes[m][0] }} </h3>
-
             <p style='color: var(--t-std);'> {{ modes[m][2] }} </p> 
           </div>  
 
 
-          <div class="giphyImg"
-            style="grid-column: 3; background-color: var(--b-white-tr);">
-            <img src="{{ modes[m][3] }}">
+          <div class='imgSlider' 
+            style="grid-column: 3">
+              <img src="{{ modes[0][3] }}">
+              <img src="{{ modes[1][3] }}">           
+              <img src="{{ modes[2][3] }}">
           </div>
-
+            
         </div>
       </div>
     {% endfor %}

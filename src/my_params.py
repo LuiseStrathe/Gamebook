@@ -92,7 +92,7 @@ mode_key = {"rounds": "R", "dice": "D", "puzzle": "P"}
 
 
 # [0:mode_name, 1:description_short, 2:description_long, 3:description_img, 
-#  4:icon, 5:scheme, 6:giphy]
+#  4:icon white, 5:icon, 6:giphy]
 
 modes_info = [
     ["rounds", 
@@ -108,7 +108,7 @@ modes_info = [
         the results of multiple games you want to combine, e.g. cards or table tennis.",
         
         "../static/media/modes/desc_mode.png", 
-        "&#x270E;",
+        "../static/media/modes/rounds_icon_tr.png", 
         "../static/media/modes/rounds_icon.png", 
         "https://giphy.com/embed/3tEFVAbfzzcwo",
     ],
@@ -126,7 +126,7 @@ modes_info = [
         The winner is the player with most points in total.",
         
         "../static/media/modes/desc_mode.png",  
-        "&#x2682;",
+        "../static/media/modes/dice_icon_tr.png", 
         "../static/media/modes/dice_icon.png", 
         'https://giphy.com/embed/l2JdUMnCDg6qs368g',
     ],
@@ -143,7 +143,7 @@ modes_info = [
         and compare within your group.",        
         
         "../static/media/modes/desc_mode.png", 
-        "&#x1F9E9;",
+        "../static/media/modes/puzzle_icon_tr.png",
         "../static/media/modes/puzzle_icon.png",
         'https://giphy.com/embed/3o6Mbr1blVD5KKQBxK',
     ],
@@ -173,7 +173,7 @@ about_info = \
         in GamesBook to never lose track of scores again.",
         
         "You can use GamesBook for all kinds of games. \
-        For most games you would choose 'rounds' which simply represents \
+        For most games you would choose 'Rounds' which simply represents \
         round-based games or even just the winner and participants of a game. \n \
         Feel free to create several groups to separate their logs as they belong. \n ",
 ]

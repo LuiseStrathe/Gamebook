@@ -254,3 +254,65 @@ function show_players() {
     document.getElementById("player10").classList.toggle("showing");}
 }
 
+
+
+
+
+
+/*  ####################################
+
+    Slider
+
+    #################################### */ 
+
+
+
+
+// Slideshow (Index)
+let slideAutoIndex = 0;
+
+
+
+function showAuto() {
+
+  let i;
+  let slides = document.getElementsByClassName("slideAuto");
+  let dots = document.getElementsByClassName("dotAuto");
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+  slideAutoIndex++;
+  if (slideAutoIndex > slides.length) {slideAutoIndex = 1}    
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" activeAuto", "");
+  }
+  slides[slideAutoIndex-1].style.display = "block";  
+  dots[slideAutoIndex-1].className += " activeAuto";
+  setTimeout(showAuto, 2000); // Change image every 2 seconds
+}
+
+
+
+
+// Manual Slider (game modes)
+
+let slideIndex = 1;
+showSlides(slideIndex);
+
+// Next/previous controls
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("slide");
+  if (n > slides.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  
+  slides[slideIndex-1].style.display = "flex";
+
+}

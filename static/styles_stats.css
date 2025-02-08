@@ -135,7 +135,7 @@
 
 /*  ############################################
 
-                    Rounds
+                    Charts
                      
     ############################################  */
 
@@ -145,32 +145,52 @@
 }
 
 
-#roundsLogs {
+
+
+/*  ############################################
+
+                    Log List
+                     
+    ############################################  */
+
+
+#rdLogs, #pzLogs {
     background-color: var(--b-dark-tr);
     border-radius: 5px;
     padding: 20px;
     margin: 0 auto;
-    overflow-y: auto;
-
+    overflow: auto;
+    max-height: 600px;  
     
-    .roundsLog {
+    .rdLog, .pzLog {
         display: grid;
-        grid-template-columns: 1fr auto;
         grid-template-rows: 1fr;
-        max-height: 600px;        
-        margin: 15px 0;
+        margin: 5px 0;
         padding: 0;
         display: block;
-        overflow-x: auto;
         text-align: left;
+        overflow-x: auto;
         background-color: var(--b-dark-tr);}
+
+    .rdLog {        
+        grid-template-columns: 1fr auto;}
+
+    .pzLog {
+        grid-template-columns: 1fr 1fr 2fr 2fr;
+
+        div {        
+            text-align: left;
+            display: inline-block; 
+            margin: 0; 
+            padding: 10px;}}
 
     p {
         margin: 0;
-        padding: 0;}
+        padding: 0;
+        color: var(--c-grey);}
 }    
 
-.roundsLog1, .roundsLog2 { 
+.rdLog1, .rdLog2 { 
     display: inline-grid;
     grid-template-columns: 80px 160px;
     padding: 10px !important;
@@ -182,40 +202,40 @@
 }
 
 
-.roundsLog2 { 
+.rdLog2 { 
     text-align: left;
     background-color: var(--b-dark-tr);
     grid-template-columns: 1fr 1fr 1fr;
     grid-column: 2;
     text-wrap: none;
     width: calc(100% - 270px);
-
     overflow-x: hidden;
 }
 
 
 @media screen and (max-width: 1024px) {
 
-    #roundsLogs{
+    #rdLogs, #pzLogs {
         margin: 0;
         padding: 20px 0;}
 }
 
 
-
-
 @media screen and (max-width: 800px) {
 
-    #roundsLogs{
-        display: block;
+    #rdLogs, #pzLogs{
         border-radius: 0;}
 
-    .roundsLog1 {
+    .rdog1 {
         text-align: left;}
 
-    .roundsLog2 {
+    .rdLog2 {
         display: grid;
         width: 100%;
+        min-width: 500px;}
+
+    .pzLog {
+        width: 100%;       
         min-width: 500px;}
 }
 

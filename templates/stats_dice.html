@@ -20,7 +20,7 @@
 
   <h1>Game Statistics</h1>
   <a class='mainLink' href="/">>>>  Home & Play  <<<</a>
-  <a href='#diceLogs'>>>>  Go to List of all dice games  <<<</a>
+  <a href='#diceLogs'>>>>  Go to list of all dice games  <<<</a>
   
   <div>
     {% for i in range(modes_info|length) %}
@@ -46,33 +46,56 @@
 
 
 
-{# Chart area #}
-<section class='fullDiv' style='background-color: white'>  
+{% if false %}
 
-  <h2 class='h2fat'>
-    <span style='background-color: var(--c-blue);'>
-      Winner Board Dice</span></h2>
+  {# Chart area #}
+  <section class='fullDiv' style='background-color: var(--c-deep-blue-tr)'>  
 
-  <p>Not yet available</p>
+    <h2><span style='background-color: white; color: black;'>
+        Dice Analytics</span></h2>
 
-</section>
+    <h3><span style='color: white; text-decoration: underline;'>
+      <br> Winner Board</span></h3>
 
+    <p style='color: white;'>
+      Not yet available.</p>
 
-
-{# Logs List #}
-<section id='diceLogs' class='midDiv'>  
-
-  <h2 class='h2fat'>
-    <span style='background-color: var(--c-blue);'>
-      All Dice Games Logged</span></h2>
-
-  <p>Not yet available</p>
+  </section>
 
 
 
+  {# Logs List #}
+
+  <section class='midDiv'>  
+    <h2><span style='background-color: white; color: var(--c-blue-dark);'>
+        All puzzles finished</span></h2>
+
+    
+    <div id='dcLogs'>
+      <p style='color: var(--t-white); padding-bottom: 30px;'>
+        Not yet available.</p>
+      
+    </div>
+  </section>
 
 
-</section>
 
+
+
+{% else %}
+  {# Giphy Content #}
+  <section id='statsMain' class='fullDiv'>  
+    <div class='giphyBg'
+        style='background-image: url("\
+        https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjEx\
+        M3YwYTFtMHNkaGRxZm1tbzQwM2xzbW10Z244d20xazYxbDQwZm\
+        ZtYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9\
+        Zw/cOo3aeD9Jzxh6/giphy.gif");'>
+
+        <p style='font-size: 4rem; color: var(--s-yellow);'>
+          Nothing there yet ...</p>
+    </div>
+  </section>
+{% endif %}
 
 {% endblock %}

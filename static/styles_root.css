@@ -157,9 +157,10 @@ header {
         z-index: 20;
         bottom: 20px; 
         right: 20px;
-
         transition: 0.3s;
-        color: var(--t-std) !important;
+        color: var(--t-white) !important;
+        font-weight: bold;
+        text-shadow: var(--t-std) 1px 1px 5px;
 }
 
 

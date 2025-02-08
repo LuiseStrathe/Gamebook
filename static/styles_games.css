@@ -147,7 +147,7 @@
 #puzzleList {
     margin: 20px auto;
     padding: 0;
-    overflow: scroll;
+    overflow: auto;
     max-height: 400px;
     
     p {
@@ -194,7 +194,7 @@
 
 #puzzleLogList {
     max-height: 800px;
-    overflow: scroll;
+    overflow: auto;
     background-color: var(--b-black-tr);
     color: var(--t-white);
 }
@@ -202,6 +202,9 @@
 @media screen and (max-width: 800px) {
     #puzzleLib, #puzzleLogList, #puzzleLogs {
         padding: 20px 0;}
+
+    #puzzleLogList table {
+        min-width: 500px;}
 }
     
 

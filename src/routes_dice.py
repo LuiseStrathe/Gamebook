@@ -6,7 +6,7 @@ from Gamebook.gamebook_app import app
 from Gamebook.src.my_forms import *
 from Gamebook.src.my_params import *
 from Gamebook.src.my_classes import *
-from Gamebook.src.my_fun import *
+from Gamebook.src.my_fun_games import *
 from Gamebook.src.routes import *
 from Gamebook.src.routes_groups import *
 

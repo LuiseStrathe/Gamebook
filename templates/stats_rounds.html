@@ -20,7 +20,7 @@
 
   <h1>Game Statistics</h1>
   <a class='mainLink' href="/">>>>  Home & Play  <<<</a>
-  <a href='#roundsLogs'>>>>  Go to List of all rounds games  <<<</a>
+  <a href='#rdLogs'>>>>  Go to list of all rounds games  <<<</a>
   
   <div>
     {% for i in range(modes_info|length) %}
@@ -43,75 +43,104 @@
 </section>
 
 
+{% if logs|length > 0 %}
 
+  {# Chart area #}
+  <section class='fullDiv' style='background-color: var(--c-deep-blue-tr)'>  
 
-{# Chart area #}
-<section class='fullDiv' style='background-color: var(--c-deep-blue-tr)'>  
+    <h2><span style='background-color: white; color: black;'>
+        Rounds Analytics</span></h2>
 
-  <h2 class='h2fat'>
-    <span style='background-color: white; color: black;'>
-      Rounds Analytics</span></h2>
-
-
-  <h3 style='color: white;'>Win Rates & Paticipation</h3>  
-  {% if (logs|length) > 2 %}
-    <div class='midDiv'>
-        <div style='height: {{winner_chart[2]}};' class='canvasDiv'>
-          <canvas id="winnerBoard"></canvas>
-          <script src='../static/rounds_stats.js'></script> 
-          <script>
-              updateWinners( 
-                {{ players|safe }},
-                {{ winner_chart[1]|safe }},
-                {{ winner_chart[0]|safe }},);
-          </script>    
-        </div>  
-    </div>
-  {% endif %}
-
-</section>
-
-
-
-{# Logs List #}
-<section class='midDiv'>  
-
-  <h2 class='h2fat'>
-    <span style='background-color: white; color: var(--c-blue-dark);'>
-      All Rounds Logged</span></h2>
-
-  
-
-  <div id='roundsLogs'>
-    <p style='color: var(--t-white); padding-bottom: 30px;'>
-      Click on a game to open the game details.</p>
     
-    {% for i in range(logs|length ) %}
-      <div class='roundsLog'>
-      
-        <div class='roundsLog1'>
-          <p><span  class='listBold'>{{ i + 1 }}</span>
-            <br>{{ logs[i][1] }}</p>
-          <p><span  class='listBold'>{{ logs[i][3] }}</span>
-            <br>({{ logs[i][5] }} rounds)</p>        
-        </div>
+    <h3 style='color: white; text-decoration: underline;'>
+      <br>Win Rates & Paticipation</h3>  
+    
+    
+    {% if (logs|length) > 2 %}
+      <p>
+        {% for p in range(players|length) %}
+          <span style='color: {{ winner_chart[1][0][p] }}; font-weight: bold;'>
+            {{ players[p] }}:
+            {{ winner_chart[3][p] }} | 
+            {{ winner_chart[0][0][p] + winner_chart[0][1][p] }}
+          </span> &emsp;
+        {% endfor %}
+      </p>
 
-        {% set color = logs[i][7] %}    
-        <a class='roundsLog2' href='/rounds/{{ logs[i][0] }}'
-          style='background-color: {{ color }}b9;'>
-          
-          <p><span  class='listBold'>{{ logs[i][2] }} won</span>
-            <br>{{ logs[i][4] }}</p>
-          <p><br>{{ logs[i][8] }}</p>
-          <p class='listDesc'>{{ logs[i][6] }}</p>
-        </a>
+      <div class='midDiv'>
+          <div style='height: {{winner_chart[2]}};' class='canvasDiv'>
+            <canvas id="winnerBoard"></canvas>
+            <script src='../static/rounds_stats.js'></script> 
+            <script>
+                updateWinners( 
+                  {{ players|safe }},
+                  {{ winner_chart[1]|safe }},
+                  {{ winner_chart[0]|safe }},);
+            </script>    
+          </div>  
       </div>
-    {% endfor %}
-  </div>
+
+    {% else %}
+      <p style='color: var(--t-white); padding-bottom: 30px;'>
+        No numbers, no stats ... analytics will show when 
+        you have at least 3 logs.</p>
+    {% endif %}
+
+  </section>
 
 
 
-</section>
+  {# Logs List #}
 
+  <section class='midDiv'>  
+    <h2><span style='background-color: white; color: var(--c-blue-dark);'>
+        All Rounds Logged</span></h2>
+    
+
+    <div id='rdLogs'>
+      <p style='color: var(--t-white); padding-bottom: 30px;'>
+        Click on a game to open the game details.</p>
+      
+      {% for i in range(logs|length ) %}
+        <div class='rdLog'>
+        
+          <div class='rdLog1'>
+            <p><span  class='listBold'>{{ i + 1 }}</span>
+              <br>{{ logs[i][1] }}</p>
+            <p><span  class='listBold'>{{ logs[i][3] }}</span>
+              <br>({{ logs[i][5] }} rounds)</p>        
+          </div>
+
+          {% set color = logs[i][7] %}    
+          <a class='rdLog2' href='/rounds/{{ logs[i][0] }}'
+            style='background-color: {{ color }}b9;'>
+            
+            <p><span  class='listBold'>{{ logs[i][2] }} won</span>
+              <br>{{ logs[i][4] }}</p>
+            <p> points:<br>{{ logs[i][8] }}</p>
+            <p class='listDesc'>{{ logs[i][6] }}</p>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+
+
+{% else %}
+  {# Giphy Content #}
+  <section id='statsMain' class='fullDiv'>  
+    <div class='giphyBg'
+        style='background-image: url("\
+        https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjEx\
+        M3YwYTFtMHNkaGRxZm1tbzQwM2xzbW10Z244d20xazYxbDQwZm\
+        ZtYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9\
+        Zw/cOo3aeD9Jzxh6/giphy.gif");'>
+
+        <p style='font-size: 4rem; color: var(--s-yellow);'>
+          Nothing there yet ...</p>
+    </div>
+  </section>
+{% endif %}
 
 {% endblock %}

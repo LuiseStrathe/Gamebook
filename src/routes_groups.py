@@ -28,22 +28,6 @@ from flask_login import LoginManager
 
 
 
-
-# Enter group page
-
-#@app.route("/gamebook")
-#def enter_gamebook():
-  
-#  if check_key(session['username'], session['key']):    
-#    return redirect(f"/gamebook/{session['username']}")
-  
-#  else: 
-#    init_session()
-  
-#    return redirect(url_for('login', retry=False))
-
-
-
 # Group page
 
 @app.route("/group/<string:group_id>", methods=["GET", "POST"])

@@ -53,13 +53,33 @@
     </div>
 
 
-    <div class="imgDiv"
+    <div class="imgDiv slideAuto fade"
       style="grid-column: 3; background-image: 
       url('../static/media/img_gaming_jumper.jpg');">
+      <div class="text">Make groups</div>
     </div>    
 
+    <div class="imgDiv slideAuto fade"
+      style="grid-column: 3; background-image: 
+      url('../static/media/img_gaming_jumper.jpg');">
+      <div class="text">Log your games</div>
+    </div>    
 
+    <div class="imgDiv slideAuto fade"
+      style="grid-column: 3; background-image: 
+      url('{{ modes[0][3] }}');">
+      <div class="text">View & analyze</div>
+    </div>    
+    
+    <div style="grid-column: 3; z-index: 1;
+      text-align: center; min-height: 15px; position: relative;">
+      <span class="dotAuto"></span> 
+      <span class="dotAuto"></span> 
+      <span class="dotAuto"></span> 
+    </div>
+    <script> showAuto(); </script>
   </section>
+
 
 
   <div id="howto" class="pageNav">
@@ -220,7 +240,7 @@
       <span style="background-color: black;">
         Game Modes</span></h2>
 
-    <p>Choose a mode to see the description and a giph.</p>
+    <p style='color: white;'>Choose a mode to explore:</p>
 
 
 
@@ -232,7 +252,9 @@
           <button class="tablinks" 
               onclick="openMode(event, '{{ modes[m][0] }}')"      
               style='text-transform:capitalize;'>
-                {{ modes[m][0] }}
+                <img height='50px' class='inlineImg'
+                src={{ modes[m][5] }}> 
+                &emsp; {{ modes[m][0] }}
           </button>
 
         {% endfor %} 
@@ -241,23 +263,23 @@
 
 
       {% for m in range(num_modes) %}
-        <div id="{{ modes[m][0] }}"  class="tabcontent">
+        <div id="{{ modes[m][0] }}"  class="tabcontent" 
+          style='border: 1px solid var(--b-subtile);'>
           <div class="imgSplitDiv">
 
             <div class="textDiv" 
-              style="grid-column: 1/3; 
-              background-color: var(--b-subtile);">
+              style="grid-column: 1/3; background-color: var(--b-subtile);">
               <h3> {{ modes[m][0] }} </h3>
-
               <p> {{ modes[m][2] }} </p> 
             </div>  
 
 
-            <div class="giphyImg"
+            <div class='imgSlider' 
               style="grid-column: 3;">
-              <img src="{{ modes[m][3] }}">
+              <img src="{{ modes[0][3] }}">
+              <img src="{{ modes[1][3] }}">           
+              <img src="{{ modes[2][3] }}">
             </div>
-
           </div>
         </div>
       {% endfor %}

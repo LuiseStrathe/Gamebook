@@ -15,7 +15,6 @@
 
 
 <div id='gameHead'>
-   
     <h1><img height='30px' class='inlineImg'
         src='../static/media/modes/puzzle_icon.png'>
         Puzzles</h1> 
@@ -29,8 +28,10 @@
             href="/stats/puzzle">View Stats</a>
     </div>
 
+    <p style='color: var(--c-grey);'>
+        &#x2460; Add puzzles you have to your library. <br>
+        &#x2461; Once you finished a puzzle, add a log with your time.</p>
 </div>
-
 
 {% if info != "" %}
 
@@ -46,29 +47,26 @@
 {% endif %}
 
 
+
 <div class='FullDiv' style="background-color: var(--b-white-tr);">
     <section id='puzzleLib' class="gameSection">
-
         <h2><span style="background-color: black;">
-            Puzzle Library</span></h2>
-
+            &#x2460; Puzzle Library</span></h2>
         <p> You have {{ puzzles.shape[0] }} puzzles in the library:</p>
         
+
         <div id="puzzleList">
             {% for i in range(puzzles.shape[0]) %}    
                 <div class="puzzleList">
-
                     <p class="pId"> {{ puzzles["id"].iloc[i] }} </p>
                     <p class="pPcs"> {{ puzzles["pcs"].iloc[i] }} </p>
                     <p class="pName"> {{ puzzles["title"].iloc[i] }} </p>
                     <p class="pDesc"> {{ puzzles["description"].iloc[i] }} </p>
-
                 </div> 
             {% endfor %}
         </div>
 
         
-
         <div id='puzzleChange'>
 
             <button class='pageLink puzzleBtn' 
@@ -154,15 +152,16 @@
 
     <h2 id="puzzleLogs">
         <span style="background-color: var(--c-blue);">
-        Puzzle Logs</span></h2>
-
-    <p style="color: var(--t-white);">Here are the puzzles, which <b>{{ page[2] }}</b> has finished & logged.</p>
+        &#x2461; Puzzle Logs</span></h2>
 
     <button class='pageLink puzzleLogBtn' 
         onclick='puzzle_log()'>
         + add puzzle log
     </button>
 
+
+    <p style="color: var(--t-white); text-align: center;">Here are the puzzles, which 
+        <b>{{ page[2] }}</b> has finished & logged:</p>
 
     <div id='puzzleLogForm' class='popUp'>
         <form action="" method="POST">
@@ -199,9 +198,7 @@
 
     {% else %}
         <div id="puzzleLogList">
-            <table>
-                <caption>Puzzle Logs</caption>
-                
+            <table>                
                 <thead>
                     <tr>
                         <th>When</th>

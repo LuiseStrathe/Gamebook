@@ -9,7 +9,7 @@ import pandas as pd
 from flask import session
 
 from Gamebook.src.my_params import *
-from Gamebook.src.my_fun import encrypt_key
+from Gamebook.src.my_fun import *
 
 
 
