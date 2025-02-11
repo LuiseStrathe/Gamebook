@@ -8,8 +8,7 @@
 {# CSS #}
 <link rel="stylesheet" href="../static/styles_games.css">
 <style type="text/css">
-    body {background-image: var(--b-grade-3) !important;}
-</style>
+    body {background-image: var(--bg-play) !important;}</style>
 
 <div id='gameHead'>   
     <h1><img height='30px' class='inlineImg'
@@ -35,11 +34,8 @@
 {% if info != "" %}
     <div id="infoID" class="userFeedback infoShow">
         {{ info }} <br><br>
-        <button 
-            class='pageLink' 
-            onclick="close_user_info()">
-                X
-        </button>
+        <button class='pageLink' onclick="close_user_info()">
+            X </button>
     </div>
 {% endif %}
 
@@ -165,31 +161,33 @@
 
 
             <div id="roundsFinish" class="popUp">
-
-                <h2>GAME OVER?</h2>
-
-                <div class='giphyBg' style='height: 250px; background-image: 
-                    url("https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3B4bHB0\
-                    ajNoYnd1YWUyam5nbDZib3UzMTYxbzhiZ2F4d253Z3YwbCZlcD12MV9pbnRlcm5\
-                    hbF9naWZfYnlfaWQmY3Q9Zw/2afdli2NFvmq1KsIeS/giphy.gif");'>
-                </div>
-                <p> Your current entries will NOT be included. 
-                    'Close round' to fix this.<br></p>
-                <p>How do you want to remember this game?</p>
-                <form action="" method="POST">
-                    {{ submit_game_form.hidden_tag() }}  
-
-                    <p>{{ submit_game_form.comment() }}</p>                              
-
-                    <div class='finishBtn'>
-                        {{ submit_game_form.submit() }}
+                <div class='popUpContent'>
+                    <div class='popHead'>
+                      <p>Log this game</p>
+                      <button onclick='finish_rounds()'>
+                          X </button>
                     </div>
 
-                    <button class='pageLink'
-                        onclick='finish_rounds()'>
-                        X
-                    </button>        
-                </form>
+                    <h2>GAME OVER?</h2>
+
+                    <div class='giphyBg' style='height: 250px; background-image: 
+                        url("https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3B4bHB0\
+                        ajNoYnd1YWUyam5nbDZib3UzMTYxbzhiZ2F4d253Z3YwbCZlcD12MV9pbnRlcm5\
+                        hbF9naWZfYnlfaWQmY3Q9Zw/2afdli2NFvmq1KsIeS/giphy.gif");'>
+                    </div>
+                    <p> Your current entries will NOT be included. 
+                        'Close round' to fix this.<br></p>
+                    <p>How do you want to remember this game?</p>
+                    <form action="" method="POST">
+                        {{ submit_game_form.hidden_tag() }}  
+
+                        <p>{{ submit_game_form.comment() }}</p>                              
+
+                        <div class='finishBtn'>
+                            {{ submit_game_form.submit() }}
+                        </div>
+                    </form>
+                </div>
             </div>
         </section>
     {% endif %}

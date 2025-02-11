@@ -38,6 +38,7 @@
 .adminConfirm {
     background-color: var(--b-dark);
     color: var(--t-white);
+    margin: 0 auto;
 }
 
 
@@ -108,7 +109,7 @@
     align-items: center;
 
     padding: 0;
-    margin: 80px 20px;
+    margin: 60px auto;
 
     p {
         text-align: right;}
@@ -128,10 +129,8 @@
     max-width: 600px;
     text-align: center;
 
-    p {
-        text-align: center;
+    p { text-align: center;
 }}
-
 
 
 .registerPlayer {
@@ -139,7 +138,8 @@
     gap: 20px;
     grid-template-columns: 2fr 1fr;
     grid-template-rows: var(--d-input-row);
-    margin: 20px auto;
+    margin: 10px auto;
+    padding: 0;
     max-width: 600px;
 
     p {
@@ -151,12 +151,8 @@
     div {
         margin: 0;
         padding: 0;}
-    
-    input {
-        min-height: var(--d-settings-player);
-        padding: 0;
-        margin: auto 0;  
-}}
+}
+
 
 #playerCount {
     margin: 40px auto 0; 
@@ -176,13 +172,11 @@
         background-color: var(--b-dark-tr);
         color: var(--t-white);
         font-weight: bold;
-        cursor: pointer;
-    }
+        cursor: pointer;}
 
     p {
         margin: auto 0;
-        text-align: left;
-    }
+        text-align: left;}
 
     input {
         text-align: right;
@@ -192,8 +186,7 @@
         padding: 0;
         border: none;
         background-color: transparent;
-        color: var(--t-std);
-    }
+        color: var(--t-std);}
 }
 
 
@@ -210,11 +203,9 @@
         grid-template-rows: 1fr 1fr; 
         width: 100%;
 
-    a {
-        grid-row: 2;}
+    a { grid-row: 2;}
 
-    p {
-        min-width: 30px;
+    p { min-width: 30px;
 }}}
 
 
@@ -308,11 +299,8 @@
     text-align: center;
     justify-items: center;
 
-    hr {
-        max-width: var(--d-full-max);}
-
-    h3 {
-        margin: 10px 5px 0;}
+    hr { max-width: var(--d-full-max);}
+    h3 { margin: 10px 5px 0;}
 }
 
 
@@ -321,7 +309,6 @@
     justify-content: space-between;
     width: 100%;
     max-width: var(--d-full-max);
-
     padding: 0;
     margin: 20px 0;
 }
@@ -343,32 +330,19 @@
 .settingsPlayerInput {
     display: inline-flex;
     justify-content: space-between;
-
     width: 65%;
-    height: var(--d-settings-player);
     padding: 0;
     margin: 0;
-
-
 }
 
 
 .settingsPlayerInput div {
-        display: inline-flex;
-
-        width: 45%;
-        align-content: center;
-        margin:0;
-        padding: 0;
-
-        input {
-            width: 100%;
-            height: var(--d-settings-player);
-            padding: 0;
-            margin: 0;           
-
-            text-align: center;    
-        }} 
+    display: inline-flex;
+    width: 45%;
+    align-content: center;
+    margin:0;
+    padding: 0;
+} 
 
 .settingsColorCheck {
     display: flex;
@@ -380,7 +354,6 @@
 
 .settingsColorCheck input, .settingsColorCheck select {
         display: inline-flex;
-        height: var(--d-settings-player);
         padding: 5px;
 }
 
@@ -400,14 +373,13 @@
             display: block;
             width: 100%;
             margin: 0;
-            height: calc(var(--d-settings-player) - 10px);      
-        }
-    }}
+            height: calc(var(--d-settings-player) - 10px);}}
+    }
 
     .settingsPlayerMain {
         width: 47%;
-        height: calc(3 * var(--d-settings-player));
-}}
+        height: calc(3 * var(--d-settings-player));}
+}
 
 
 
@@ -434,7 +406,7 @@
 
 .settingsBtn {
     background-color: var(--b-foot) !important;
-    color: var(--s-yellow) !important;
+    color: var(--t-white) !important;
     border:none;
 }
 
@@ -444,9 +416,7 @@
 
 
 
-#settingsID {
-    
-    a, input {
+#settingsID a, #settingsID input {
         display: block;
         padding: 15px;
         margin: 10px 0;   
@@ -456,7 +426,7 @@
         font-weight: normal;
         border-radius: 5px;
         font-weight: bold;             
-        border: none; }
+        border: none; 
 }
 
 
@@ -483,74 +453,18 @@
 
 
 #deleteDiv {
-    background-color: var(--b-dark);
     text-align: center;
     padding: 40px 20px;
     margin-top: 30px;
+    background-color: var(--b-dark);
 
+    p, button {
+        color: var(--t-white);}
 
-    h2, a, p, button {
-        color: var(--t-white); }
-
-    a, button {
-        background-color: var(--s-red);
-        width: 67%;
-        max-width: var(--d-full-max);
-        border: none;}
-    
-    a:hover, button:hover {
-        cursor: pointer;
-}}
-
-
-#delGroupID {
-    display: none;
-    flex-grow: column;
-    text-align: center;
-    
-
-    a, button {
-        display: block;
-        justify-content: stretch;
-        padding: 15px;
-        margin: 10px 0;  
-        width: 100%;
-        min-width: 200px;
-        text-align: center;
-        background-color: transparent;
-        border:none;};
-
-    form input {
-        color: var(--i-text);
-        font-style: none; 
-}}
-
-
-#delGroupID input {
-    padding: 15px;
-    margin: 10px 0;   
-    max-width: 100%;
-    min-width: 200px;
-
-    color: var(--t-white);
-    font-style: none;
-    font-weight: bold;      
-    text-align: center;
-    border-radius: 5px;
+    #deleteSubmit input {
+        background-color: var(--s-red) !important;
+        color: var(--t-white);}
 }
-
-
-#delGroupConfirm {
-    padding: 0;
-
-    input { 
-        background-color: var(--s-red);
-        color: var(--t-white) !important;
-        letter-spacing: 0.2rem;
-        font-weight: bold;
-        font-style: normal;
-}}
-
 
 
 /* --> LEAVE ON BOTTOM  */
@@ -564,17 +478,11 @@
         display: block;
         text-align: center  ;
 
-
-
         a, button {
             display: block; 
             width: 100%;
-            margin: 20px 0;
-    }}
-    
-    #deleteDiv a, #deleteDiv button {
-        width: 100%;
-}}
+            margin: 20px 0;}}
+}
 
 
 

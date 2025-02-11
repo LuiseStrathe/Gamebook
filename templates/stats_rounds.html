@@ -9,9 +9,6 @@
 
 {# CSS #}
 <link rel="stylesheet" href="../static/styles_stats.css">
-<style type="text/css">
-  body {background-image: var(--b-grade-4) !important;}
-</style>
 
 
 
@@ -42,8 +39,8 @@
 
 </section>
 
-
-{% if logs|length > 0 %}
+{% set n = logs|length %}
+{% if n > 0 %}
 
   {# Chart area #}
   <section class='fullDiv' style='background-color: var(--c-deep-blue-tr)'>  
@@ -56,7 +53,7 @@
       <br>Win Rates & Paticipation</h3>  
     
     
-    {% if (logs|length) > 2 %}
+    {% if n > 2 %}
       <p>
         {% for p in range(players|length) %}
           <span style='color: {{ winner_chart[1][0][p] }}; font-weight: bold;'>
@@ -68,16 +65,16 @@
       </p>
 
       <div class='midDiv'>
-          <div style='height: {{winner_chart[2]}};' class='canvasDiv'>
-            <canvas id="winnerBoard"></canvas>
-            <script src='../static/rounds_stats.js'></script> 
-            <script>
-                updateWinners( 
-                  {{ players|safe }},
-                  {{ winner_chart[1]|safe }},
-                  {{ winner_chart[0]|safe }},);
-            </script>    
-          </div>  
+        <div style='height: {{winner_chart[2]}};' class='canvasDiv'>
+          <canvas id="winnerBoard"></canvas>
+          <script src='../static/rounds_stats.js'></script> 
+          <script>
+              updateWinners( 
+                {{ players |safe }},
+                {{ winner_chart[1] |safe }},
+                {{ winner_chart[0] |safe }},);
+          </script>    
+        </div>  
       </div>
 
     {% else %}
@@ -95,30 +92,32 @@
   <section class='midDiv'>  
     <h2><span style='background-color: white; color: var(--c-blue-dark);'>
         All Rounds Logged</span></h2>
-    
+    <p>Click on a game to open the game details:</p>    
 
-    <div id='rdLogs'>
-      <p style='color: var(--t-white); padding-bottom: 30px;'>
-        Click on a game to open the game details.</p>
+    <div id='logs'>
+
       
-      {% for i in range(logs|length ) %}
-        <div class='rdLog'>
-        
-          <div class='rdLog1'>
-            <p><span  class='listBold'>{{ i + 1 }}</span>
-              <br>{{ logs[i][1] }}</p>
-            <p><span  class='listBold'>{{ logs[i][3] }}</span>
-              <br>({{ logs[i][5] }} rounds)</p>        
-          </div>
+      {% for i in range(n) %}
+        <div class='log'>
+        {% set color = logs[i][7] %}  
+          <a href='/rounds/{{ logs[i][0] }}'>
 
-          {% set color = logs[i][7] %}    
-          <a class='rdLog2' href='/rounds/{{ logs[i][0] }}'
-            style='background-color: {{ color }}b9;'>
-            
-            <p><span  class='listBold'>{{ logs[i][2] }} won</span>
-              <br>{{ logs[i][4] }}</p>
-            <p> points:<br>{{ logs[i][8] }}</p>
-            <p class='listDesc'>{{ logs[i][6] }}</p>
+
+            <div style='min-width: 70px !important;'>
+              <p class='logDesc'><span  class='listBold'>{{ n - i }}</span>
+                <br>{{ logs[i][1] }}</p></div>
+            <div><p><span  class='listBold'>{{ logs[i][3] }}</span>
+                <br>({{ logs[i][5] }} rounds)</p></div>
+
+            <div style='background-color: {{ color }}c9;'>
+              <p><span  class='logBold'>&#x1F3C6; {{ logs[i][2] }}</span>
+                <br>{{ logs[i][4] }}</p>
+            </div>
+            <div><p> points:<br>{{ logs[i][8] }}</p></div>
+            <div style='flex-grow: 1;'>
+              <p class='logDesc'>{{ logs[i][6] }}</p></div>
+
+
           </a>
         </div>
       {% endfor %}

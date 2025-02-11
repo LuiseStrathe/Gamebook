@@ -50,20 +50,13 @@ def encrypt_key(key):
     
 def verify_session():    
     
-    if 'status' in session:    
-    
-        if session['status'] == "IN":
+    if ('status' in session) and (session['status'] == "IN"):
+        try: session['username']
+        except: pass
+        else: return True
             
-            try: session['username']
-            except: pass
-            
-            else: 
-                if session['username'] not in ['random', '']:
-                    return True
-        
     else: 
         init_session()
-        
         return False
 
 
@@ -80,14 +73,12 @@ def page_html(static, force_in_out="no"):
     3 -     player colors
     '''
     
-    
     page_html = ["__head_out.html", 
                 page_titles[static], 
                 "NaN",
                 player_colors]
     
     if verify_session():    
-        
         page_html[0] = "__head_in.html"
         page_html[2] = session['username']
         
@@ -101,6 +92,8 @@ def page_html(static, force_in_out="no"):
         page_html[0] = "__head_out.html"
         
     return page_html
+
+
 
 
 
@@ -154,17 +147,14 @@ def id_to_name(id):
 def check_name(name):
     
     id = name_to_id(name)
-    if id == 'random':
-        check = False
-    else:
-        check = f'{id}.pkl' not in os.listdir(f'{path_data}groups/')
+    check = f'{id}.pkl' not in os.listdir(f'{path_data}groups/')
         
     return check, id
 
 
 def check_key(id, key):
 
-    if id in ['random', '', None]:
+    if id in ['    ' ,'' , None]:
             check = False
           
     elif load_group(id)[1] == False:

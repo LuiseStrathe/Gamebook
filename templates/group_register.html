@@ -9,13 +9,7 @@
 {# CSS #}
 <link rel="stylesheet" href="../static/styles_admin.css">
 <style type="text/css">
-
-body { 
-    background-image: 
-    linear-gradient(to bottom right, 
-#80ff6d, #ff8138) !important;    }
-
-</style>
+    body {background-image: var(--bg-login) !important;}</style>
 
 {% set colors = page[3] %}
 
@@ -181,7 +175,7 @@ body {
         </div>   
 
         <div>
-            <div  class="registerPlayer showing" style="margin-top: 0;">
+            <div  class="registerPlayer showing" style="height: 50px;">
                 <p style="grid-column: 1;">Name</p>
 
                 <p style="grid-column: 2;">Color</p>
@@ -251,16 +245,14 @@ body {
 
         {# Confirm #}
 
-        <div>
+        <div class='registerInfo'>
             <p style="display: inline-block; margin: 60px 0 20px;"> 
-                <b>What is your groups's slogan?</b> (optional)
-            </p>
+                <b>What is your groups's slogan?</b> (optional) </p>
 
             <p id="sloganChange" style="display: inline-block;">
-                {{ group_form.slogan(size=100) }}
-            </p>
+                {{ group_form.slogan(size=100) }} </p>
     
-            <input class="pageLink adminConfirm"
+            <input class="pageLink adminConfirm" type="submit"
                 {{ group_form.registration_submit() }} >
         </div>
 
@@ -269,14 +261,12 @@ body {
 
         {# Login Link #}
 
-        <div style="height: 100px;"></div>
-
-        <a style="display: block; margin: 20px auto;" class="pageLink" 
-            href = "/login">
-            Already have a group? Login here.
-        </a>
-            
-        <div style="height: 200px;"></div>
+        <div style="height: 200px; text-align: center, justify-content: center;">
+            <a style="display: block; margin: 20px auto; max-width: 300px;" 
+                class="pageLink" href = "/login">
+                Already have a group? Login here.
+            </a>
+        </div>
 
     </form>
 </div>

@@ -63,8 +63,7 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        align-items: center;
-    }
+        align-items: center;}
 
     div a {
         color: var(--t-white);
@@ -72,6 +71,10 @@
 
     div a:hover {
         color: var(--s-hover);}
+
+    p {
+        color: var(--t-white);
+        text-align: center;}
 }
 
 
@@ -84,19 +87,6 @@
 }
 
 
-
-.submitBtn {
-    padding:0;
-    margin: 20px 0;
-    width: 100%;
-
-    input {
-        margin: 0;
-        height: 40px;
-        background-color: var(--t-white);
-        border-radius: 5px;
-        font-weight: bold;}
-}
 
 .finishBtn {
     display: flex;
@@ -146,10 +136,12 @@
 
 #puzzleList {
     margin: 20px auto;
-    padding: 0;
+    padding: 10px;
     overflow: auto;
     max-height: 400px;
-    
+    border-radius: 5px;
+    background-color:  var(--c-deep-blue-tr);
+
     p {
         color: var(--t-std);}
 
@@ -160,6 +152,7 @@
         grid-template-columns: 30px 60px 1fr 2fr;
         grid-template-rows: 1;
         border-radius: 5px;
+
 
         p { 
             color: var(--t-std);
@@ -179,17 +172,17 @@
             font-size: 0.8rem;}}
 }
 
-#puzzleLogForm {
-    div p {
-        color: var(--t-white);}
+#puzzleLogForm div p {
+        color: var(--t-white);
 }
 
-.puzzleLogBtn {
-    display: flex;
-    background-color: var(--b-white-tr) !important;
-    color: var(--t-std) !important;
-    margin: 15px auto;
+.puzzleBtn {
+    display: inline-block;
     text-align: center;
+    background-color: var(--b-dark) !important;
+    color: var(--s-hover) !important;
+    border: 1px solid var(--s-hover);
+    margin: 15px;
 }
 
 #puzzleLogList {
@@ -197,11 +190,13 @@
     overflow: auto;
     background-color: var(--b-black-tr);
     color: var(--t-white);
+    border-radius: 5px;
 }
 
 @media screen and (max-width: 800px) {
     #puzzleLib, #puzzleLogList, #puzzleLogs {
-        padding: 20px 0;}
+        padding: 20px 0;
+        border-radius: 0;}
 
     #puzzleLogList table {
         min-width: 500px;}

@@ -28,7 +28,7 @@
       {% endif %}"
     </p>
 
-    <p id='headLinks'><a href="/settings">>>> to Settings  <<<</a><br>
+    <p id='headLinks'><a href="/settings">>>> to Settings  <<<<br></a>
       <a href="/statistics">>>> to Statistics  <<<</a></p>
   </div>
 </div>
@@ -39,24 +39,21 @@
 {% if info != "" %}
     <div id="infoID" class="userFeedback infoShow">
         {{ info }} <br><br>
-        <button 
-            class='pageLink' 
-            onclick="close_user_info()">
-                X
-        </button>
+        <button class='pageLink' onclick="close_user_info()">
+          X </button>
     </div>
 {% endif %}
 
 
 
 {# Play #}
-<section class="FullDiv" 
+<section class="midDiv" 
   style="background-color: var(--b-white-tr);">
 
   <div id='play' class="pageNav">
     <h2><span style="background-color: black;">
       Play</span></h2>
-    <p style='color: var(--t-std);'>></p>
+    <p style='color: var(--t-std);'>&#x25B6;</p>
     <a href='#games' style='color: var(--t-std);'>to Game Info</a>
   </div>
 
@@ -85,65 +82,91 @@
 
     {# Popups #}
     <div id='roundsStart' class="startPop popUp">
-      <form action="" method="POST">
-        {{ rounds_form.hidden_tag() }}
-        
-        <div>
-          <p>What game are you playing?</p>
-          <p>{{ rounds_form.r_title() }}</p>
-          <p><br>Who is joining?</p>
+      <div class='popUpContent'>
+        <div class='popHead'>
+          <p>Rounds Game</p>
+          <button onclick='start_rounds()'>
+              X </button>
+        </div>
 
-          {% for p in range(group.n) %}
-            {% set player_tag = 'r_p_' + p|string %}
-            <div class='playerDiv'>
-              <p style='background-color: {{ colors[p] }};'>
-                {{ players[p] }}</p>
-              <p>{{ rounds_form[player_tag]() }}</p>
-            </div>
-          {% endfor %}
+
+        <form action="" method="POST">
+          {{ rounds_form.hidden_tag() }}
+          
+          <div>
+            <p>What game are you playing?</p>
+            <p>{{ rounds_form.r_title() }}</p>
+            <p><br>Who is joining?</p>
+
+            {% for p in range(group.n) %}
+              {% set player_tag = 'r_p_' + p|string %}
+              <div class='playerDiv'>
+                <p style='background-color: {{ colors[p] }};'>
+                  {{ players[p] }}</p>
+                <p>{{ rounds_form[player_tag]() }}</p>
+              </div>
+            {% endfor %}
           </div>
 
-        <p class='startBtn'>{{ rounds_form.submit_rounds_start() }}</p>
-      </form>
-
-      <button onclick="start_rounds()" class='pageLink'>
-        x</button>
+          <p class='startBtn'>{{ rounds_form.submit_rounds_start() }}</p>
+        </form>      
+      </div>
     </div>
+
 
     <div id='diceStart' class="startPop popUp">          
-      <div>
-        <p>Dice mode is not yet available</p>
-        <p>&#x1F641;</p>
+      <div class='popUpContent'>
+        <div class='popHead'>
+          <p>Dice Game</p>
+          <button onclick='start_dice()'>
+              X </button>
+        </div>
+        
+        
+        <form action="" method="POST">
+          {{ dice_form.hidden_tag() }}
+          
+          <div>
+            <p><br>Who is joining?</p>
+
+            {% for p in range(group.n) %}
+              {% set player_tag = 'd_p_' + p|string %}
+              <div class='playerDiv'>
+                <p style='background-color: {{ colors[p] }};'>
+                  {{ players[p] }}</p>
+                <p>{{ dice_form[player_tag]() }}</p>
+              </div>
+            {% endfor %}
+          </div>
+
+          <p class='startBtn'>{{ dice_form.submit_dice_start() }}</p>
+        </form>    
       </div>
-
-      <button onclick="start_dice()" class='pageLink'>
-        x</button>
     </div>
-
-  
   </div>
-
-  
-
-
 </section>
+
+
+
 
 <div style="height: 80px;"></div>
 
 
+
+
 {# Game Modes #}
-<section id="gamesDiv" class="FullDiv"
-  style="background-color: var(--b-black-tr); color: var(--t-white);">
+<section id="gamesDiv" class="midDiv">
 
   <div id='games' class="pageNav">
     <a href='#play'>to Play</a>
-    <p>></p>
-    <h2><span style="background-color: black;">
+    <p>&#x25B6;</p>
+    <h2><span style="background-color: white; color: black;">
       Game Info</span></h2>
   </div>
 
-  <p style='display:block; text-align: center;'>
-    Choose a mode to learn how it works:</p>
+  <p id='gamesTxt'>
+    <span style=' background-color: var(--b-black-tr);'>
+    Choose a mode to learn how it works:</span></p>
 
 
   <div class="tab">
@@ -164,19 +187,16 @@
 
 
     {% for m in range(num_modes) %}
-      <div id="{{ modes[m][0] }}"  class="tabcontent" 
-        style='border: 1px solid var(--b-subtile);'>
+      <div id="{{ modes[m][0] }}"  class="tabcontent">
         <div class="imgSplitDiv">
 
-          <div class="textDiv" 
-            style="grid-column: 1/3; background-color: var(--b-subtile);">
+          <div class="textDiv">
             <h3> {{ modes[m][0] }} </h3>
             <p style='color: var(--t-std);'> {{ modes[m][2] }} </p> 
           </div>  
 
 
-          <div class='imgSlider' 
-            style="grid-column: 3">
+          <div class='imgSlider'>
               <img src="{{ modes[0][3] }}">
               <img src="{{ modes[1][3] }}">           
               <img src="{{ modes[2][3] }}">

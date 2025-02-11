@@ -49,10 +49,6 @@ body {
     /* text */
     color:var(--t-std);
 
-    /* background default */
-    background: var(--b-basic);
-    background: var(--b-basic-g);
-
     /* background image */
     height: 100%;
     background-repeat: no-repeat;
@@ -254,7 +250,7 @@ nav .navMode {
 .navContent {
     display: none;              /* Hidden by default! */
     width: 280px;
-    background-color: var(--b-head);
+    background-color: var(--b-menu);
     margin: 0;
     padding: 0 0 10px 0;
     border-radius: 0;

@@ -63,16 +63,6 @@
 }
 
 
-.listDesc {
-    text-decoration: italic;
-    font-size: 0.8rem;
-}
-
-.listBold {
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
 
     
 .modeLink:hover {
@@ -94,7 +84,7 @@
 
 /*  ############################################
 
-                    Main
+                    Giphy
                      
     ############################################  */
 
@@ -147,6 +137,8 @@
 
 
 
+
+
 /*  ############################################
 
                     Log List
@@ -154,7 +146,8 @@
     ############################################  */
 
 
-#rdLogs, #pzLogs {
+
+#logs {
     background-color: var(--b-dark-tr);
     border-radius: 5px;
     padding: 20px;
@@ -162,23 +155,17 @@
     overflow: auto;
     max-height: 600px;  
     
-    .rdLog, .pzLog {
-        display: grid;
-        grid-template-rows: 1fr;
+    .log {
+        display: flex;
+        overflow-x: auto;
         margin: 5px 0;
         padding: 0;
-        display: block;
+
         text-align: left;
-        overflow-x: auto;
-        background-color: var(--b-dark-tr);}
-
-    .rdLog {        
-        grid-template-columns: 1fr auto;}
-
-    .pzLog {
-        grid-template-columns: 1fr 1fr 2fr 2fr;
-
+        background-color: var(--b-dark-tr);
+        
         div {        
+            min-width: 120px;
             text-align: left;
             display: inline-block; 
             margin: 0; 
@@ -187,57 +174,32 @@
     p {
         margin: 0;
         padding: 0;
-        color: var(--c-grey);}
+        color: var(--t-white);}
 }    
 
-.rdLog1, .rdLog2 { 
-    display: inline-grid;
-    grid-template-columns: 80px 160px;
-    padding: 10px !important;
-    margin: 0;
-    text-align: right;
-    line-height: 1.5rem;
-    color: var(--t-white);
-    grid-row: 1;
+
+.logDesc {
+    text-decoration: italic;
+    font-size: 0.8rem;
 }
 
-
-.rdLog2 { 
-    text-align: left;
-    background-color: var(--b-dark-tr);
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-column: 2;
-    text-wrap: none;
-    width: calc(100% - 270px);
-    overflow-x: hidden;
+.logBold {
+    font-size: 1.2rem;
+    font-weight: bold;
 }
 
 
 @media screen and (max-width: 1024px) {
 
-    #rdLogs, #pzLogs {
+    #logs {
         margin: 0;
-        padding: 20px 0;}
-}
-
-
-@media screen and (max-width: 800px) {
-
-    #rdLogs, #pzLogs{
+        padding: 20px 0;
         border-radius: 0;}
-
-    .rdog1 {
-        text-align: left;}
-
-    .rdLog2 {
-        display: grid;
-        width: 100%;
-        min-width: 500px;}
-
-    .pzLog {
+    .log {
         width: 100%;       
-        min-width: 500px;}
+        min-width: 600px;}
 }
+
 
 
 

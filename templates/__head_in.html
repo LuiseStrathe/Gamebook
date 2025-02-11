@@ -10,8 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>GamesBook</title>    
-    <meta name="Save the analogue games you play with friends or familiy." 
-      content="GamesBook">    
+    <meta name="Save the analogue games you play with friends or familiy." content="GamesBook">    
     <meta name="apple-mobile-web-app-title" content="MyWebSite" />
     
     <link rel="icon" type="image/png" href="../static/media/favicon/favicon-96x96.png" sizes="96x96" />
@@ -23,24 +22,17 @@
     <link rel="stylesheet" href="../static/styles_main.css">
     <script type="text/javascript" src="{{url_for('static', filename='main.js')}}"></script>
     <script type="text/javascript" src="{{url_for('static', filename='charts.js')}}"></script>    
-    <script 
-      src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 
   </head>
 
 
-  <body 
-    style="background-image: url('../static/media/gamebook_bg_c3r.jpg');">
 
-
+  <body style="background-image: var(--bg-in);">
     
     <header>
       <div id="header">
-      
-
         <div class="headerBox">
-          
           <a
             onclick="goBack()" 
             class="navIcon" 
@@ -54,7 +46,6 @@
                 src="../static/media/favicon/favicon-96x96.png" 
                 alt="Go to Home">
           </a>
-
         </div>
           
           
@@ -65,18 +56,13 @@
 
 
         <div class="headerBox">
-
-
           <a href="/logout" 
             title="Logout" 
             id="logIcon" class="navIcon"
             style="margin-top: -0.4rem;">
               &#x2386;
           </a>
-
-
         </div>
-
       </div>
 
 
@@ -96,7 +82,7 @@
             href="/about">&#x2023; About & Contact</a>
           <hr>
           
-          <a href="/">&#x2023; Overview</a>
+          <a href="/">&#x2023; Home</a>
           <a href="/"><span class="navMode"> 
             &#x1805; Start a game</a></span>
           <a href="/puzzle"><span class="navMode"> 
@@ -106,7 +92,7 @@
           <hr>
           <a style="color:var(--t-head);" 
             href="/settings">&#x2023; Settings</a>
-          <a  style="color:var(--t-head);" 
+          <a style="color:var(--t-head);" 
             href="/logout">&#x2023; Logout</a>
         
         </div>

@@ -29,7 +29,7 @@ var winner_board = new Chart(ctx_w, {
     options: {
         responsive: true,
         indexAxis: 'y',
-        borderWidth: 1,
+        borderWidth: 3,
         
         scales: {
             y: {

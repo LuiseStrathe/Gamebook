@@ -7,11 +7,6 @@
 
 {# CSS #}
 <link rel="stylesheet" href="../static/styles_index.css">
-<style type="text/css">
-  body { 
-      background-image: var(--b-grade-2) !important;    }
-  
-</style>
 
 
 
@@ -25,9 +20,9 @@
   <div id='intro' class="pageNav">
 
     <a class='pageNavCurrent' href='#intro'>Intro</a>
-    <p>></p>
+    <p>&#x25B6;</p>
     <a href='#howto'>How To</a>
-    <p>></p>
+    <p>&#x25B6;</p>
     <a href='#games'>Games</a>
     
   </div>
@@ -46,6 +41,7 @@
         What is GamesBook?
       </span></h2>      
       <p>{{ about_info[0] }}</p>
+      <p>{{ about_info[1] }}</p>
       <br>
       <a href='/about'
         class="pageLink">
@@ -85,9 +81,9 @@
   <div id="howto" class="pageNav">
 
     <a href='#intro'>Intro</a>
-    <p>></p>
+    <p>&#x25B6;</p>
     <a class='pageNavCurrent' href='#howto'>How To</a>
-    <p>></p>
+    <p>&#x25B6;</p>
     <a href='#games'>Games</a>
     
   </div>
@@ -165,18 +161,18 @@
           Therefore GamesBook offers <b>game modes</b>.
         </p> 
         <p>Here are two examples: </p> 
-        <p><i>> If you do a <b>'Puzzle'</b>, you will simply puzzle it and 
+        <p><i>&#x2311; If you do a <b>'Puzzle'</b>, you will simply puzzle it and 
           measure the time it takes you to finish it. 
           Afterwards, you log your time in GamesBook.</i></p> 
-          <p><i>> Say you play <b>Scrabble</b>. This is a round-based, multiplayer game. 
+          <p><i>&#x2311; Say you play <b>Scrabble</b>. This is a round-based, multiplayer game. 
           You can have GamesBook open while you play and enter the points 
           after each round or after a playthrough - you decide. 
           Once you are done, you save the log of the Scrabble session. 
           The game mode for this is <b>'Rounds'</b>.</i>
         </p>
                 
-        <a class='pageLink' href="/random_group">
-          Try without account</a>  
+        <a class='pageLink' href="#games">
+          Learn more about game modes</a>  
       
         </div>
     </div>  
@@ -218,34 +214,29 @@
 
 
 
+
   <div id="games" class="pageNav">
-
     <a href='#intro'>Intro</a>
-    <p>></p>
+    <p>&#x25B6;</p>
     <a href='#howto'>How To</a>
-    <p>></p>
+    <p>&#x25B6;</p>
     <a class='pageNavCurrent' href='#games'>Games</a>
-    
   </div>
-
 
 
   {# Game Modes #}
 
-  <section id="gamesDiv" class="FullDiv"
-    style="background-color: var(--c-purple);">
+  <section id="gamesDiv" class="FullDiv">
 
-
-    <h2>
-      <span style="background-color: black;">
+    <h2><span style="background-color: black;">
         Game Modes</span></h2>
 
-    <p style='color: white;'>Choose a mode to explore:</p>
+    <p id='gamesTxt'><span style='background-color: var(--b-black-tr);'>
+      Choose a mode to explore:</span></p>
 
 
 
     <div class="tab">
-
       <div class="tabButtons">
         {% for m in range(num_modes) %}
           
@@ -263,12 +254,9 @@
 
 
       {% for m in range(num_modes) %}
-        <div id="{{ modes[m][0] }}"  class="tabcontent" 
-          style='border: 1px solid var(--b-subtile);'>
+        <div id="{{ modes[m][0] }}"  class="tabcontent midDiv">
           <div class="imgSplitDiv">
-
-            <div class="textDiv" 
-              style="grid-column: 1/3; background-color: var(--b-subtile);">
+            <div class="textDiv">
               <h3> {{ modes[m][0] }} </h3>
               <p> {{ modes[m][2] }} </p> 
             </div>  
@@ -293,7 +281,6 @@
 <div class='footHome'>
 
   <a class='pageLink' href='/register'>Register a Group</a>
-  <a class='pageLink' href='/random_group'>Try GamesBook</a>
   <a class='pageLink' href='/about'>About & Insights</a>
 
 </div>

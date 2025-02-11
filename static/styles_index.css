@@ -76,41 +76,6 @@
 }
 
 
-
-
-@media screen and (max-width: 800px) {
-    .homeBody {
-        h2 {
-            text-align: center !important;}
-    }
-
-    .imgSplitDiv {
-        display:block;
-        margin: 15px auto;
-        grid-auto-flow: row;
-    
-        div {
-            display:block;}
-
-        h2 {
-            text-align: center;}
-
-    }
-
-    .textDiv {
-        padding: 15px;
-
-        a {
-            display: block;
-            margin: 15px auto !important;}
-
-        p {
-            font-size: 1rem;
-            line-height: 1.5rem;}
-    }
-}
-
-
 .pageNav {
     display: flex;
     justify-content: space-around;
@@ -135,6 +100,54 @@
 }}
 
 
+
+@media screen and (max-width: 800px) {
+    .homeBody {
+        h2 {
+            text-align: center !important;}
+    }
+
+    .imgSplitDiv {
+        display:block;
+        margin: 15px auto;
+        grid-auto-flow: row;
+    
+        div { display:block;}
+
+        h2 { text-align: center;}
+    }
+
+    .pageNav {
+        width: 100%;
+
+        a { padding: 5px 0;
+            margin: 10px;}
+        p { display: none;}
+    }
+
+    .textDiv {
+        padding: 15px;
+
+        a {
+            display: block;
+            margin: 15px auto !important;}
+
+        p {
+            font-size: 1rem;
+            line-height: 1.5rem;}}
+}
+
+
+@media screen and (max-width: 400px) {
+    .pageNav {
+        display: block;
+        margin: 0;
+
+        a {
+            display: block;
+            margin: 0;
+            }}
+}
 
 
 
@@ -199,14 +212,7 @@
 
 
 
-
-
-
-
-
-
-
-
+/* else */
 
 .howToDiv {
     display: grid;
@@ -251,21 +257,31 @@
     display: block;
     margin: 0 auto;
     padding: 40px 20px;
-    
+    background-image: url('../static/media/img_machine.jpg');
+    background-size: cover; 
+    background-repeat: no-repeat;
 
     .imgSplitDiv {
         margin: 0;
-        padding: 0;
+        padding: 0;}
+
+    #gamesTxt {
+        display:block; 
+        text-align: center; 
+        color: var(--s-yellow);}
+
+    .textDiv {
+        grid-column: 1/3; 
+        background-color: var(--b-white-tr);}
+
+    .tabcontent {
+        border: 5px solid var(--b-subtile);}
+
+    .imgSlider {
+        background-color: var(--b-dark-tr);
+        grid-column: 3
     }
-
-    .giphyImg {
-        background-color: var(--b-subtile);
-
-        img {
-            padding: 10px;
-            max-width: 400px;
-            object-fit: contain;}
-}}
+}
 
 
 .footHome {
@@ -283,17 +299,6 @@
 
 
 @media screen and (max-width: 800px) {
-    .pageNav {
-        width: 100%;
-
-
-        a { padding: 5px 0;
-            margin: 20px auto;}
-
-        p {
-            display: none;}
-    }
-
 
     .howToDiv {
         grid-template-columns: 1fr 1fr;
@@ -302,33 +307,21 @@
 
         div {
             min-height: 200px;
-            border-radius: 5px;
-        }
+            border-radius: 5px;}
 
         .giphyBg {
             grid-column: 2;
-            grid-row: 1;}
-    }
+            grid-row: 1;}}
 
     .howToTextDiv {
         grid-column: 1/3;
-        grid-row: 2 !important;
-    }
+        grid-row: 2 !important;}
 }
 
 
 @media screen and (max-width: 400px) {
-    .pageNav {
-        display: block;
-
-        a {
-            display: block;
-            padding: 10px 5px 5px;}
-    }
-
     .howToDiv {
-        grid-template-rows: 200px auto;
-    }
+        grid-template-rows: 200px auto;}
 }
 
 
@@ -363,14 +356,14 @@
         text-align: left;
         letter-spacing: 0.2rem;
         border: none;
-        margin:0;}
+        margin:0;
+        line-height: 2;}
     
     p {
         display: block;
         margin-top: 40px;
         grid-column: 2;
-        grid-row: 1/3;
-        line-height: 2rem;}
+        grid-row: 1/3;}
 
     #slogan {
         font-style: italic; 
@@ -515,6 +508,12 @@
         h3, p {
             font-size: 1rem;
             margin: 10px;}}
+
+    .headLinks {
+        line-height: 1.2;}
+
+    #gamesDiv {
+        padding: 20px 0 40px;}
 }
 
 

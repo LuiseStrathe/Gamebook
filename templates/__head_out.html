@@ -21,23 +21,17 @@
     <link rel="manifest" href="../static/media/favicon/site.webmanifest" />
 
     <link rel="stylesheet" href="../static/styles_main.css">
-    <script type="text/javascript" src="{{url_for('static', filename='main.js')}}"></script>
-    
+    <script type="text/javascript" 
+      src="{{url_for('static', filename='main.js')}}"></script>
 
   </head>
 
 
-  <body 
-    style="background-image: url('../static/media/gamebook_bg_c3.jpg">
-      
-    
+  <body style="background-image: var(--bg-out);">    
 
     <header>
       <div id="header">
-      
-
         <div class="headerBox">
-          
           <a
             onclick="goBack()" 
             class="navIcon" 
@@ -45,23 +39,20 @@
               &hookleftarrow;
           </a>
           
+
           <a href="/"
             title="Home" class="navIcon">
               <img id="homeIcon" 
                 src="../static/media/favicon/favicon-96x96.png" 
                 alt="Go to Home">
           </a>
-
         </div>
           
           
-        <p>
-          {{ page_html[1] }}
-        </p>
+        <p> {{ page_html[1] }} </p>
 
 
         <div class="headerBox">
-
           <a href="/about"
             title="About" class="navIcon menuText">
               ABOUT</a>
@@ -71,18 +62,13 @@
             title="Login" 
             id="logIcon" class="navIcon"
             style="margin-top: -0.4rem;">
-              &#x2386;
-          </a>
-
-
+              &#x2386;</a>
         </div>
-
       </div>
 
 
 
       <nav>
-
         <button id="navButton"
           onclick='toggle_nav()'>
             &#9776;
@@ -90,26 +76,19 @@
 
 
         <div id="navDrop" class="navContent">
-
           <p>MENU</p>
           <a href="/">&#x2023; Home</a>
-          <a href="/random_group">&#x2023; Test GamesBook</a>
           <a href="/about">&#x2023; About & Contact</a>
           <hr>
           <a href="/login">&#x2023; Login</a>
           <a href="/register">&#x2023; Register</a>
-        
         </div>
-
       </nav>
 
 
 
-      <a class="goUp"  title="Go to top"
-        onclick="topFunction()">
-            &UpArrowBar;
-      </a>   
-      
+      <a class="goUp"  title="Go to top" onclick="topFunction()">
+        &UpArrowBar;</a>   
     </header>
 
 
@@ -120,15 +99,14 @@
 
 
     <footer>
-
       <div >
         <p style="font-weight: bold; 
           margin-bottom: 30px; margin-top: 40px;">
           GamesBook.site</p>
         <p><a href="/">Home</a><br></p>
         <p><a href="/about">About & Contact</a></p>
-        <p><a href="/random_group">Test it</a><br></p>   
       </div>
+
 
       <div>
         <p style="font-weight: bold; 
@@ -137,10 +115,9 @@
         <p><a href="/login">Login</a><br></p>
         <p><a href="/register">Register</a></p>
       </div>
-
     </footer>
 
 
-  </body>
 
+  </body>
 </html>

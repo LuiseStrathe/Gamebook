@@ -58,7 +58,7 @@ class GroupForm(FlaskForm):
   c8 = SelectField("c8", choices=player_colors,)
   c9 = SelectField("c9", choices=player_colors,)
   
-  registration_submit = SubmitField("Register this Group")
+  registration_submit = SubmitField("Register")
 
 
 
@@ -120,7 +120,7 @@ class SettingsForm(FlaskForm):
   
   changePassword = PasswordField("changePassword", 
     validators=[DataRequired()])
-  settings_submit = SubmitField("Save Changes")
+  settings_submit = SubmitField("Save")
 
 
 
@@ -146,8 +146,8 @@ class DeleteForm(FlaskForm):
 # Submit Game
 class SubmitGameForm(FlaskForm):
   
-  comment = TextAreaField("Page Comment")
-  submit = SubmitField("Save Game (log)", validators=[DataRequired()])
+  comment = TextAreaField("Comment")
+  submit = SubmitField("Save", validators=[DataRequired()])
 
 
 
@@ -169,7 +169,7 @@ class StartRoundsForm(FlaskForm):
   r_p_8 = BooleanField("Rounds Player 9")
   r_p_9 = BooleanField("Rounds Player 10")
   
-  submit_rounds_start = SubmitField("Start Rounds")
+  submit_rounds_start = SubmitField("Start")
   
 
 
@@ -186,7 +186,27 @@ class CloseRoundForm(FlaskForm):
   pt8 = IntegerField("enter points", default=0)
   pt9 = IntegerField("enter points", default=0)
   
-  submitRound = SubmitField("Close Round", validators=[DataRequired()])
+  submitRound = SubmitField("Next Round", validators=[DataRequired()])
+
+
+
+# DICE
+
+class StartDiceForm(FlaskForm):
+  
+  d_p_0 = BooleanField("Dice Player 1")
+  d_p_1 = BooleanField("Dice Player 2")
+  d_p_2 = BooleanField("Dice Player 3")
+  d_p_3 = BooleanField("Dice Player 4")
+  d_p_4 = BooleanField("Dice Player 5")
+  d_p_5 = BooleanField("Dice Player 6")
+  d_p_6 = BooleanField("Dice Player 7")
+  d_p_7 = BooleanField("Dice Player 8")
+  d_p_8 = BooleanField("Dice Player 9")
+  d_p_9 = BooleanField("Dice Player 10")
+  
+  submit_dice_start = SubmitField("Start")
+
 
 
   
@@ -200,7 +220,7 @@ class AddPuzzleForm(FlaskForm):
                      validators=[DataRequired()])
   description = StringField("Description (optional)")
   
-  submit_add_puzzle = SubmitField("Add Puzzle")
+  submit_add_puzzle = SubmitField("Save")
   
   
   
@@ -212,7 +232,7 @@ class ChangePuzzleForm(FlaskForm):
   description_change = StringField("Description change")
   delete = BooleanField("Delete")
   
-  submit_change_puzzle = SubmitField("Submit Changes")
+  submit_change_puzzle = SubmitField("Save")
   
   def __init__(self, puzzles, *args, **kwargs):
     super().__init__(*args, **kwargs)
@@ -230,7 +250,7 @@ class PuzzleRecordForm(FlaskForm):
   minutes = IntegerField("Minutes", default=0, validators=[DataRequired()])
   seconds = IntegerField("Seconds", default=0)
   comment = StringField("Comment (optional)")
-  submit_puzzle_log = SubmitField("Save Log")
+  submit_puzzle_log = SubmitField("Save")
   
   def __init__(self, players, choice_puzzles, *args, **kwargs):
     super().__init__(*args, **kwargs)
@@ -240,26 +260,3 @@ class PuzzleRecordForm(FlaskForm):
 
 
 
-
-
-############################################
-
-#                    OLD 
-                     
-############################################
-
-
-
-
-# random_start 
-class RandomGroup(FlaskForm):
-  
-  p1 = StringField("Player 1", validators=[DataRequired()])
-  p2 = StringField("Player 2", validators=[DataRequired()])
-  p3 = StringField("Player 3")
-  p4 = StringField("Player 4")
-  
-  submit = SubmitField("Start without Login")
-  
-  
-  

@@ -162,14 +162,12 @@
 
                 <div> 
                     {% for j in range(colors|length) %}
-
                         {% set bg_color = 
                             "background-color: " + (colors[j][0]|string) + ";" %}
 
                         <div class="displayColors" style='{{ bg_color }}' >
                             {{ colors[j][1] }}
                         </div>
-                    
                     {% endfor %}
                 </div>
 
@@ -177,21 +175,20 @@
 
             {# Change settings popUp #}
             <div id="settingsID" class="popUp settingsContent">
+                <div class='popUpContent'>
+                    <div class='popHead'>
+                        <p>Confirm changes</p>
+                        <button onclick='toggle_change_settings()'>
+                            X </button>
+                    </div>
                 
-                <p>Confirm changes?</p>
-                
-                <p>Enter your password:</p>
-                {{ settings_form.changePassword(size=20) }}
+                    <p>Enter your password:</p>
+                    {{ settings_form.changePassword(size=20) }}
 
-                <div id="settingsConfirm">
-                    {{ settings_form.settings_submit() }}
-                </div>  
-
-                <a class='pageLink' 
-                    href="/settings">
-                    X
-                </a>
-
+                    <div id="settingsConfirm">
+                        {{ settings_form.settings_submit() }}
+                    </div>  
+                </div>
             </div>
         </form>
 
@@ -221,7 +218,7 @@
 
         <h2>Delete Group<br></h2>
         
-        <button class='pageLink delGroupBtn'
+        <button class='pageLink' style="background-color: var(--s-red);"
             onclick="toggle_group_delete()">
                 Delete this group and all data
         </button>
@@ -233,35 +230,31 @@
 
 
         <div id="delGroupID" class="popUp delGroupContent">
+            <div class='popUpContent'>
+                <div class='popHead'>
+                    <p>delete this group</p>
+                    <button onclick='toggle_group_delete()'>
+                        X </button>
+                </div>
                 
-            <p>Are you sure you want to <br>
-                delete <b>{{  page[2]  }} </b><br>
-                including all data?<br><br>
-                <span style="font-size: 3em;">
-                    &#x1F571;</p></span><br>
 
-            <p>Enter your password:</p>
+                <p>Are you sure you want to <br>
+                    delete <b>{{  page[2]  }} </b><br>
+                    including all data?<br><br>
+                    <span style="font-size: 3rem;">
+                        &#x1F571;</p></span><br>
 
-            <form action="" method="POST">
-            
-                {{ delete_form.hidden_tag() }}
-                
-                {{ delete_form.deletePassword(size=20) }}
-                
-                <div id="delGroupConfirm">
-                    {{ delete_form.delete_submit() }}
-                </div>    
-                    
-            </form>
+                <p>Password:</p>
 
-            <button class='pageLink'
-                onclick="toggle_group_delete()">
-                X
-            </button>
+                <form action="" method="POST">
+                    {{ delete_form.hidden_tag() }}
 
+                    <div>{{ delete_form.deletePassword(size=20) }}</div>
+                    <div class='submitBtn' id='deleteSubmit'>
+                        {{ delete_form.delete_submit() }}</div>   
+                </form>
+            </div>
         </div>
-
-
     </section>
 
 

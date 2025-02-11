@@ -7,12 +7,9 @@
 
 
 
-{# CSS #}
+{# CSS & JS #}
 <link rel="stylesheet" href="../static/styles_stats.css">
-<style type="text/css">
-  body {background-image: var(--b-grade-4) !important;}
-</style>
-
+<script src='../static/puzzle_stats.js'></script> 
 
 
 {# Header #}
@@ -38,8 +35,8 @@
   </div>
 </section>
 
-
-{% if logs|length > 0 %}
+{% set n = logs|length %}
+{% if n > 0 %}
 
   {# Chart area #}
   <section class='fullDiv' style='background-color: var(--c-deep-blue-tr)'>  
@@ -50,11 +47,79 @@
     <h3><span style='color: white; text-decoration: underline;'>
       <br> Puzzles Logged</span></h3>
 
+    {% set width_charts = 400 + (charts[0][0]|length * charts[0][1]|length * 40) %}
+
+    <p style='color: var(--t-white);'>Total number of logs:<br>
+      {% for p in range(charts[0][1]|length) %}
+        <span style='color: {{ charts[0][2][p][0] }}; font-weight: bold;'>
+          {{ charts[0][1][p] }}: {{ charts[1][0][p] }}
+        </span> &emsp;
+      {% endfor %}
+    </p>
+    
+    <div class='midDiv'>
+      <div style='height: 100%; max-width: {{ width_charts }}px' class='canvasDiv'>
+        <canvas id="logsChart"></canvas>
+        
+        <script>
+          logs_chart( 
+            {{ charts[0][0] |safe }},
+            {{ charts[0][1] |safe }},
+            {{ charts[0][2] |safe }},
+            {{ charts[2][0] |safe }});
+        </script>    
+      </div>  
+    </div>
+
+
     <h3><span style='color: white; text-decoration: underline;'>
       <br> Player Speed</span></h3>
+
+    <p style='color: var(--t-white);'>Overall average speed (pieces per min):<br>
+      {% for p in range(charts[0][1]|length) %}
+        <span style='color: {{ charts[0][2][p][0] }}; font-weight: bold;'>
+          {{ charts[0][1][p] }}: {{ charts[1][1][p] }}
+        </span> &emsp;
+      {% endfor %}
+    </p>
+
+    <div class='midDiv'>
+      <div style='height: 100%; max-width: {{ width_charts }}px' class='canvasDiv'>
+        <canvas id="playerSpeedChart"></canvas>
+        <script>
+          player_speed_chart( 
+            {{ charts[0][0] |safe }},
+            {{ charts[0][1] |safe }},
+            {{ charts[0][2] |safe }},
+            {{ charts[2][1] |safe }});
+        </script>    
+      </div>  
+    </div>
       
+
     <h3><span style='color: white; text-decoration: underline;'>
       <br> Compare Puzzles</span></h3>
+
+    <p style='color: var(--t-white);'>Overall average speed (pieces per min):<br>
+      {% for p in range(charts[0][3]|length) %}
+        <span style='color: {{ charts[0][4][p][0] }}; font-weight: bold;'>
+          {{ charts[0][3][p] }}: {{ charts[1][2][p] }}
+        </span> &emsp;
+      {% endfor %}
+    </p>
+
+    <div class='midDiv'>
+      <div style='height: 100%; max-width: {{ width_charts }}px' class='canvasDiv'>
+        <canvas id="puzzleSpeedChart"></canvas>
+        <script>
+          puzzle_speed_chart( 
+            {{ charts[0][0] |safe }},
+            {{ charts[0][3] |safe }},
+            {{ charts[0][4] |safe }},
+            {{ charts[2][2] |safe }});
+        </script>  
+      </div>  
+    </div>
 
   </section>
 
@@ -64,28 +129,27 @@
 
   <section class='midDiv'>  
     <h2><span style='background-color: white; color: var(--c-blue-dark);'>
-        All puzzles finished</span></h2>
-
+      All puzzles finished</span></h2>
+    <a href='/puzzle' style='padding-bottom: 30px; display: block;'>
+      >>> add more puzzles or logs here <<<</a>
     
   {# 0:date, 1:winner, 2:puzzle, 3:pcs, 4:time, 5:comment #}
-    <div id='pzLogs'>
-      <a href='/puzzle' 
-        style='color: var(--t-white); padding-bottom: 30px;'>
-          >>> add more puzzles or logs here <<<</a>
-      
-      {% for i in range(logs|length) %}
-          {% set color = page[3][i][0] %}  
-          <div class='pzLog'>
+    <div id='logs'>
+      {% for i in range(n) %} 
+        <div class='log'>
 
-            <div><p><span  class='listBold'>{{ i + 1 }} </span>
-              <br>{{ logs[i][0] }}</p></div>
-            <div><p style='color: {{ color }};'><span  class='listBold'>{{ logs[i][3] }} # </span>
-              <br>{{ puzzles['title'].iloc[logs[i][2]] }}</p></div>        
-            <div><p style='color: {{ color }};'><span  class='listBold'>{{ logs[i][1] }} </span>
-              <br><b>{{ logs[i][4] }}</b> h:m:s</p></div>
-            <div><p class='listDesc' >{{ logs[i][5] }}</p></div>
-      
-          </div>
+          <div class='logDesc' style='min-width: 70px !important;'><p>
+            <span  class='logBold'>{{ n - i }} </span>
+            <br>{{ logs[i][0] }}</p></div>
+          <div><p><span  class='logBold'>{{ logs[i][4] }} # </span>
+            <br>{{ puzzles['title'].iloc[logs[i][3] - 1] }}</p></div>        
+          <div style='background-color: {{ logs[i][2] }}c9;'><p>
+            <span  class='logBold'>{{ logs[i][1] }} </span>
+            <br><b>{{ logs[i][5] }}</b> h:m:s</p></div>
+          <div style='flex-grow: 1;'>
+            <p class='logDesc'>{{ logs[i][6] }}</p></div>
+    
+        </div>
       {% endfor %}
     </div>
   </section>

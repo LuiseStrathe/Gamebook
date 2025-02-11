@@ -10,8 +10,8 @@
 /* -----------------  DIMENSIONS  ---------------- */
 
    --d-head-height:     45px;
-   --d-settings-player: 50px;
-   --d-input-row:       40px;
+   --d-settings-player: 40px;
+   --d-input-row:       25px;
    --d-full-max:        1024px;
 
 
@@ -30,9 +30,9 @@
    --s-green:  #208320;
 
    /* inputs */
-   --i-text:   #00044d;
+   --i-text:   #00022e;
    --i-border: #505b84;
-   --i-background: #98b4eb;
+   --i-background: #b7cfff;
 
 
 
@@ -65,20 +65,20 @@
    --b-black-tr: #000000a7;
    --b-subtile: #ffedcd5c;
 
-   --b-head:   #00000091;
+   --b-head:   #212121da;
    --b-foot:   #252525;   
+   --b-menu:   #474747f2;
    --b-info:   #eaeaeaf1;
-
+   --b-popup:  #252525;
+   
    /* gradients */
-   --b-basic:  #ffcaaa;
-   --b-basic-g: linear-gradient(163deg, #ffcaaa 13%, #daffed 79%);
-   --b-grade-2: linear-gradient(to bottom right, 
-   rgb(126, 109, 255),rgba(255, 202, 145, 0.93));
-   --b-grade-3: linear-gradient(to bottom right, 
-   rgb(19, 30, 58),rgb(56, 23, 44));
-   --b-grade-4: linear-gradient(to bottom right, 
-   rgb(255, 164, 152),rgb(118, 88, 227));
+   --bg-base: linear-gradient(to bottom right, #ecb959, #8059ec);
+   --bg-out: linear-gradient(to bottom right, #7e6dff, #ffcf91);
+   --bg-in: linear-gradient(to bottom right, #ffa498, #7658e3);
+   --bg-play: linear-gradient(to bottom right, #131e3a,#38172c);
+   --bg-login: linear-gradient(to bottom right, #ffc533, #726dffab);
 
+   
 
 /* ############  text  ############ */
 
@@ -89,19 +89,7 @@
 
 
 
-/* ############  data  ############ */
-
-
-/* charts */
-
-   --p0:       #60d2ff; 
-   --p1:       #4a74ff; 
-   --p2:       #53eba4; 
-   --p3:       #2799bf; 
-   --p4:       #9aff9a; 
-   --p5:       #5a73ff; 
-   --p6:       #735ee6; 
-   --p7:       #4df7b0;
+/* ############  else  ############ */
 
 
 

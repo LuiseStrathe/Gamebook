@@ -121,12 +121,20 @@ def stats_puzzle():
   group_id = name_to_id(session['username'])
   group = load_group(group_id)[0]
   players = group.players
-  logs = gen_puzzle_logs(group_id)
   puzzles = pd.DataFrame(group.puzzles, columns=['id', 'title'])
-    
+  
+  
+  # CHARTS
+  #   > LABELS =  [0:categories, 1:players (w/ puzzle), 2:colors, 3:puzzles, 4:colors puzzles]
+  #   > EXTRA =   [0:#logs player, 1:avg speed player, 2:avg speed puzzle]
+  #   > DATA =    [0:#logged, 1:speed player, 2:speed puzzle]
+  
+  logs = gen_puzzle_logs(group_id)   
+  charts = gen_puzzle_charts(logs, puzzles, chart_colors)
+     
     
   static = 'stats_puzzle.html'  
   return render_template(
     static, page=page_html(static, "IN"),
-    players=players, logs=logs, puzzles=puzzles,
-    modes=modes, modes_info=modes_info,)
+    logs=logs, puzzles=puzzles, charts=charts,
+    players=players, modes=modes, modes_info=modes_info,)

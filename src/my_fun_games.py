@@ -10,8 +10,9 @@ sys.path.insert(1, "./")
 import pickle
 import numpy as np
 import pandas as pd
+import json
 from flask import session
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, time
 
 from Gamebook.src.my_params import *
 from Gamebook.src.my_classes import *
@@ -45,22 +46,14 @@ def gen_game_id(mode):
     return str(mode_key[mode] + str(new_id).zfill(10)) 
 
 
-def create_random_group():
-
-    group = My_Group(name='random', 
-        key='random', 
-        players=session['random_players'], 
-        colors=[c[0]for c in player_colors],
-        slogan ='This is a small test version of the gamebook. Enjoy!')
-
-    return group
-
 
 
 
 ###############################################
 #                     ROUNDS 
 ###############################################
+
+
 
 def start_rounds(group_id, form):
           
@@ -170,11 +163,11 @@ def gen_rounds_logs(id):
                 result.info_3,
                 group.colors[result.winner_name],
                 ' : '.join(sums)]
-        logs.append(log)
+        logs.insert(0, log)
     
     # winner chart
     if len(logs) > 2:
-        colors_faint = [group.colors[p] + '69' for p in range(group.n)]
+        colors_faint = [group.colors[p] + '30' for p in range(group.n)]
         
         for p in range(group.n):
             n_played = np.sum([p in r for r in results.info_2])
@@ -193,33 +186,61 @@ def gen_rounds_logs(id):
 
 
 ###############################################
+#                     DICE 
+###############################################
+
+
+
+def start_dice(group_id, form):
+          
+    # check players
+    group = load_group(group_id)[0]
+    players = [p for p in range(group.n) if form[f'd_p_{p}'].data]
+            
+    if len(players) < 2:
+        info = 'Select at least 2 players for a dice game.'
+        game_id = 0
+        
+    else:
+        # init game
+        info = ''
+        game_id = gen_game_id('dice')
+        points = np.zeros((1, len(players)))  
+        group = load_group(group_id)[0]
+        results = group.results
+        session['round'] = 0
+        session['game_id'] = game_id
+        session['num_players'] = len(players)
+
+        
+        # delete open dice game if no winner_name
+        drop_game_id = results[(results['g_mode']=='dice') \
+            & (results['winner_name']=='')].game_id.values
+        
+        group.results = results.drop(results[results['game_id'].isin(drop_game_id)].index)
+         
+        
+        # group.results  > save in group
+        result = { \
+            'game_id':game_id, 'g_mode': 'dice', "group_id":group.id, 
+            "result":[points], "n_rounds": 0, 
+            "winner_name":'', 'time':datetime.now(),
+            'info_1':'', 'info_2': players, 'info_3':''}
+        
+        group.results = pd.concat([group.results, pd.DataFrame([result])])
+        group.update_group()
+    
+    return game_id, info
+
+
+
+###############################################
 #                     PUZZLES 
 ###############################################
 
 
 
-def gen_puzzle_logs(id):
-    
-    group = load_group(id)[0]
-    logs = []
-    results = group.results[group.results['g_mode']=='puzzle'] 
-    
-    for i in range(len(results)):
-        result = results.iloc[i]
-        
-        # 0:date, 1:winner, 2:puzzle, 3:pcs, 4:time, 5:comment
-        log = [result.time.strftime("%d/%m/%y"), 
-               group.players[result.winner_name],  
-               result.info_1, 
-               result.n_rounds, 
-               str(timedelta(seconds=result["result"])),
-               result.info_3]
-        logs.append(log)
-    
-    return logs
 
-    
-    
 def add_puzzle(group_id, add_puzzle_form):
     
     group = load_group(group_id)[0]
@@ -260,11 +281,12 @@ def submit_puzzle_record(id, form):
     pcs = group.puzzles.pcs.iloc[puzzle_id - 1]
     player_index  = group.players.index(form.player.data)
     
-    result = {'game_id': game_id, 'g_mode': 'puzzle', "group_id": id, 
-         "result": duration, "n_rounds": pcs, 
-         "winner_name": player_index, 
-         'time': datetime.now(),
-         'info_1': puzzle_id, 'info_2': '', 'info_3': form.comment.data, }
+    result = {
+        'game_id': game_id, 'g_mode': 'puzzle', "group_id": id, 
+        "result": duration, "n_rounds": pcs, 
+        "winner_name": player_index, 
+        'time': datetime.now(),
+        'info_1': puzzle_id, 'info_2': '', 'info_3': form.comment.data, }
 
     
     # save in group
@@ -308,6 +330,152 @@ def change_puzzle(id, form):
     group.update_group()
     pass
 
+
+def gen_puzzle_logs(id):
+    
+    group = load_group(id)[0]
+    logs = []
+    results = group.results[group.results['g_mode']=='puzzle'] 
+    
+    for i in range(len(results)):
+        result = results.iloc[i]
+        
+        # 0:date, 1:winner, 2: color, 3:puzzle, 4:pcs, 5:time, 6:comment
+        log = [result.time.strftime("%d/%m/%y"), 
+                group.players[result.winner_name],  
+                group.colors[result.winner_name],   
+                result.info_1, 
+                result.n_rounds, 
+                str(timedelta(seconds=result["result"])),
+                result.info_3]
+        logs.insert(0, log)
+    
+    return logs
+
+
+
+def gen_puzzle_charts(logs, puzzle_names, chart_colors): 
+      
+    # clean logs
+    logs = [l for l in logs if l[5] != '0:00:00']
+  
+    
+    # LABELS 
+    categories = sorted(list(set([l[4] for l in logs])), reverse=False)
+    players = list(set([l[1] for l in logs]))
+    puzzles = sorted(list(set([l[3] for l in logs])))
+
+    
+    # DATA
+    logged = np.zeros((len(players), len(categories)), dtype=int)
+    times_player = np.zeros((len(players), 2, len(categories)), dtype=float)
+    times_puzzle = np.zeros((len(puzzles), 2, len(categories)), dtype=float)
+    avg_player, avg_puzzle = [], []
+
+    
+    # player data
+    for p in range(len(players)):
+        playr = players[p]
+        log_p = [l for l in logs if l[1] == playr]
+        
+        times = [l[5].split(':') for l in log_p]
+        times = [int(s) / 60 + int(m) + 60 * int(h) for h, m, s in times]
+        pieces = np.sum([l[4] for l in log_p])
+        avg = np.sum(times) / pieces
+        avg_player.append(round(avg, 2))
+            
+        for c in range(len(categories)):
+            cat = categories[c]
+            log = [l for l in log_p if l[4] == cat]
+            
+            logged[p, c] = len(log)
+            
+            times = [l[5].split(':') for l in log]
+            times = [int(s) / 60 + int(m) + 60 * int(h) for h, m, s in times]
+
+            if len(times) > 0:
+                avg = min(cat / np.mean(times), 15)   # REMOVE MAX 15 MIN
+                top = min(cat / np.min(times), 15)  # REMOVE MAX 15 MIN
+                times_player[p, 0, c] = round(avg, 1)
+                times_player[p, 1, c] = round(top, 1)
+        
+        logged[c] = logged[c].tolist()
+        
+        
+        
+        
+    # puzzle data
+    
+    for z in range(len(puzzles)):
+        puz = puzzles[z]
+        log_z = [l for l in logs if l[3] == puz]
+        
+        times = [l[5].split(':') for l in log_z]
+        times = [int(s) / 60 + int(m) + 60 * int(h) for h, m, s in times]
+        pieces = np.sum([l[4] for l in log_z])
+        avg = np.sum(times) / pieces
+        avg_puzzle.append(round(avg, 2))
+        
+        for c in range(len(categories)):
+            cat = categories[c]
+            log = [l for l in log_z if l[4] == cat]
+            
+            times = [l[5].split(':') for l in log]
+            times = [int(s) / 60 + int(m) + 60 * int(h) for h, m, s in times]
+            
+            if len(times) > 0:
+                avg = min(cat / np.mean(times), 15)   # REMOVE MAX 15 MIN
+                top = min(cat / np.min(times), 15)   # REMOVE MAX 15 MIN
+                
+                times_puzzle[z, 0, c] = round(avg, 1)
+                times_puzzle[z, 1, c] = round(top, 1)
+                
+            else:
+                times_puzzle[z, :, c] = [None, None]
+                
+        
+
+
+    # EXTRA data
+    
+    colors, colors_puzzles = [], []
+        
+    categories = ['# ' + str(cat) for cat in categories]
+    
+    sum_logged = [int(np.sum(logged[p])) for p in range(len(players))]  
+    
+    while len(puzzles) > len(chart_colors):
+        chart_colors += chart_colors        
+        
+        
+    for p in players:
+        
+        color, i = "", 0
+        while color == '' and i < len(logs):
+            if logs[i][1] == p:
+                color = logs[i][2]
+            i += 1
+        colors.append([color, color + '30'])
+    
+    
+    for z in range(len(puzzles)):
+        
+        puzzles[z] = puzzle_names['title'][puzzle_names['id'] == puzzles[z]][0]
+        
+        color = chart_colors[z]
+        colors_puzzles.append([color, color + '30'])
+  
+                
+    # COMBINE DATA
+    charts = [
+        [categories, players, colors, puzzles, colors_puzzles],
+        [sum_logged, avg_player, avg_puzzle], 
+        [logged.tolist(), times_player.tolist(), json.dumps(times_puzzle.tolist())]]
+    
+    return charts
+
+    
+    
 
 
 

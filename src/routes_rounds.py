@@ -24,9 +24,8 @@ from datetime import datetime
 def rounds(game_id):
   
   # verify user
-  if verify_session() == False: 
-    if session['username'] == 'random': pass
-    else: return redirect("/")
+  if verify_session() == False or game_id[0] != 'R': 
+    return redirect("/")
     
 
   # init params
@@ -93,8 +92,6 @@ def rounds(game_id):
     if submit_game_form.validate_on_submit():
       
       if n > 0:
-        
-        print("\n> submit game")
         comment = submit_game_form.comment.data
         end_rounds(group=group, points=points, game_id=game_id, \
           title=title, players=player_ids, comment=comment)
@@ -150,8 +147,6 @@ def stats_rounds():
   players = group.players
   logs, winner_chart = gen_rounds_logs(group_id)
   colors = group.colors
-  
-  print('\n> winner logs:\n', winner_chart)
   
     
   static = 'stats_rounds.html'  

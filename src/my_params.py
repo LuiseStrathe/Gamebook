@@ -8,7 +8,7 @@
 #   > General
 #   > Data
 #   > Modes
-#   > Texts
+#   > Texts (What is GamesBook)
 
 
 
@@ -33,7 +33,6 @@ page_titles = {
     "stats_puzzle.html": "Stats",
     "dice.html": "Dice",
     "puzzle.html": "Puzzles",
-    "random.html": "Test GamesBook",
     "rounds.html": "Rounds",
 }
 
@@ -70,6 +69,23 @@ player_colors = [
     ('#31b1b5', 'Turquoise'),
     ('#df5e6b', 'Light Red'),
 ]
+
+chart_colors = [
+    '#d04fa1', '#007c59', '#cf7437', '#25b922', '#cabc22',
+    '#b21a1a', '#3925a5', '#228ad0', '#8a37a0', '#31b1b5',
+    '#df5e6b', '#ff8c00', '#ff1493', '#ff4500', '#ff6347',
+    '#ff69b4', '#ff7f50', '#ff8c00', '#ff00ff', '#ff1493',
+    '#ff4500', '#ff6347', '#ff69b4', '#ff7f50', '#ff8c00',
+    '#ff00ff', '#ff1493', '#ff4500', '#ff6347', '#ff69b4',
+    '#ff7f50', '#ff8c00', '#ff00ff', '#ff1493', '#ff4500',
+    '#ff6347', '#ff69b4', '#ff7f50', '#ff8c00', '#ff00ff',
+    '#ff1493', '#ff4500', '#ff6347', '#ff69b4', '#ff7f50',
+    '#ff8c00', '#ff00ff', '#ff1493', '#ff4500', '#ff6347',
+    '#ff69b4', '#ff7f50', '#ff8c00', '#ff00ff', '#ff1493',
+    '#ff4500', '#ff6347', '#ff69b4', '#ff7f50', '#ff8c00',
+    '#ff00ff', '#ff1493', '#ff4500', '#ff6347', '#ff69b4',
+    '#ff7f50', '#ff8c00', '#ff00ff', '#ff1493', '#ff4500',
+    '#ff6347', '#ff69b4', '#ff7f50', '#ff8c00', '#ff00ff',]
            
             
 puzzle_cols = ['id', 'title', 'description', 'pcs'] 
@@ -99,8 +115,7 @@ modes_info = [
         
         "Play round-based games within your group.", 
         
-        "This game mode is not yet available.\n\n \
-        Play round-based games within your group.\n\n \
+        "Play round-based games within your group.\n\n \
         In each round, you can enter points for each player.\n \
         The winner is the player with the most points over all rounds.\n\n \
         You can use this mode for all kinds of games. Either you note down rounds \
@@ -135,10 +150,10 @@ modes_info = [
      
         "Save the puzzles you've finished and compare times.",
         
-        "Test your puzzle skills\n\n \
-        Finish a puzzle tracking the time you need to finish it. \
+        "Challenge your puzzle skills: \
+        finish a puzzle tracking the time you need to finish it. \
         You can then log your time in GamesBook in a easy way. \
-        Just add the puzzle once and save logs for the times you finished it. \n \
+        Just add the puzzle once and then save logs each time you finish it. \n \
         After a view entries you will be able to explore your stats  \
         and compare within your group.",        
         
@@ -158,13 +173,19 @@ modes_info = [
 
 
 about_info = \
-    [   "GamesBook is a simple and free notebook for game results. \
+    [   # index
+        "You enjoy playing games with your friends irl? \
+        You want to keep track of your scores and analyze them? \
+        Then GamesBook is the right place for you.",
+        
+        "GamesBook is a simple and free notebook for game results. \
         It allows you to save, share and analyize games you play with friends. \n \n \
         You can create a shared group account for up to 10 players,  \
         to then add logs with the results of the games you played with the group. \
         Now you have access to all of the group's games and analytics \
         in GamesBook to never lose track of scores again. \n ",
 
+        # about
         "GamesBook is a simple and free notebook for game results. \
         It allows you to save, share and analyize games you play with friends. \n\n \
         You can create a shared group account for up to 10 players,  \

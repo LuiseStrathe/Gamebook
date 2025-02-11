@@ -39,10 +39,10 @@ def group(group_id):
     
     info = ""
     rounds_form = StartRoundsForm(csrf_enabled=False)
+    dice_form = StartDiceForm(csrf_enabled=False)
     
-    if rounds_form.validate_on_submit():
-      print('>> rounds form validated')
-          
+    
+    if rounds_form.validate_on_submit():          
       game_id, info = start_rounds(group_id, rounds_form)
       
       if info == '':      
@@ -50,16 +50,25 @@ def group(group_id):
     
     else: print("> Submit ROUNDS - errors:", rounds_form.errors)
     
+    
+    if dice_form.validate_on_submit():
+      game_id, info = start_dice(group_id, dice_form)
+      
+      if info == '':      
+        return redirect(f"/dice/{game_id}")
+      
+    else: print("> Submit DICE - errors:", dice_form.errors)
+    
+    
     static = 'group.html'
     return render_template(
       static, page=page_html(static, "IN"), info=info,
-      modes=modes_info, num_modes=len(modes),
-      group=group, rounds_form=rounds_form)
+      modes=modes_info, num_modes=len(modes), group=group, 
+      rounds_form=rounds_form, dice_form=dice_form)
     
     
   else:
     init_session()
-    
     return redirect(url_for('login', retry=False))
 
 
@@ -83,35 +92,6 @@ def statistics():
     static, page=page_html(static, "IN"),
     modes=modes, modes_info=modes_info,)
     
-
-  
-  
-  
-  
-  
-# Random 
-
-@app.route("/random_group", methods=["GET", "POST"])
-def random_group():
-  random_form = RandomGroup(csrf_enabled=False)
-  
-  if random_form.validate_on_submit():
-    players = [random_form.p1.data, random_form.p2.data, \
-                      random_form.p3.data, random_form.p4.data]
-    players = [p for p in players if p != '']
-    session['group_id'] = 'random'
-    session['num_players'] = len(players)
-    session['status'] = 'OUT'
-    session['random_players'] = players
-    return redirect(f"/start/rounds/random")
-
-  static = 'random.html'
-  return render_template(
-    static, page=page_html(static, "OUT"), 
-    modes=modes_info,
-    random_form=random_form)
-  
-  
 
 
 
