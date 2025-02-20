@@ -17,7 +17,6 @@
 
   <h1>Game Statistics</h1>
   <a class='mainLink' href="/">>>>  Home & Play  <<<</a>
-  <a href='#diceLogs'>>>>  Go to list of all dice games  <<<</a>
   
   <div>
     {% for i in range(modes_info|length) %}
@@ -42,20 +41,52 @@
 
 
 
+{% set n = logs|length %}
+{% if n > 0 %}
 
-{% if false %}
+  <a href='#logs' style='display: block; margin: 15px auto; width: fit-content;'>
+    &#x25BE; go to logs  &#x25BE;</a>
 
   {# Chart area #}
-  <section class='fullDiv' style='background-color: var(--c-deep-blue-tr)'>  
+  <section class='fullDiv' style='background-color: var(--c-deep-blue-tr)'> 
+
 
     <h2><span style='background-color: white; color: black;'>
         Dice Analytics</span></h2>
 
     <h3><span style='color: white; text-decoration: underline;'>
-      <br> Winner Board</span></h3>
+      <br>Win Rates & Paticipatio</span></h3>
 
-    <p style='color: white;'>
-      Not yet available.</p>
+  {% if n > 2 %}
+    <p>
+      {% for p in range(winner_chart[1]|length) %}
+        <span style='color: {{ winner_chart[2][0][p] }}; font-weight: bold;'>
+          {{ winner_chart[1][p] }}:
+          {{ winner_chart[4][p] }} | 
+          {{ winner_chart[0][0][p] + winner_chart[0][1][p] }}
+        </span> &emsp;
+      {% endfor %}
+    </p>
+
+    <div class='midDiv'>
+      <div style='height: {{winner_chart[3]}};' class='canvasDiv'>
+        <canvas id="winnerBoard"></canvas>
+        <script src='../static/rounds_stats.js'></script> 
+        <script>
+            updateWinners( 
+              {{ winner_chart[1] |safe }},
+              {{ winner_chart[2] |safe }},
+              {{ winner_chart[0] |safe }},);
+        </script>    
+      </div>  
+    </div>
+
+
+    {% else %}
+      <p style='color: var(--t-white); padding-bottom: 30px;'>
+        No numbers, no stats ... analytics will show when 
+        you have at least 3 logs.</p>
+    {% endif %}
 
   </section>
 
@@ -65,13 +96,35 @@
 
   <section class='midDiv'>  
     <h2><span style='background-color: white; color: var(--c-blue-dark);'>
-        All puzzles finished</span></h2>
+      All Dice Games Logged</span></h2>
+    <p>Click on a game to open the game details:</p>    
 
-    
-    <div id='dcLogs'>
-      <p style='color: var(--t-white); padding-bottom: 30px;'>
-        Not yet available.</p>
+    <div id='logs'>
+
       
+      {% for i in range(n) %}
+        <div class='log'>
+        {% set color = logs[i][7] %}
+          <a href='/dice/{{ logs[i][0] }}'>
+
+
+            <div style='min-width: 70px !important;'>
+              <p class='logDesc'><span  class='listBold'>{{ n - i }}</span>
+                <br>{{ logs[i][1] }}</p></div>
+            <div><p><span  class='listBold'>{{ logs[i][3] }}</span></p></div>
+
+            <div style='{{ color }}'>
+              <p><span  class='logBold'>&#x1F3C6; {{ logs[i][2] }}</span>
+                <br>{{ logs[i][4] }}</p>
+            </div>
+            <div><p> points:<br>{{ logs[i][8] }}</p></div>
+            <div style='flex-grow: 1;'>
+              <p class='logDesc'>{{ logs[i][6] }}</p></div>
+
+
+          </a>
+        </div>
+      {% endfor %}
     </div>
   </section>
 

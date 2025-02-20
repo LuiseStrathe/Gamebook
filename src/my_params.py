@@ -43,17 +43,33 @@ page_titles = {
 #############  DATA  ################
 
 
-result_cols = ['game_id', 'g_mode', "group_id",
-               "result", "n_rounds", "winner_name", 'time', 
-               'info_1', 'info_2', 'info_3']
+result_cols = [
+    'game_id', 'mode', 'group_id', 'time_stamp',     
+    'g_data', 'n_rounds', 'title',     
+    'player_ids', 'winner_id', 'comment',     
+    'info_1', 'info_2', 'info_3']
 
-'''         result: np array of points, mode specific scheme
-            time:   timestamp
-            info:   mode specific info
+''' 
+    game_id:     unique id of game
+    mode:      mode name ('rounds', 'dice', 'puzzle')
+    timestamp:   timestamp of sevd log    
+    
+    g_data: list of all numeric results (points, times, etc.)
+    n_rounds:    number of rounds played, pcs of puzzle respectively
+    title:       title / category of game/puzzle
+    
+    combatants_id: list of player ids
+    winner_id:   id of winner
+    comment:     comment on game from input
+    
+    info:   mode specific info
+    
+    > players, puzzles and game titles identified by id, not string <
 '''
      
 
-player_cols = ['name', 'color', 'icon', 'info']     
+player_cols = [
+    'name', 'color', 'icon', 'info']     
          
 
 player_colors = [
@@ -63,7 +79,7 @@ player_colors = [
     ('#25b922', 'Green'),
     ('#cabc22', 'Yellow'),
     ('#b21a1a', 'Red'),
-    ('#3925a5', 'Dark Blue'),
+    ('#0a22f2', 'Dark Blue'),
     ('#228ad0', 'Blue'),
     ('#8a37a0', 'Violet'),
     ('#31b1b5', 'Turquoise'),
@@ -71,9 +87,6 @@ player_colors = [
 ]
 
 chart_colors = [
-    '#d04fa1', '#007c59', '#cf7437', '#25b922', '#cabc22',
-    '#b21a1a', '#3925a5', '#228ad0', '#8a37a0', '#31b1b5',
-    '#df5e6b', '#ff8c00', '#ff1493', '#ff4500', '#ff6347',
     '#ff69b4', '#ff7f50', '#ff8c00', '#ff00ff', '#ff1493',
     '#ff4500', '#ff6347', '#ff69b4', '#ff7f50', '#ff8c00',
     '#ff00ff', '#ff1493', '#ff4500', '#ff6347', '#ff69b4',
@@ -88,12 +101,22 @@ chart_colors = [
     '#ff6347', '#ff69b4', '#ff7f50', '#ff8c00', '#ff00ff',]
            
             
-puzzle_cols = ['id', 'title', 'description', 'pcs'] 
+puzzle_cols = [
+    'id', 'title', 'description', 'pcs'] 
 
 dice_rows = [
-    "1's", "2's", "3's", "4's", "5's", "6's", '3 of a kind',
-    '4 of a kind', 'full house', 'small straight', 
-    'large straight', 'YEAHA', 'chance']
+    ['1s', '2s', '3s', '4s', '5s', '6s', 
+     '3x', '4x', 'fh', 
+     'ss', 'ls', 
+     'gm', 'ch'],
+    ["1s", "2s", "3s", "4s", "5s", "6s", 
+    '3 of a Kind', '4 of a Kind', 'Full House', 
+    'Small Straight', 'Large Straight', 
+    'GAMER', 'Chance'],
+    ['', '', '', '', '', '',
+     'Sum all dice', 'Sum all dice', '25 pts.', 
+     '30 pts.', '40 pts.',
+     '50 pts.', 'Sum all dice'],]
 
 
 

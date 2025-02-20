@@ -7,8 +7,9 @@
 
 {# CSS #}
 <link rel="stylesheet" href="../static/styles_games.css">
-<style type="text/css">
-    body {background-image: var(--bg-play) !important;}</style>
+<style type="text/css">body {background-image: var(--bg-play) !important;}</style>
+<script src='../static/play_charts.js'></script> 
+
 
 <div id='gameHead'>   
     <h1><img height='30px' class='inlineImg'
@@ -16,16 +17,14 @@
         Rounds</h1> 
 
     <div>
-        {% if finished %}
+        {% if status == 'play' %}
             <a class="pageLink" 
-            href="/">Home</a>
-            <a class="pageLink"
-                href="/stats/rounds">Stats</a>
+            href="/">Stop Game</a>
         {% else %}
-            <a class="pageLink"
-                href="/">|| Pause game</a>
-            <a class="pageLink"
-                href="/">X Delete game</a>
+        <a class="pageLink"
+            href="/">Play Next</a>
+        <a class="pageLink"
+                href="/stats/rounds">See Statistics</a>
         {% endif %}
     </div>
 </div>
@@ -41,20 +40,21 @@
 
 {% set players = game_info[3] %}
 {% set colors = game_info[4] %}
+{% set table_width = 100 + 100 * players|length %}
 
 
 
 
 <div class='FullDiv' style="background-color: var(--b-dark-tr);">
-    <section id='roundsMain' class="gameSection">
+    <section id='playMain' class="midDiv gameSection">
 
-        <h2><span style='background-color: var(--s-yellow);'>
+        <h2><span style='background-color: var(--s-yellow); color: black;'>
             {{ game_info[1] }} </span></h2>
-        {% if not finished %}        
+        {% if status == 'play' %}        
             <p>Game {{ game_info[0] }} <b>@ round {{ round }} </b><br>
             startet on {{ game_info[2] }}</p>
         {% else %}
-            <p>Congratz to <b>{{ players[winner] }}</b> for winning!</p>
+            <p>Congratz to <b>{{ winners }}</b> for winning!</p>
             <p style="font-size: 0.9rem;">
                 Game {{ game_info[0] }} finished on {{ game_info[2] }} 
                 @ {{ round }} rounds </p>
@@ -63,12 +63,12 @@
 
 
         <form action="" method="POST">
-            {% if not finished %}  
+            {% if status == 'play' %}  
                 {{ rounds_form.hidden_tag() }}
             {% endif %}
 
 
-            <table>
+            <table style='min-width: {{ table_width }}px;'>
                 {# player row #}
                 <tr style='border-bottom: 1px solid var(--c-grey);'>
                     <th style='width: 40px;'> </th>
@@ -87,7 +87,7 @@
                 {% if round > 1 %}
                     {% for row in range(round - 1) %}
                         <tr>
-                            <td class='roundsCol'>
+                            <td class='playCol'>
                                 {{ row + 1 }}</td>
                             {% for p in range(players|length) %}
                                 <td>{{ points[row][p] }}</td>
@@ -99,12 +99,12 @@
 
 
                 {# input round #}
-                {% if not finished %}
+                {% if status == 'play' %}
                     <tr class="active-row">
-                        <td class='roundsCol'>
+                        <td class='playCol'>
                             {{ round }}</td>
                         {% for p in range(players|length) %}
-                            <td class='roundsInput' 
+                            <td class='playInput' 
                                 style='background-color: {{ colors[p] }}9b;'>
                                 {{ point_entries[p] }} </td>
                         {% endfor %}
@@ -120,12 +120,12 @@
                 {# sum row #}
                 {% if round > 1 %}
                     <tr class="finalRow">
-                        <td class='roundsCol'>&sum;</td>
+                        <td class='playCol'>&sum;</td>
 
                         {% for p in range(players|length) %}
-                            {% if finished and p == winner %}
+                            {% if status == 'done' and players[p] in winners %}
                                 <td style='color: {{ colors[p] }};
-                                    background-color: transparent;
+                                    background-color: transparent; 
                                     border: 1px solid {{ colors[p] }};'>
                                         {{ points[-1][p] }}</td>
                             {% else %}
@@ -139,7 +139,7 @@
                 {% endif %}
             </table>
 
-            {% if not finished %}
+            {% if status == 'play' %}
                 <div class='pageLink submitBtn'>
                     {{ rounds_form.submitRound() }}</div>
             {% endif %}
@@ -149,22 +149,23 @@
 
 
 
+{# Finish Game #}
 {% if round > 1 %}
-    {% if not finished %}
+    {% if status == 'play' %}
         <section class="gameSection">
 
             <button class='finishBtn' 
                 style='background-color: black; color: var(--s-yellow);'
-                onclick='finish_rounds()'>
+                onclick='finish_game()'>
                 Finish Game
             </button>
 
 
-            <div id="roundsFinish" class="popUp">
+            <div id="finishGame" class="popUp">
                 <div class='popUpContent'>
                     <div class='popHead'>
                       <p>Log this game</p>
-                      <button onclick='finish_rounds()'>
+                      <button onclick='finish_game()'>
                           X </button>
                     </div>
 
@@ -183,7 +184,7 @@
 
                         <p>{{ submit_game_form.comment() }}</p>                              
 
-                        <div class='finishBtn'>
+                        <div class='acceptBtn'>
                             {{ submit_game_form.submit() }}
                         </div>
                     </form>
@@ -193,12 +194,13 @@
     {% endif %}
 {% endif %}
 
+
+
 {% if round > 2 %}
     <section class="gameSection" >
-        <h2 style='color: white;'>Player Performance</h2>     
+        <h2 style='color: white;'>Game Journey</h2>     
 
-        <canvas id="rounds_chart" height='500px'     ></canvas>
-        <script src='../static/rounds_page.js'></script> 
+        <canvas id="rounds_chart" height='500px'></canvas>
         <script>
             updateRoundsChart( 
                 {{ chart_data[0] | safe }},

@@ -17,7 +17,6 @@
 
   <h1>Game Statistics</h1>
   <a class='mainLink' href="/">>>>  Home & Play  <<<</a>
-  <a href='#rdLogs'>>>>  Go to list of all rounds games  <<<</a>
   
   <div>
     {% for i in range(modes_info|length) %}
@@ -42,6 +41,9 @@
 {% set n = logs|length %}
 {% if n > 0 %}
 
+  <a href='#logs' style='display: block; margin: 15px auto; width: fit-content;'>
+    &#x25BE; go to logs  &#x25BE;</a>
+
   {# Chart area #}
   <section class='fullDiv' style='background-color: var(--c-deep-blue-tr)'>  
 
@@ -55,27 +57,28 @@
     
     {% if n > 2 %}
       <p>
-        {% for p in range(players|length) %}
-          <span style='color: {{ winner_chart[1][0][p] }}; font-weight: bold;'>
-            {{ players[p] }}:
-            {{ winner_chart[3][p] }} | 
-            {{ winner_chart[0][0][p] + winner_chart[0][1][p] }}
-          </span> &emsp;
+        {% for p in range(winner_chart[1]|length) %}
+        <span style='color: {{ winner_chart[2][0][p] }}; font-weight: bold;'>
+          {{ winner_chart[1][p] }}:
+          {{ winner_chart[4][p] }} | 
+          {{ winner_chart[0][0][p] + winner_chart[0][1][p] }}
+        </span> &emsp;
         {% endfor %}
       </p>
 
       <div class='midDiv'>
-        <div style='height: {{winner_chart[2]}};' class='canvasDiv'>
+        <div style='height: {{winner_chart[3]}};' class='canvasDiv'>
           <canvas id="winnerBoard"></canvas>
           <script src='../static/rounds_stats.js'></script> 
           <script>
               updateWinners( 
-                {{ players |safe }},
                 {{ winner_chart[1] |safe }},
+                {{ winner_chart[2] |safe }},
                 {{ winner_chart[0] |safe }},);
           </script>    
         </div>  
       </div>
+
 
     {% else %}
       <p style='color: var(--t-white); padding-bottom: 30px;'>
@@ -91,7 +94,7 @@
 
   <section class='midDiv'>  
     <h2><span style='background-color: white; color: var(--c-blue-dark);'>
-        All Rounds Logged</span></h2>
+      All Rounds Logged</span></h2>
     <p>Click on a game to open the game details:</p>    
 
     <div id='logs'>
@@ -99,7 +102,7 @@
       
       {% for i in range(n) %}
         <div class='log'>
-        {% set color = logs[i][7] %}  
+        {% set color = logs[i][7] %}
           <a href='/rounds/{{ logs[i][0] }}'>
 
 
@@ -109,7 +112,7 @@
             <div><p><span  class='listBold'>{{ logs[i][3] }}</span>
                 <br>({{ logs[i][5] }} rounds)</p></div>
 
-            <div style='background-color: {{ color }}c9;'>
+            <div style='{{ color }}'>
               <p><span  class='logBold'>&#x1F3C6; {{ logs[i][2] }}</span>
                 <br>{{ logs[i][4] }}</p>
             </div>

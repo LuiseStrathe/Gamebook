@@ -165,8 +165,11 @@ div {
         box-shadow: 0 0 10px 5px var(--s-shadow);
     
     * p {
-        color: var(--t-white);
-    }}
+        margin: 10px auto;
+        color: var(--t-white);}
+
+    }
+
 
     .popHead {
         display: flex;
@@ -179,7 +182,7 @@ div {
         border-bottom: 1px solid var(--b-white-tr);
 
         p { text-align: left;
-            color: white;
+            color: var(--t-white);
             width: auto;
             padding: 0;
             margin: 0;
@@ -202,6 +205,15 @@ div {
 }
 
 
+.acceptBtn {
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    min-height: 30px;
+
+    input { 
+        border-radius: 5px;
+        background-color: var(--t-white);}}
 
 
 /* ------------------  LINKS  ------------------ */

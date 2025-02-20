@@ -15,8 +15,8 @@
 {# Header #}
 <section class="statsHeader">
   <h1>Game Statistics</h1>
-  <a class='mainLink' href="/">>>>  Home & Play  <<<</a>
-  <a href='#pzLogs'>>>>  Go to List of all Puzzles finished  <<<</a>
+  <a class='mainLink' href="/">>>>  Home  <<<</a>
+  <a class='mainLink' href="/puzzle">>>>  Puzzles  <<<</a>
   
   <div>
     {% for i in range(modes_info|length) %}
@@ -37,6 +37,9 @@
 
 {% set n = logs|length %}
 {% if n > 0 %}
+
+  <a href='#logs' style='display: block; margin: 15px auto; width: fit-content;'>
+    &#x25BE; go to logs  &#x25BE;</a>
 
   {# Chart area #}
   <section class='fullDiv' style='background-color: var(--c-deep-blue-tr)'>  

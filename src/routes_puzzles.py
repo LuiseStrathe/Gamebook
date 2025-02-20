@@ -131,6 +131,10 @@ def stats_puzzle():
   
   logs = gen_puzzle_logs(group_id)   
   charts = gen_puzzle_charts(logs, puzzles, chart_colors)
+  
+  print('\n LABELS:\n', charts[0])
+  #print('\n EXTRA:\n', charts[1])
+  print('\n DATA:\n', *charts[2], sep='\n')
      
     
   static = 'stats_puzzle.html'  

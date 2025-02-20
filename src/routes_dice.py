@@ -21,28 +21,88 @@ from datetime import datetime
 @app.route("/dice/<string:game_id>", methods=["GET", "POST"])
 def dice(game_id):
     
-  # verify
+  # VERIFY
   if verify_session() == False or game_id[0] != 'D': 
     return redirect("/")
   
-  
-  
-  # init params
-  info = ""
   group_id = session['username']
   group = load_group(group_id)[0]
-  result = group.results[group.results.game_id == game_id]
-
-
-  # game_info: 
-    #     0: game_id, 1: title, 2: date, 
-    #     3: player_names, 4: player_colors, 
-    #     5: comment
     
+  if game_id not in group.results.game_id.values:
+    return redirect("/")
+  
+  
+  # INIT
+  info = ""
+
+  result = group.results[group.results.game_id == game_id]
+  game_data = result.g_data.values[0]
+  n = result.n_rounds.values[0]
+  player_ids = result.player_ids.values[0]
+  player_names = [group.players[id] for id in player_ids]
+  player_colors = [group.colors[id] for id in player_ids]
+  date = pd.to_datetime(result.time_stamp.values[0]).strftime("%d/%m/%y")
+  comment = result.comment.values[0]
+  winners = winner_str(group.players, result.winner_id.values[0])
+
+  
+  dice_form = PlayDiceForm(csrf_enabled=False)
+  submit_game_form = None  
+  
+  # STATUS
+  if n < 13: status = 'play'
+  elif n == 13: status = 'final'
+  else: status = 'done'
+  
+    
+  # PLAYING
+  if status == 'play': 
+    
+    # submit a round
+    if dice_form.validate_on_submit():
+      info = next_dice(group, game_id, game_data, dice_form)
+      
+      if info == '':      
+        return redirect(f"/dice/{game_id}")
+
+    else: print("> Submit DICE - errors:", dice_form.errors)
+    
+  
+  elif status == 'final':
+    submit_game_form = SubmitGameForm(csrf_enabled=False)
+    
+    # submit game
+    if submit_game_form.validate_on_submit():
+      comment = submit_game_form.comment.data
+      winner_ids = result.winner_id.values[0]
+      end_dice(group, game_id, player_ids, game_data, winner_ids, comment)
+      
+      return redirect(f"/group/{group_id}")
+      
+    else: print("> Submit GAME - errors:", submit_game_form.errors)
+    
+  
+  # DATA
+  game_info = [status, game_id, date,       # 0-2 (game)
+              player_names, player_colors,  # 3-4 (players)
+              comment, winners,             # 5-6 (final)
+              dice_rows[1], dice_rows[2]]   # 7   (labels)
+
+  point_entries = create_dice_point_entries(
+    game_data, n, dice_form, len(player_ids))
+  
+  chart_data = create_dice_game_chart(history=game_data[1])
+  
                
   static = "dice.html"
   return render_template(
-    static, page=page_html(static, "in"), info=info,)
+    static, page=page_html(static, "IN"), info=info,
+    game_info=game_info, round=int(n),
+    dice_form=dice_form, submit_game_form=submit_game_form,
+    point_entries=point_entries, chart_data=chart_data,)
+
+
+
 
 
 
@@ -56,10 +116,17 @@ def stats_dice():
       init_session()
       return redirect(url_for('login', retry=False))  
   
+  # init
+  group_id = name_to_id(session['username'])
+  group = load_group(group_id)[0]
+  players = group.players
+  logs, winner_chart = gen_dice_stats(group_id)
+  colors = group.colors
     
   static = 'stats_dice.html'  
   return render_template(
     static, page=page_html(static, "IN"),
-    modes=modes, modes_info=modes_info,)
+    players=players, modes=modes, modes_info=modes_info,
+    logs=logs, winner_chart=winner_chart, colors=colors,)
 
 

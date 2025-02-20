@@ -32,6 +32,20 @@ def check_name_create(name):
     return check, id
 
 
+# duplicate from my_fun.py
+def encrypt_key(key):
+    
+    path = f'{path_data}/server/salt.txt'
+    with open(path, "rt") as f:
+        salt = str(f.readline())
+    
+    hash = 65
+    salted = key + salt
+    for ch in salted:
+        hashed = ( hash*281  ^ ord(ch)*987) & 0xFFFFFFFF
+    
+    return str(hashed)
+
 
 
 # classes

@@ -147,10 +147,10 @@ function puzzle_log() {
 }
 
 
-// Rounds
+// Rounds & Dice
 
-function finish_rounds() {
-  document.getElementById("roundsFinish").classList.toggle("gameShow");
+function finish_game() {
+  document.getElementById("finishGame").classList.toggle("gameShow");
 }
 
 

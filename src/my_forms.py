@@ -5,9 +5,9 @@ from wtforms import StringField, TextAreaField, SubmitField, \
   BooleanField, RadioField, IntegerField, SelectMultipleField, \
   SelectField, PasswordField
 from wtforms.validators import DataRequired, Length, Email, \
-  EqualTo, ValidationError
+  EqualTo, ValidationError, Optional
 
-from Gamebook.src.my_params import player_colors
+from Gamebook.src.my_params import player_colors, dice_rows
 
 
 
@@ -47,16 +47,8 @@ class GroupForm(FlaskForm):
   p8 = StringField("Player 9", validators=[Length(max=20)])
   p9 = StringField("Player 10", validators=[Length(max=20)])
   
-  c0 = SelectField("c0", choices=player_colors,)
-  c1 = SelectField("c1", choices=player_colors,)
-  c2 = SelectField("c2", choices=player_colors,)
-  c3 = SelectField("c3", choices=player_colors,)
-  c4 = SelectField("c4", choices=player_colors,)
-  c5 = SelectField("c5", choices=player_colors,)
-  c6 = SelectField("c6", choices=player_colors,)
-  c7 = SelectField("c7", choices=player_colors,)
-  c8 = SelectField("c8", choices=player_colors,)
-  c9 = SelectField("c9", choices=player_colors,)
+  for i in range(10):
+    exec(f"c{i} = SelectField('c{i}', choices={player_colors})")
   
   registration_submit = SubmitField("Register")
 
@@ -67,54 +59,26 @@ class SettingsForm(FlaskForm):
   
   slogan = TextAreaField("slogan")
   
+  
   # Player names
-  p0 = StringField("p0", 
-    validators=[Length(max=20)])
-  p1 = StringField("p1", 
-    validators=[Length(max=20)])
-  p2 = StringField("p2", 
-    validators=[Length(max=20)])
-  p3 = StringField("p3", 
-    validators=[Length(max=20)])
-  p4 = StringField("p4", 
-    validators=[Length(max=20)])
-  p5 = StringField("p5", 
-    validators=[Length(max=20)])
-  p6 = StringField("p6", 
-    validators=[Length(max=20)])
-  p7 = StringField("p7", 
-    validators=[Length(max=20)])
-  p8 = StringField("p8", 
-    validators=[Length(max=20)])
-  p9 = StringField("p9", 
-    validators=[Length(max=20)])
+  for i in range(10):
+    exec(f"p{i} = StringField('p{i}', validators=[Length(max=20)])")
+
   pNew = StringField("pNew", 
     validators=[Length(max=20)])
   
+  
   # Color selection
-  c0 = SelectField("c0", choices=player_colors, default="#cabc22")
-  c1 = SelectField("c1", choices=player_colors, default="#cabc22")
-  c2 = SelectField("c2", choices=player_colors, default="#cabc22")
-  c3 = SelectField("c3", choices=player_colors, default="#cabc22")
-  c4 = SelectField("c4", choices=player_colors, default="#cabc22")
-  c5 = SelectField("c5", choices=player_colors, default="#cabc22")
-  c6 = SelectField("c6", choices=player_colors, default="#cabc22")
-  c7 = SelectField("c7", choices=player_colors, default="#cabc22")
-  c8 = SelectField("c8", choices=player_colors, default="#cabc22")
-  c9 = SelectField("c9", choices=player_colors, default="#cabc22")
+  for i in range(10):
+    exec(f"c{i} = SelectField('c{i}', choices={player_colors}, default='#cabc22')")
+ 
   cNew = SelectField(u"cNew", choices=player_colors, default="#cabc22")
   
+  
   # Check for color change
-  x0 = BooleanField("x_c0")
-  x1 = BooleanField("x_c1")
-  x2 = BooleanField("x_c2")
-  x3 = BooleanField("x_c3")
-  x4 = BooleanField("x_c4")
-  x5 = BooleanField("x_c5")
-  x6 = BooleanField("x_c6")
-  x7 = BooleanField("x_c7")
-  x8 = BooleanField("x_c8")
-  x9 = BooleanField("x_c9")
+  for i in range(10):
+    exec(f"x{i} = BooleanField('x_c{i}')")
+
   xNew = BooleanField("x_cNew")
   
   
@@ -143,10 +107,10 @@ class DeleteForm(FlaskForm):
 ############################################
 
 
-# Submit Game
+# SUBMIT Game, finally
 class SubmitGameForm(FlaskForm):
   
-  comment = TextAreaField("Comment")
+  comment = TextAreaField("Comment", validators=[Optional()])
   submit = SubmitField("Save", validators=[DataRequired()])
 
 
@@ -158,16 +122,8 @@ class StartRoundsForm(FlaskForm):
   r_title = StringField("Rounds Game Title", 
     validators=[DataRequired(), Length(min=3, max=20)])
   
-  r_p_0 = BooleanField("Rounds Player 1")
-  r_p_1 = BooleanField("Rounds Player 2")
-  r_p_2 = BooleanField("Rounds Player 3")
-  r_p_3 = BooleanField("Rounds Player 4")
-  r_p_4 = BooleanField("Rounds Player 5")
-  r_p_5 = BooleanField("Rounds Player 6")
-  r_p_6 = BooleanField("Rounds Player 7")
-  r_p_7 = BooleanField("Rounds Player 8")
-  r_p_8 = BooleanField("Rounds Player 9")
-  r_p_9 = BooleanField("Rounds Player 10")
+  for i in range(10):   # 10 players
+    exec(f"r_p_{i} = BooleanField('Rounds Player {i+1}')")
   
   submit_rounds_start = SubmitField("Start")
   
@@ -175,16 +131,8 @@ class StartRoundsForm(FlaskForm):
 
 class CloseRoundForm(FlaskForm):
   
-  pt0 = IntegerField("enter points", default=0)
-  pt1 = IntegerField("enter points", default=0)
-  pt2 = IntegerField("enter points", default=0)
-  pt3 = IntegerField("enter points", default=0)
-  pt4 = IntegerField("enter points", default=0)
-  pt5 = IntegerField("enter points", default=0)
-  pt6 = IntegerField("enter points", default=0)
-  pt7 = IntegerField("enter points", default=0)
-  pt8 = IntegerField("enter points", default=0)
-  pt9 = IntegerField("enter points", default=0)
+  for i in range(10):   # 10 players
+    exec(f"pt{i} = IntegerField('enter points', validators=[Optional()])")
   
   submitRound = SubmitField("Next Round", validators=[DataRequired()])
 
@@ -194,19 +142,35 @@ class CloseRoundForm(FlaskForm):
 
 class StartDiceForm(FlaskForm):
   
-  d_p_0 = BooleanField("Dice Player 1")
-  d_p_1 = BooleanField("Dice Player 2")
-  d_p_2 = BooleanField("Dice Player 3")
-  d_p_3 = BooleanField("Dice Player 4")
-  d_p_4 = BooleanField("Dice Player 5")
-  d_p_5 = BooleanField("Dice Player 6")
-  d_p_6 = BooleanField("Dice Player 7")
-  d_p_7 = BooleanField("Dice Player 8")
-  d_p_8 = BooleanField("Dice Player 9")
-  d_p_9 = BooleanField("Dice Player 10")
+  for i in range(10):   # 10 players
+    exec(f"d_p_{i} = BooleanField('Dice Player {i+1}')")
   
   submit_dice_start = SubmitField("Start")
 
+
+
+class PlayDiceForm(FlaskForm):
+  
+  for i in range(10):   # 10 players
+    
+    # x's & x of a kind values
+    for j in range(8): 
+      id, name = dice_rows[0][j], dice_rows[1][j]
+      exec(f"p{i}_{id} = IntegerField('{name}', \
+        validators=[Optional(strip_whitespace=True)])")
+      
+    # straights & full house & gamer
+    for j in range(8, 12): 
+      id, name = dice_rows[0][j], dice_rows[1][j]
+      exec(f"p{i}_{id} = IntegerField('{name}', \
+        validators=[Optional(strip_whitespace=True)])")
+      
+    # chance
+    id, name = dice_rows[0][12], dice_rows[1][12]
+    exec(f"p{i}_{id} = IntegerField('{name}', \
+      validators=[Optional(strip_whitespace=True)])")
+    
+  submitDice = SubmitField("Confirm", validators=[DataRequired()])
 
 
   
@@ -215,9 +179,9 @@ class StartDiceForm(FlaskForm):
 class AddPuzzleForm(FlaskForm):
   
   title = StringField("Title", 
-                      validators=[DataRequired(), Length(min=3, max=20)])
+    validators=[DataRequired(), Length(min=3, max=20)])
   pcs = IntegerField("Number of Pieces", 
-                     validators=[DataRequired()])
+    validators=[DataRequired()])
   description = StringField("Description (optional)")
   
   submit_add_puzzle = SubmitField("Save")

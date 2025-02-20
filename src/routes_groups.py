@@ -123,11 +123,6 @@ def login():
           session['username'] = id
           session['key'] = key
           session['status'] = 'IN'
-          session['num_players'] = load_group(id)[0].n
-          session['round'] = 0
-          session['game_id'] = 0
-          
-          print(name, 'is now logged in')
 
           return redirect(f"/group/{id}")
           
@@ -138,7 +133,7 @@ def login():
         
   static = 'group_login.html'    
   return render_template(
-    static, page=page_html(static, "OUT"), 
+    static, page=page_html(static, "no"), 
     retry=retry)
 
 
@@ -185,7 +180,6 @@ def register():
         
         session['username'] = group.id
         session['key'] = group.key
-        session['num_players'] = group.n
         session['status'] = 'IN'
         
         return redirect(f"/group/{group.id}")
@@ -195,7 +189,7 @@ def register():
   
   static = 'group_register.html'  
   return render_template(
-    static, page=page_html(static, "OUT"), 
+    static, page=page_html(static, "no"), 
     group_form=group_form, info=info)
 
 

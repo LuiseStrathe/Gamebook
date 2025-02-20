@@ -30,6 +30,11 @@ function logs_chart(
         options: {
             responsive: true,
             borderWidth: 3,
+            barShowStroke : false,
+            barPercentage: 0.8,
+            categoryPercentage: 0.8,
+            interaction: {intersect: false,},
+            skipNull: true,
             
             scales: {
                 y: {
@@ -106,7 +111,11 @@ function player_speed_chart(
         options: {
             responsive: true,
             borderWidth: 3,
+            barShowStroke : false,
+            barPercentage: 1.6,
+            categoryPercentage: 0.7,
             interaction: {intersect: false,},
+            skipNull: true,
             
             scales: {
                 y: {
@@ -186,8 +195,8 @@ function puzzle_speed_chart(
         options: {
             responsive: true,
             borderWidth: 3,
-            interaction: {intersect: false,},
-            skipNull: true,
+            barPercentage: 1.6,
+            categoryPercentage: 0.7,
             
             scales: {
                 y: {

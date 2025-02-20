@@ -8,8 +8,9 @@
 
 {# CSS #}
 <link rel="stylesheet" href="../static/styles_games.css">
-<style type="text/css">
-    body {background-image: var(--bg-play) !important;}</style>
+<style type="text/css">body {background-image: var(--bg-play) !important;}</style>
+<script src='../static/play_charts.js'></script> 
+
 
 <div id='gameHead'>   
     <h1><img height='30px' class='inlineImg'
@@ -17,16 +18,14 @@
         Dice</h1> 
 
     <div>
-        {% if finished %}
+        {% if status == 'play' %}
             <a class="pageLink" 
-            href="/">Home</a>
-            <a class="pageLink"
-                href="/stats/dice">Stats</a>
+            href="/">Stop Game</a>
         {% else %}
             <a class="pageLink"
-                href="/">|| Pause game</a>
+                href="/">Play Next</a>
             <a class="pageLink"
-                href="/">X Delete game</a>
+                href="/stats/dice">See Statistics</a>
         {% endif %}
     </div>
 </div>
@@ -40,18 +39,171 @@
     </div>
 {% endif %}
 
-
-
+{% set players = game_info[3] %}
+{% set colors = game_info[4] %}
+{% set table_width = 160 + 90 * players|length %}
+{% set status = game_info[0] %}
+{% set winners = game_info[6] %}
 
 
 <div class='FullDiv' style="background-color: var(--b-dark-tr);">
-    <section id='diceMain' class="gameSection">
+    <section id='playMain' class="midDiv gameSection">
 
-        <h2><span style='background-color: var(--s-red);'>
-            Nothing there yet :/ </span></h2>
-    
+        <h2><span style='background-color: var(--s-yellow); color: black;'>
+            Dicin'</span></h2>
+
+        {% if status == 'play' %}        
+            <p>Game {{ game_info[1] }} <b>@ {{ round }} rounds done </b><br>
+            startet on {{ game_info[2] }}</p>
+
+        {% elif status == 'final' %}
+            <h2><br>{{ winners }} won!</h2>
+            <p style='color: white; text-align: center;'>
+                How do you want to remember this game?</p>
+
+            <form action="" method="POST">
+                {{ submit_game_form.hidden_tag() }}  
+                <p>{{ submit_game_form.comment() }}</p>                              
+
+                <div class='acceptBtn'>
+                    {{ submit_game_form.submit() }}
+                </div>
+            </form>
+
+        {% else %}
+            <p>Congratz to <b>{{ winners }}</b> for winning!</p>
+            <p style="font-size: 0.9rem;">
+                Game finished on {{ game_info[2] }}</p>
+            <p><b> {{ game_info[5] }}</b></p>
+        {% endif %} 
+
+        
+        <form action="" method="POST">
+            {% if status in ['play', 'final'] %}  
+                {{ dice_form.hidden_tag() }}
+            {% endif %}
+
+
+            {# game table #}
+            <table style='min-width: {{ table_width }}px;'>
+                {# player row #}
+                <tr style='border-bottom: 1px solid var(--c-grey);'>
+                    <th style='width: 100px;'> </th>
+                    {% for p in range(players|length) %}
+                        <th style='background-color: {{ colors[p] }};
+                            letter-spacing: 0.1rem;'>
+                            {{ players[p] }}</th>
+                    {% endfor %}
+                </tr>
+
+                <tr class="divider">
+                    <td colspan='{{ players|length + 1 }}'><hr></td>
+                </tr>
+
+                {# top game table #}
+                {% for row in range(6) %}
+                    <tr>
+                        <td class='playCol'>
+                            {{ game_info[7][row] }}</td>
+                        {% for p in range(players|length) %}
+                            <td class='playInput'>
+                                {{ point_entries[row][p] }} </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                
+
+                <tr class="finalRow" style='font-weight: normal;'>
+                    <td class='playCol' style='font-weight: normal;'>&sum;</td>
+                    {% for p in range(players|length) %}
+                        <td style='color: {{ colors[p] }}; font-weight: normal; background-color: transparent;'>
+                            {{ point_entries[-4][p] }} + {{ point_entries[-3][p] }}</td>
+                    {% endfor %}
+                </tr>
+
+                <tr class="divider">
+                    <td colspan='{{ players|length + 1 }}'><hr></td>
+                </tr>
+
+
+                {# bottom game table #}
+                {% for row in range(6, 13) %}
+                    <tr>
+                        <td class='playCol' style='font-size: 0.9rem; padding: 0;'>
+                            {{ game_info[7][row] }}<br>
+                            <span style='font-size:0.8rem; color:var(--c-grey);'>
+                                {{ game_info[8][row] }}</span></td>
+                        {% for p in range(players|length) %}
+                            <td class='playInput'>
+                                {{ point_entries[row][p] }} </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+
+
+
+                <tr class="finalRow">
+                    <td class='playCol' style='font-weight: normal;'>&sum;</td>
+                    {% for p in range(players|length) %}
+                        <td style='color: {{ colors[p] }}; font-weight: normal; 
+                        background-color: transparent;'>
+                                {{ point_entries[-2][p] }}</td>
+                    {% endfor %}
+                </tr>
+
+
+
+                {# sum #}
+                <tr class="divider">
+                    <td colspan='{{ players|length + 1 }}'><hr></td>
+                </tr>
+
+                <tr class="finalRow">
+                    <td class='playCol'>&sum;</td>
+                    {% for p in range(players|length) %}
+                        {% if status != 'play' and players[p] in winners %}
+                            <td style='color: {{ colors[p] }};
+                                background-color: transparent; 
+                                border: 1px solid {{ colors[p] }};'>
+                                    {{ point_entries[-1][p] }}</td>
+                        {% else %}
+                            <td style='color: {{ colors[p] }};
+                                background-color: transparent;'>
+                                    {{ point_entries[-1][p] }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            </table>
+
+
+            {# submit button #}
+            {% if status == 'play' %}
+                <div class='pageLink submitBtn'>
+                    {{ dice_form.submitDice() }}</div>
+            {% endif %}
+        </form>    
     </section>
 </div>
+
+
+
+
+{% if round > 2 %}
+    <section class="gameSection" >
+        <h2 style='color: white;'>Game Journey</h2>  
+        <p style='color: var(--c-grey);'>35-point bonus excluded.</p>   
+
+        <canvas id="dice_chart" height='500px'></canvas>
+        <script>
+            updateDiceChart( 
+                {{ chart_data[0] | safe }},
+                {{ players | safe }}, {{ colors | safe }},
+                {{ chart_data[1] | safe }});
+        </script>    
+
+    </section>
+{% endif %}
+
 
 
 {% endblock %}

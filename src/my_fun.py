@@ -28,12 +28,9 @@ def init_session():
     session['status'] = 'OUT'
     session['username'] = ''
     session['key'] = ''
-    session['game_id'] = 0
-    session['mode'] = ''
-    session['num_players'] = 0
-    session['round'] = 0
     
-    
+
+# duplicated in my_classes.py
 def encrypt_key(key):
     
     path = f'{path_data}/server/salt.txt'
