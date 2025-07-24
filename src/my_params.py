@@ -49,6 +49,7 @@ result_cols = [
     'player_ids', 'winner_id', 'comment',     
     'info_1', 'info_2', 'info_3']
 
+
 ''' 
     game_id:     unique id of game
     mode:      mode name ('rounds', 'dice', 'puzzle')

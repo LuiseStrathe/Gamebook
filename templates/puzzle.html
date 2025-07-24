@@ -43,15 +43,25 @@
 
 
 
-<div class='FullDiv' style="background-color: var(--b-white-tr);">
-    <section id='puzzleLib' class="gameSection">
-        <h2><span style="background-color: black;">
+<div class='FullDiv' 
+        style="background-image: url('../static/media/img_puzzles.jpg');
+        background-size: cover;">
+    <section id='puzzleLib' class="gameSection" >
+        <h2><span style="background-color: var(--c-yellow); color: black;">
             Puzzle Library</span></h2>
-        <p> You have {{ puzzles.shape[0] }} puzzles in the library:</p>
+        
         
         {% if puzzles.shape[0] > 0 %}
         <div id="puzzleList">
-            {% for i in range(puzzles.shape[0]) %}    
+            <p> You have {{ puzzles.shape[0] }} puzzles in the library:</p>
+            <div id="puz_head">
+                <p>&#9207;</p>
+                <p>&#129513;</p>
+                <p>Title</p>
+                <p>Description</p>
+            </div> 
+
+            {% for i in range(puzzles.shape[0]) %} 
                 <div class="puzzleList">
                     <p class="pId"> {{ puzzles["id"].iloc[i] }} </p>
                     <p class="pPcs"> {{ puzzles["pcs"].iloc[i] }} </p>
@@ -69,7 +79,7 @@
                 + add puzzle </button>
             {% if puzzles.shape[0] > 0 %}
                 <button class='pageLink puzzleBtn' onclick='puzzle_change()'>
-                    change </button>
+                    change puzzle</button>
             {% endif %}
 
             <div id='puzzleAddForm' class='popUp'>

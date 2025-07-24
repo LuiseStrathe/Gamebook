@@ -227,7 +227,7 @@ function puzzle_speed_chart(
                         
                 title: {
                     display: true,
-                    text: 'Puzzle speed - in average & fastest:',},},
+                    text: 'Puzzle speed - on average & fastest:',},},
     },},);
     
 

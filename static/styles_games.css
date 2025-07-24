@@ -254,23 +254,27 @@
     overflow: auto;
     max-height: 400px;
     border-radius: 5px;
-    background-color:  var(--c-deep-blue-tr);
+    background-color: black;
+
 
     p {
-        color: var(--t-std);}
-
-    div {
+        color: var(--t-white);}
+    
+    #puz_head {
+            p {color: var(--c-yellow);}}
+    
+            div {
         padding: 0;
         margin: 2px 0;
         display: grid;
         grid-template-columns: 30px 60px 1fr 2fr;
         grid-template-rows: 1;
         border-radius: 5px;
+        border-bottom: 1px dotted var(--c-yellow-dark);
 
 
         p { 
-            color: var(--t-std);
-            background-color: var(--b-white-tr);
+            color: var(--t-white);
             display: inline-block;
             margin: 0;
             padding: 5px;
