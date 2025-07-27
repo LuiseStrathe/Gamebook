@@ -18,7 +18,7 @@ from datetime import datetime
 
 
 ###############################################
-#                     PUZZLE 
+#                  PUZZLE SITE
 ###############################################
 
 
@@ -46,7 +46,21 @@ def puzzle():
   choice_puzzles = \
     [(f"{puzzles.id.iloc[i]}: {puzzles.title.iloc[i]} ({puzzles.pcs.iloc[i]} pcs.)")
     for i in range(len(puzzles))]
+
+  choice_logs_delete = \
+    [(f"({len(logs) - i}) {logs[i][2]}: \
+      {puzzles.title[puzzles.id[0] == logs[i][4]][0].upper()} \
+      in {logs[i][6]} ({logs[i][1]})")
+      for i in range(len(logs))]
+    
+  choice_filter = \
+    [sorted(set([i[2] for i in logs])),
+     sorted(set([i[5] for i in logs])),
+     sorted(puzzles.title[puzzles.id == j][0] for j in set([i[4] for i in logs])),
+     sorted(set([i[1].partition('/')[2] for i in logs]))]
   
+  
+  # FORMS
   
   change_puzzle_form = ChangePuzzleForm( \
     puzzles=choice_puzzles, csrf_enabled=False)      
@@ -54,8 +68,14 @@ def puzzle():
   add_puzzle_form = AddPuzzleForm(csrf_enabled=False) 
 
   puzzle_record_form = PuzzleRecordForm( \
-    players=players, choice_puzzles=choice_puzzles,
-    csrf_enabled=False)    
+    players=players, choice_puzzles=choice_puzzles, csrf_enabled=False)    
+  
+  puzzle_record_delete_form = PuzzleRecordDeleteForm( \
+    log_choices=choice_logs_delete, csrf_enabled=False)
+  
+  puzzle_log_filter_form = PuzzleLogFilterForm(
+    players=players, puzzles=choice_puzzles, choice_filter=choice_filter,
+    csrf_enabled=False)   
   
      
   
@@ -71,6 +91,7 @@ def puzzle():
     print("> Submit ADD - errors", add_puzzle_form.errors)
  
   
+  
   # CHANGE PUZZLE 
 
   if change_puzzle_form.validate_on_submit():
@@ -84,17 +105,39 @@ def puzzle():
     print("> Submit CHANGE - errors:", change_puzzle_form.errors)
 
  
-  # LOGS
+ 
+  # NEW PUZZLE LOG
   
   if puzzle_record_form.validate_on_submit():
     submit_puzzle_record(id=group_id, form=puzzle_record_form)
     print("> puzzle LOG submitted")
-    
-    info = f"{ puzzle_record_form.player.data }'s Log was saved."
+    info = f"{ puzzle_record_form.player.data }'s log was saved."
     return redirect(f"/puzzle")
   
   else:
     print("> Submit LOG - errors: ", puzzle_record_form.errors)
+    
+    
+    
+  # DELETE PUZZLE LOG
+  
+  if puzzle_record_delete_form.validate_on_submit():
+    delete_puzzle_log(id=group_id, form=puzzle_record_delete_form, logs=logs)
+    print("> puzzle LOG DELETE submitted")
+    info = f"{ puzzle_record_delete_form.logs.data }'s log was deleted."
+    return redirect(f"/puzzle#puzzleLogs")
+  
+  else:
+    print("> Submit LOG DELETE - errors: ", puzzle_record_delete_form.errors)
+  
+  
+  # FILTER PUZZLE LOGS
+  if puzzle_log_filter_form.validate_on_submit():
+    print("\n> puzzle LOG FILTER submitted\n")
+    return redirect(f"/puzzle#puzzleLogs")
+  
+  else:
+    print("> Submit LOG FILTER - errors: ", puzzle_log_filter_form.errors)
     
     
   static = 'puzzle.html'  
@@ -103,11 +146,22 @@ def puzzle():
     add_puzzle_form=add_puzzle_form, 
     change_puzzle_form=change_puzzle_form,
     puzzle_record_form=puzzle_record_form,
+    puzzle_record_delete_form=puzzle_record_delete_form,
+    puzzle_log_filter_form=puzzle_log_filter_form,
     puzzles=puzzles, colors=player_colors,
     logs=logs, info=info)
 
 
 
+
+
+
+
+
+
+###############################################
+#               PUZZLE STATS
+###############################################
 
 @app.route("/stats/puzzle", methods=["GET", "POST"])
 def stats_puzzle():
@@ -132,9 +186,9 @@ def stats_puzzle():
   logs = gen_puzzle_logs(group_id)   
   charts = gen_puzzle_charts(logs, puzzles, chart_colors)
   
-  print('\n LABELS:\n', charts[0])
+  #print('\n LABELS:\n', charts[0])
   #print('\n EXTRA:\n', charts[1])
-  print('\n DATA:\n', *charts[2], sep='\n')
+  #print('\n DATA:\n', *charts[2], sep='\n')
      
     
   static = 'stats_puzzle.html'  

@@ -39,7 +39,7 @@ function logs_chart(
             scales: {
                 y: {
                     beginAtZero: true,
-                    border: {color: 'white',},
+                    border: {color: 'white', width: 1,},
                     title: {
                         display: true,
                         text: 'Number of finished puzzles (logs)',},
@@ -50,7 +50,8 @@ function logs_chart(
                     title: {
                         display: true,
                         text: 'Pieces per puzzle',},
-                    ticks: {color: 'white',},},
+                    ticks: {color: 'white',},
+                    grid: {color: 'black', lineWidth: 2},},
             },
 
             plugins: {
@@ -121,8 +122,7 @@ function player_speed_chart(
                 y: {
                     stacked: false,
                     beginAtZero: true,
-                    border: {color: 'white',},
-                    
+                    border: {color: 'white', width: 1,},                    
                     title: {
                         display: true,
                         text: 'Pieces per Minute',},
@@ -134,7 +134,8 @@ function player_speed_chart(
                     title: {
                         display: true,
                         text: 'Pieces per puzzle',},
-                    ticks: {color: 'white',},},},
+                    ticks: {color: 'white',},
+                    grid: {color: 'black', lineWidth: 2},},},
 
             plugins: {
                 legend: { display: false,},
@@ -145,7 +146,7 @@ function player_speed_chart(
                         
                 title: {
                     display: true,
-                    text: 'Player speed - in average & fastest:',},},
+                    text: 'Player speed - on average & fastest:',},},
     },},);
     
 
@@ -202,7 +203,7 @@ function puzzle_speed_chart(
                 y: {
                     stacked: false,
                     beginAtZero: true,
-                    border: {color: 'white',},
+                    border: {color: 'white', width: 1,},
                     
                     title: {
                         display: true,
@@ -215,7 +216,8 @@ function puzzle_speed_chart(
                     title: {
                         display: true,
                         text: 'Pieces per puzzle',},
-                    ticks: {color: 'white',},},},
+                    ticks: {color: 'white'},
+                    grid: {color: 'black', lineWidth: 2},},},
 
             plugins: {
                 

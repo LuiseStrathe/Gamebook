@@ -9,6 +9,7 @@
 
 {# CSS & JS #}
 <link rel="stylesheet" href="../static/styles_stats.css">
+<link rel="stylesheet" href="../static/styles_games.css">
 <script src='../static/puzzle_stats.js'></script> 
 
 
@@ -52,7 +53,7 @@
 
     {% set width_charts = 400 + (charts[0][0]|length * charts[0][1]|length * 40) %}
 
-    <p style='color: var(--t-white);'>Total number of logs:<br>
+    <p style='color: var(--t-white);'>
       {% for p in range(charts[0][1]|length) %}
         <span style='color: {{ charts[0][2][p][0] }}; font-weight: bold;'>
           {{ charts[0][1][p] }}: {{ charts[1][0][p] }}
@@ -78,7 +79,8 @@
     <h3><span style='color: white; text-decoration: underline;'>
       <br> Player Speed</span></h3>
 
-    <p style='color: var(--t-white);'>Overall average speed (pieces per min):<br>
+    <p style='color: var(--t-white);'>
+      Minutes per piece<br>([min-max] range of average speeds for all puzzle sizes):<br>
       {% for p in range(charts[0][1]|length) %}
         <span style='color: {{ charts[0][2][p][0] }}; font-weight: bold;'>
           {{ charts[0][1][p] }}: {{ charts[1][1][p] }}
@@ -103,7 +105,8 @@
     <h3><span style='color: white; text-decoration: underline;'>
       <br> Compare Puzzles</span></h3>
 
-    <p style='color: var(--t-white);'>Overall average speed (pieces per min):<br>
+    <p style='color: var(--t-white);'>
+      Minutes per piece:<br>
       {% for p in range(charts[0][3]|length) %}
         <span style='color: {{ charts[0][4][p][0] }}; font-weight: bold;'>
           {{ charts[0][3][p] }}: {{ charts[1][2][p] }}
@@ -129,32 +132,41 @@
 
 
   {# Logs List #}
+  {# 0:game_id, 1:date, 2:winner, 3: player color #}
+  {# 4:puzzle title, 5:pcs, 6:time, 7:comment #}
 
   <section class='midDiv'>  
     <h2><span style='background-color: white; color: var(--c-blue-dark);'>
       All puzzles finished</span></h2>
     <a href='/puzzle' style='padding-bottom: 30px; display: block;'>
       &#10149; add more puzzles or logs here</a>
-    
-  {# 0:date, 1:winner, 2:puzzle, 3:pcs, 4:time, 5:comment #}
-    <div id='logs'>
-      {% for i in range(n) %} 
-        <div class='log'>
 
-          <div class='logDesc' style='min-width: 70px !important;'><p>
-            <span  class='logBold'>{{ n - i }} </span>
-            <br>{{ logs[i][0] }}</p></div>
-          <div><p><span  class='logBold'>{{ logs[i][4] }} # </span>
-            <br>{{ puzzles['title'].iloc[logs[i][3] - 1] }}</p></div>        
-          <div style='background-color: {{ logs[i][2] }}c9;'><p>
-            <span  class='logBold'>{{ logs[i][1] }} </span>
-            <br><b>{{ logs[i][5] }}</b> h:m:s</p></div>
-          <div style='flex-grow: 1;'>
-            <p class='logDesc'>{{ logs[i][6] }}</p></div>
-    
-        </div>
-      {% endfor %}
+    <div id='puzzleLogList' style='background-color: var(--b-dark-tr);'>
+      <table>                
+        <thead>
+            <tr>
+                <th>&#128467;</th>
+                <th>&#129513;</th>
+                <th>&#128572;</th>
+                <th>&#128393;</th>
+            </tr>
+        </thead>
+
+        {% for i in range(n) %} 
+          <tr>
+            <td>{{ n - i }} <br>
+              <b>{{ logs[i][1] }}</b> </td>
+            <td style='color: {{ logs[i][3] }};'>
+              {{ puzzles['title'].iloc[logs[i][4] - 1] }}<br>
+              <b> {{ logs[i][5] }}</b> </td>
+            <td style='color: {{ logs[i][3] }}'> {{ logs[i][2] }} <br>
+              <b>{{ logs[i][6] }}</b> </td>
+            <td style='color: var(--c-grey)'> {{ logs[i][7] }} </td>
+          </tr>
+        {% endfor %}
+      </table>
     </div>
+
   </section>
 
 

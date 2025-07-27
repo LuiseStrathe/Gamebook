@@ -18,15 +18,8 @@
         src='../static/media/modes/puzzle_icon.png'>
         Puzzles</h1> 
 
-    <div>
-        <a class="pageLink"
-            href="/">Home</a>
-        <a class="pageLink"
-            href="#puzzleLogs">View Logs</a>
-        <a class="pageLink"
-            href="/stats/puzzle">View Stats</a>
-    </div>
-
+    <a class='mainLink' href="/stats/puzzle">&#10149; View Stats</a><br>
+    <a class='mainLink' href="#puzzleLogs">&#9207; Your Logs &#9207;</a>
     <p> &#x2460; Add your puzzles to the library. <br>
         &#x2461; Once you finished a puzzle, add a log with your time.</p>
 </div>
@@ -75,11 +68,13 @@
         
         <div id='puzzleChange'>
 
-            <button class='pageLink puzzleBtn' onclick='puzzle_add()'>
-                + add puzzle </button>
+            <button class='pageLink puzzleBtn' onclick='puzzle_add()'
+                style='background-color: var(--s-green);'>
+                + Add Puzzle </button>
             {% if puzzles.shape[0] > 0 %}
-                <button class='pageLink puzzleBtn' onclick='puzzle_change()'>
-                    change puzzle</button>
+                <button class='pageLink puzzleBtn' onclick='puzzle_change()'
+                style='background-color: var(--s-red);'>
+                    &#916; Change Puzzle</button>
             {% endif %}
 
             <div id='puzzleAddForm' class='popUp'>
@@ -151,16 +146,55 @@
 
     <h2 id="puzzleLogs"><span style="background-color: white; color: black;">
         Puzzle Logs</span></h2>
+
     {% if puzzles.shape[0] > 0 %}
-        <button class='pageLink puzzleBtn' onclick='puzzle_log()'>
-            + add puzzle log </button>
+        <div>
+            <button class='pageLink puzzleBtn' onclick='puzzle_log()'
+                style='background-color: var(--s-green);'>
+                + Add Log </button>
+
+            <button class='pageLink puzzleBtn' onclick='puzzle_log_delete()'
+                style='background-color: var(--s-red);'>
+                - Remove Log </button>
+        </div>
     {% endif %}
 
 
-    <p style="text-align: center; color: white;">Here are the puzzles, which 
+
+    <p style="text-align: center; color: white;">
+        Here are the puzzles, which 
         <span style='text-transform: uppercase;'><b>{{ page[2] }}</b></span> 
         has finished & logged:</p>
 
+    <button class='pageLink puzzleBtn' onclick='puzzle_log_filter()'>
+        🔍 Filter</button>
+    
+    <button class='pageLink puzzleBtn' href="/puzzle#puzzleLogs">
+        <span style='color: var(--s-red); font-weight: bold;'>X</span> 
+        Reset Filter</button>
+
+    <div id='puzzleLogFilter' class='popUp'>
+            <div class='popUpContent'>
+                        <div class='popHead'>
+                <p>Filter Puzzle Logs</p>
+                <button onclick='puzzle_log_filter()'>
+                    X </button>
+            </div> 
+
+            <form action="" method="POST">
+                {{ puzzle_log_filter_form.hidden_tag() }}
+
+                <p>&#128572; {{ puzzle_log_filter_form.player() }}</p>
+                <p>🏜️ {{ puzzle_log_filter_form.sizes() }}</p>
+                <p>&#129513; {{ puzzle_log_filter_form.puzzle() }}</p>
+                <p>&#128467; {{ puzzle_log_filter_form.date() }}</p>
+
+                <div  class='pageLink submitBtn' >
+                    {{ puzzle_log_filter_form.apply_puzzle_log_filter() }}</div>   
+
+            </form>
+        </div>
+    </div>
 
     <div id='puzzleLogForm' class='popUp'>
         <div class='popUpContent'>
@@ -195,6 +229,28 @@
         </div>    
     </div>
 
+    <div id='puzzleLogDeleteForm' class='popUp'>
+        <div class='popUpContent'>
+            <div class='popHead'>
+                <p>Delete a puzzle log</p>
+                <button onclick='puzzle_log_delete()'>
+                    X </button>
+            </div> 
+
+            <form action="" method="POST">
+                {{ puzzle_record_delete_form.hidden_tag() }}
+
+                <p>Select log to delete:</p>
+                <p>{{ puzzle_record_delete_form.logs() }}</p>
+
+                <div  class='pageLink submitBtn'>
+                    {{ puzzle_record_delete_form.submit_puzzle_log_delete() }}</div>
+            </form>
+        </div>
+    </div>
+
+
+
     {% set n = logs|length %}
     {% if (n == 0) %}
         <p style='color: var(--t-white);'>&#x1F641; No logs yet.</p>
@@ -204,29 +260,29 @@
             <table>                
                 <thead>
                     <tr>
-                        <th>When</th>
-                        <th>Puzzle</th>
-                        <th>Player</th>
-                        <th>Comment</th>
+                        <th>&#128467;</th>
+                        <th>&#129513;</th>
+                        <th>&#128572;</th>
+                        <th>&#128393;</th>
                     </tr>
                 </thead>
 
 
                 {% for i in range(n) %}
 
-                    {% set player = logs[i][1] %}
+                    {% set player = logs[i][2] %}
                     {% set color = colors[player] %}
-                    {% set puzzle_num = logs[i][3]|int - 1 %}
+                    {% set puzzle_num = logs[i][4]|int - 1 %}
 
                     <tr style="border-left: 5px solid {{ color }}c9;">
                         <td style="color: var(--c-grey)"> {{ n - i }} <br>
-                            <b>{{ logs[i][0] }}<b> </td>
+                            <b>{{ logs[i][1] }}<b> </td>
                         <td style="color: {{color}}">
                             {{ puzzles.iloc[puzzle_num].title }}<br>
-                            <b> {{ logs[i][4] }}</b> </td>
+                            <b> {{ logs[i][5] }}</b> </td>
                         <td style="color: {{color}}"> {{ player }} <br>
-                            <b>{{ logs[i][5] }}</b> </td>
-                        <td style="color: var(--c-grey)"> {{ logs[i][6] }} </td>
+                            <b>{{ logs[i][6] }}</b> </td>
+                        <td style="color: var(--c-grey)"> {{ logs[i][7] }} </td>
                     </tr>
                 {% endfor %}
             </table>

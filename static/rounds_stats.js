@@ -68,7 +68,7 @@ function updateWinners(players, colors, chart_data) {
     winner_board.data.labels = players;
 
     for (var i = 0; i < n; i++) {
-        winner_board.data.datasets[i].label = ['won', 'lost'][i];
+        winner_board.data.datasets[i].label = ['won', 'not won'][i];
         winner_board.data.datasets[i].data = chart_data[i];
         winner_board.data.datasets[i].backgroundColor = colors[i];
         winner_board.data.datasets[i].borderColor = colors[0];

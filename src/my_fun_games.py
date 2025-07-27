@@ -622,7 +622,7 @@ def add_puzzle(group_id, add_puzzle_form):
         
         record = {
             'id': n,
-            'title': add_puzzle_form.title.data, 
+            'title': add_puzzle_form.title.data.capitalize(), 
             'pcs': add_puzzle_form.pcs.data, 
             'description': add_puzzle_form.description.data}
 
@@ -664,8 +664,36 @@ def submit_puzzle_record(id, form):
     # save in all results
     results = pd.read_csv(f'{path_data}modes/results.csv')
     results = pd.concat([results, pd.DataFrame([result])])
-    results.to_csv(f'{path_data}modes/results.csv', index=False)    
+    results.to_csv(f'{path_data}modes/results.csv', index=False)  
     
+    pass  
+
+
+def delete_puzzle_log(id, form, logs):
+    
+    group = load_group(id)[0]
+    displayed_id = int(form.logs.data[1:-20].split(')')[0])
+    logs_id = len(logs) - displayed_id
+    game_id = logs[logs_id][0]
+    
+    print('\nlogs_data in row: ', form.logs.data)
+    print('deletion displayed_id: ', displayed_id, '\n')
+    print('will delete item ', logs_id, ' from logs')
+    print('logs item is: ', logs[logs_id])
+    print('resulting game_id: ', logs[logs_id][0], '\n')
+    
+    
+    # delete from group
+    group.results = group.results[group.results['game_id'] != game_id]
+    group.update_group()
+    
+    # delete from all results
+    results = pd.read_csv(f'{path_data}modes/results.csv')
+    results = results[results['game_id'] != game_id]
+    results.to_csv(f'{path_data}modes/results.csv', index=False)
+    
+    pass    
+ 
  
     
 def change_puzzle(id, form):
@@ -701,7 +729,7 @@ def change_puzzle(id, form):
 
 
 
-def gen_puzzle_logs(id):
+def gen_puzzle_logs(id, sort_by='date'):
     
     group = load_group(id)[0]
     logs = []
@@ -710,8 +738,10 @@ def gen_puzzle_logs(id):
     for i in range(len(results)):
         result = results.iloc[i]
         
-        # 0:date, 1:winner, 2: color, 3:puzzle, 4:pcs, 5:time, 6:comment
-        log = [result.time_stamp.strftime("%d/%m/%y"), 
+        # 0:game_id, 1:date, 2:winner, 3:player color, 
+        # 4:puzzle title, 5:pcs, 6:time, 7:comment
+        log = [ result.game_id,
+                result.time_stamp.strftime("%d/%m/%y"), 
                 group.players[result.winner_id],  
                 group.colors[result.winner_id],   
                 result.title, 
@@ -724,18 +754,21 @@ def gen_puzzle_logs(id):
 
 
 
+
+
+
 # STATS page
 
 def gen_puzzle_charts(logs, puzzle_names, chart_colors): 
       
     # clean logs
-    logs = [l for l in logs if l[5] != '0:00:00']
+    logs = [l for l in logs if l[6] != '0:00:00']
   
     
     # LABELS 
-    categories = sorted(list(set([l[4] for l in logs])), reverse=False)
-    players = list(set([l[1] for l in logs]))
-    puzzles = sorted(list(set([l[3] for l in logs])))
+    categories = sorted(list(set([l[5] for l in logs])), reverse=False)
+    players = list(set([l[2] for l in logs]))
+    puzzles = sorted(list(set([l[4] for l in logs])))
 
     
     # DATA
@@ -748,21 +781,22 @@ def gen_puzzle_charts(logs, puzzle_names, chart_colors):
     # player data
     for p in range(len(players)):
         playr = players[p]
-        log_p = [l for l in logs if l[1] == playr]
+        log_p = [l for l in logs if l[2] == playr]
         
-        times = [l[5].split(':') for l in log_p]
+        times = [l[6].split(':') for l in log_p]
         times = [int(s) / 60 + int(m) + 60 * int(h) for h, m, s in times]
-        pieces = np.sum([l[4] for l in log_p])
-        avg = np.sum(times) / pieces
-        avg_player.append(round(avg, 2))
-            
+        
+        
+        #pieces = np.sum([l[5] for l in log_p])
+        #avg_player_min = round(np.sum(times) / pieces, 2) 
+        
+                    
         for c in range(len(categories)):
             cat = categories[c]
-            log = [l for l in log_p if l[4] == cat]
-            
+            log = [l for l in log_p if l[5] == cat]
             logged[p, c] = len(log)
             
-            times = [l[5].split(':') for l in log]
+            times = [l[6].split(':') for l in log]
             times = [int(s) / 60 + int(m) + 60 * int(h) for h, m, s in times]
 
             if len(times) > 0:
@@ -770,6 +804,15 @@ def gen_puzzle_charts(logs, puzzle_names, chart_colors):
                 top = cat / np.min(times)
                 times_player[p, 0, c] = round(avg, 1)
                 times_player[p, 1, c] = round(top, 1)
+        
+        avg_player_all = [t for t in times_player[p, 0] if t > 0]
+        avg_player_min = round(np.reciprocal(np.max(avg_player_all)), 2)
+        avg_player_max = round(np.reciprocal(np.min(avg_player_all)), 2)
+        
+        if avg_player_min == avg_player_max and avg_player_max < 1000:
+            avg_player.append(f'{avg_player_min}')
+        else:
+            avg_player.append(f'{avg_player_min} - {avg_player_max}')
         
         logged[c] = logged[c].tolist()
         
@@ -780,19 +823,19 @@ def gen_puzzle_charts(logs, puzzle_names, chart_colors):
     
     for z in range(len(puzzles)):
         puz = puzzles[z]
-        log_z = [l for l in logs if l[3] == puz]
+        log_z = [l for l in logs if l[4] == puz]
         
-        times = [l[5].split(':') for l in log_z]
+        times = [l[6].split(':') for l in log_z]
         times = [int(s) / 60 + int(m) + 60 * int(h) for h, m, s in times]
-        pieces = np.sum([l[4] for l in log_z])
+        pieces = np.sum([l[5] for l in log_z])
         avg = np.sum(times) / pieces
         avg_puzzle.append(round(avg, 2))
         
         for c in range(len(categories)):
             cat = categories[c]
-            log = [l for l in log_z if l[4] == cat]
+            log = [l for l in log_z if l[5] == cat]
             
-            times = [l[5].split(':') for l in log]
+            times = [l[6].split(':') for l in log]
             times = [int(s) / 60 + int(m) + 60 * int(h) for h, m, s in times]
             
             if len(times) > 0:
@@ -824,8 +867,8 @@ def gen_puzzle_charts(logs, puzzle_names, chart_colors):
         
         color, i = "", 0
         while color == '' and i < len(logs):
-            if logs[i][1] == p:
-                color = logs[i][2]
+            if logs[i][2] == p:
+                color = logs[i][3]
             i += 1
         colors.append([color, color + '30'])
     

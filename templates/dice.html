@@ -11,23 +11,25 @@
 <style type="text/css">body {background-image: var(--bg-play) !important;}</style>
 <script src='../static/play_charts.js'></script> 
 
+{% set players = game_info[3] %}
+{% set colors = game_info[4] %}
+{% set table_width = 160 + 90 * players|length %}
+{% set status = game_info[0] %}
+{% set winners = game_info[6] %}
 
 <div id='gameHead'>   
     <h1><img height='30px' class='inlineImg'
         src='../static/media/modes/dice_icon.png'>
         Dice</h1> 
 
-    <div>
-        {% if status == 'play' %}
-            <a class="pageLink" 
-            href="/">Stop Game</a>
-        {% else %}
-            <a class="pageLink"
-                href="/">&#10149; Play Again</a>
-            <a class="pageLink"
-                href="/stats/dice">&#10149; To Statistics</a>
-        {% endif %}
-    </div>
+    {% if status == 'play' %}
+        <a class="pageLink" 
+        href="/"><span style="color: red; font-weight: bold;">X</span> Stop Game</a>
+    {% else %}
+        <a class="pageLink"
+            href="/"><span style="color: red; font-weight: bold;">X</span> Exit Game</a>
+    {% endif %}
+
 </div>
 
 
@@ -38,12 +40,6 @@
             X </button>
     </div>
 {% endif %}
-
-{% set players = game_info[3] %}
-{% set colors = game_info[4] %}
-{% set table_width = 160 + 90 * players|length %}
-{% set status = game_info[0] %}
-{% set winners = game_info[6] %}
 
 
 <div class='FullDiv' style="background-color: var(--b-dark-tr);">

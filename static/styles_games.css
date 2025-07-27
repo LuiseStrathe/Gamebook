@@ -67,8 +67,7 @@
         align-items: center;}
 
     div a {
-        color: var(--t-white);
-        border: 1px solid var(--t-white);}
+        color: var(--t-white);}
 
     div a:hover {
         color: var(--s-hover);}
@@ -295,25 +294,24 @@
 }
 
 .puzzleBtn {
-    display: inline-block;
-    text-align: center;
-    background-color: var(--b-dark) !important;
-    color: var(--s-hover) !important;
-    border: 1px solid var(--s-hover);
-    margin: 15px;
+   border-color: var(--t-white) !important;
 }
 
 #puzzleLogList {
-    max-height: 800px;
+    max-height: 600px;
     overflow: auto;
-    background-color: var(--b-black-tr);
     color: var(--t-white);
     border-radius: 5px;
 }
 
+
+#puzzleLogFilter {
+
+}
+
 @media screen and (max-width: 800px) {
     #puzzleLib, #puzzleLogList, #puzzleLogs {
-        padding: 20px 0;
+        padding: 20px;
         border-radius: 0;}
 
     #puzzleLogList table {

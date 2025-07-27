@@ -83,7 +83,7 @@
                         <div 
                             style="display: block; align-content: center; 
                             justify-content:center;">
-                                Choose color
+                                Select to change
                         </div>
                     </div>
 
@@ -133,7 +133,7 @@
                     <div class="settingsPlayerDiv">
 
                         <div class="settingsPlayerMain">
-                            <h3>+ Player</h3>
+                            <h3>+ Player &#9205;</h3>
                         </div>
 
 
@@ -150,15 +150,7 @@
 
                 <hr>
 
-                {# Info #}
-                <p style="font-size: 1.5rem;">&#x1F6C8;</p>
-                <p>You can have a maximum of 10 players in your group.
-                    <b>Players can not be removed </b>once they are added
-                    to your group.
-                    Names and assigned colors can be edited here anytime, 
-                    no data will be lost by that.</p>
-                <p>To change settings for a player: hit the player-checkbox 
-                    and click "Safe Changes" below.</p>
+                {# Color Scheme #}
 
                 <div> 
                     {% for j in range(colors|length) %}
@@ -172,6 +164,20 @@
                 </div>
 
             </section>
+
+
+            {# info #}
+            <div class="midDiv" 
+                style="background-color: var(--b-white-tr); padding: 15px;">
+                <p>You can have a maximum of 10 players in your group.</br> 
+                    <b>Players can not be removed </b>once they are added
+                    to your group.</br>
+                    Names and assigned colors can be edited here anytime, 
+                    no data will be lost by that.</p>
+                <p>&#9207; To change settings for a player: hit the player-checkbox 
+                    and click "Safe Changes" below. &#9207;</p>
+            </div>
+
 
             {# Change settings popUp #}
             <div id="settingsID" class="popUp settingsContent">

@@ -5,7 +5,7 @@ from wtforms import StringField, TextAreaField, SubmitField, \
   BooleanField, RadioField, IntegerField, SelectMultipleField, \
   SelectField, PasswordField
 from wtforms.validators import DataRequired, Length, Email, \
-  EqualTo, ValidationError, Optional
+  EqualTo, ValidationError, Optional, NumberRange
 
 from Gamebook.src.my_params import player_colors, dice_rows
 
@@ -210,9 +210,12 @@ class PuzzleRecordForm(FlaskForm):
     choices=[], validators=[DataRequired()])
   puzzle = SelectField("Puzzle ID",
     choices=[], validators=[DataRequired()])
-  hours = IntegerField("Hours", default=0)
-  minutes = IntegerField("Minutes", default=0, validators=[DataRequired()])
-  seconds = IntegerField("Seconds", default=0)
+  hours = IntegerField("Hours", default=0, 
+                validators=[NumberRange(min=0, max=1000)])
+  minutes = IntegerField("Minutes", default=1, 
+                validators=[DataRequired(), NumberRange(min=0, max=59)])
+  seconds = IntegerField("Seconds", default=0, 
+                validators=[NumberRange(min=0, max=59)])
   comment = StringField("Comment (optional)")
   submit_puzzle_log = SubmitField("Save")
   
@@ -222,5 +225,30 @@ class PuzzleRecordForm(FlaskForm):
     self.player.choices = players
 
 
+class PuzzleRecordDeleteForm(FlaskForm):
+  logs = SelectField("Logs", 
+    choices=[], validators=[DataRequired()])
+  submit_puzzle_log_delete = SubmitField("Delete")
+  
+  def __init__(self, log_choices, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+    self.logs.choices = log_choices
+    
 
-
+class PuzzleLogFilterForm(FlaskForm):
+  player = SelectField("Player", 
+    choices=[], validators=[Optional()])
+  sizes = SelectField("Sizes", 
+    choices=[], validators=[Optional()])
+  puzzle = SelectField("Puzzle", 
+    choices=[], validators=[Optional()])
+  date = SelectField("Date",
+    choices=[], validators=[Optional()])
+  apply_puzzle_log_filter = SubmitField("Filter")
+  
+  def __init__(self, choice_filter, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+    self.player.choices = ['All Players'] + choice_filter[0]
+    self.sizes.choices = ['All Sizes'] + choice_filter[1]
+    self.puzzle.choices = ['All Puzzles'] + choice_filter[2]
+    self.date.choices = ['All Times'] + choice_filter[3]

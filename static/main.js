@@ -146,6 +146,14 @@ function puzzle_log() {
   document.getElementById("puzzleLogForm").classList.toggle("gameShow");
 }
 
+function puzzle_log_delete() {
+  document.getElementById("puzzleLogDeleteForm").classList.toggle("gameShow");
+}
+
+function puzzle_log_filter() {
+  document.getElementById("puzzleLogFilter").classList.toggle("gameShow");
+}
+
 
 // Rounds & Dice
 
