@@ -238,7 +238,7 @@ class PuzzleRecordDeleteForm(FlaskForm):
 class PuzzleLogFilterForm(FlaskForm):
   player = SelectField("Player", 
     choices=[], validators=[Optional()])
-  sizes = SelectField("Sizes", 
+  size = SelectField("Size", 
     choices=[], validators=[Optional()])
   puzzle = SelectField("Puzzle", 
     choices=[], validators=[Optional()])
@@ -249,6 +249,6 @@ class PuzzleLogFilterForm(FlaskForm):
   def __init__(self, choice_filter, *args, **kwargs):
     super().__init__(*args, **kwargs)
     self.player.choices = ['All Players'] + choice_filter[0]
-    self.sizes.choices = ['All Sizes'] + choice_filter[1]
+    self.size.choices = ['All Sizes'] + choice_filter[1]
     self.puzzle.choices = ['All Puzzles'] + choice_filter[2]
     self.date.choices = ['All Times'] + choice_filter[3]

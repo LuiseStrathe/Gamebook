@@ -141,60 +141,28 @@
 
 
 
+{# Logs #}
 
 <section id="puzzleLogs" class="gameSection">
 
     <h2 id="puzzleLogs"><span style="background-color: white; color: black;">
         Puzzle Logs</span></h2>
 
+
+    {# Log Admin #}
+    
     {% if puzzles.shape[0] > 0 %}
         <div>
             <button class='pageLink puzzleBtn' onclick='puzzle_log()'
                 style='background-color: var(--s-green);'>
                 + Add Log </button>
-
-            <button class='pageLink puzzleBtn' onclick='puzzle_log_delete()'
+            {% if logs|length > 0 %}
+                <button class='pageLink puzzleBtn' onclick='puzzle_log_delete()'
                 style='background-color: var(--s-red);'>
                 - Remove Log </button>
+            {% endif %}
         </div>
     {% endif %}
-
-
-
-    <p style="text-align: center; color: white;">
-        Here are the puzzles, which 
-        <span style='text-transform: uppercase;'><b>{{ page[2] }}</b></span> 
-        has finished & logged:</p>
-
-    <button class='pageLink puzzleBtn' onclick='puzzle_log_filter()'>
-        🔍 Filter</button>
-    
-    <button class='pageLink puzzleBtn' href="/puzzle#puzzleLogs">
-        <span style='color: var(--s-red); font-weight: bold;'>X</span> 
-        Reset Filter</button>
-
-    <div id='puzzleLogFilter' class='popUp'>
-            <div class='popUpContent'>
-                        <div class='popHead'>
-                <p>Filter Puzzle Logs</p>
-                <button onclick='puzzle_log_filter()'>
-                    X </button>
-            </div> 
-
-            <form action="" method="POST">
-                {{ puzzle_log_filter_form.hidden_tag() }}
-
-                <p>&#128572; {{ puzzle_log_filter_form.player() }}</p>
-                <p>🏜️ {{ puzzle_log_filter_form.sizes() }}</p>
-                <p>&#129513; {{ puzzle_log_filter_form.puzzle() }}</p>
-                <p>&#128467; {{ puzzle_log_filter_form.date() }}</p>
-
-                <div  class='pageLink submitBtn' >
-                    {{ puzzle_log_filter_form.apply_puzzle_log_filter() }}</div>   
-
-            </form>
-        </div>
-    </div>
 
     <div id='puzzleLogForm' class='popUp'>
         <div class='popUpContent'>
@@ -250,43 +218,117 @@
     </div>
 
 
-
-    {% set n = logs|length %}
     {% if (n == 0) %}
         <p style='color: var(--t-white);'>&#x1F641; No logs yet.</p>
 
-    {% else %}
-        <div id="puzzleLogList">
-            <table>                
-                <thead>
-                    <tr>
-                        <th>&#128467;</th>
-                        <th>&#129513;</th>
-                        <th>&#128572;</th>
-                        <th>&#128393;</th>
-                    </tr>
-                </thead>
 
+    {% else %}    
 
-                {% for i in range(n) %}
+        {# Log Filter #}
+        
+        <div id='filterDiv'>
 
-                    {% set player = logs[i][2] %}
-                    {% set color = colors[player] %}
-                    {% set puzzle_num = logs[i][4]|int - 1 %}
+            {% if filter != "all" %}
 
-                    <tr style="border-left: 5px solid {{ color }}c9;">
-                        <td style="color: var(--c-grey)"> {{ n - i }} <br>
-                            <b>{{ logs[i][1] }}<b> </td>
-                        <td style="color: {{color}}">
-                            {{ puzzles.iloc[puzzle_num].title }}<br>
-                            <b> {{ logs[i][5] }}</b> </td>
-                        <td style="color: {{color}}"> {{ player }} <br>
-                            <b>{{ logs[i][6] }}</b> </td>
-                        <td style="color: var(--c-grey)"> {{ logs[i][7] }} </td>
-                    </tr>
-                {% endfor %}
-            </table>
+                {% if filter[3] != "" %}
+                    <p>🗓 {{ filter[3] }}</p>
+                {% endif %}
+                {% if filter[1] != "" %}
+                    <p>🏜️ {{ filter[1] }}</p>
+                {% endif %}
+                {% if filter[2] != "" %}
+                    <p>🧩 {{ filter[2] }}</p>
+                {% endif %}
+                {% if filter[0] != "" %}
+                    <p style='border-color: {{ filter[0][1] }}c9;'> 
+                    😼  {{ filter[0][0] }}</p>
+                {% endif %}
+                
+                <a class='pageLink puzzleBtn' href="/puzzle#puzzleLogs">
+                    <span style='color: var(--s-red); font-weight: bold;'>X</span> 
+                    Reset</a>
+
+            {% elif filter == 'all' %}     
+                <p style="text-align: center; color: white; height: auto; border: none;">
+                    Here are all the puzzle times, which 
+                    <span style='text-transform: uppercase;'><b>{{ page[2] }}</b></span> 
+                    has finished & logged:
+                </p>
+            {% else %}
+                <p style="text-align: center; color: white; height: auto; border: none;">
+                    No results for this filter 👀</p>
+            
+            {% endif %}
+
+            <button class='pageLink puzzleBtn' onclick='puzzle_log_filter()'>
+                🔍 Filter</button>
+
         </div>
+
+
+        <div id='puzzleLogFilter' class='popUp'>
+            <div class='popUpContent'>
+                <div class='popHead'>
+                    <p>Filter Puzzle Logs</p>
+                    <button onclick='puzzle_log_filter()'>
+                        X </button>
+                </div> 
+
+                <form action="" method="POST">
+                    {{ puzzle_log_filter_form.hidden_tag() }}
+
+                    <p>&#128572; {{ puzzle_log_filter_form.player() }}</p>
+                    <p>&#129513; {{ puzzle_log_filter_form.size() }}</p>
+                    <p>🏜️ {{ puzzle_log_filter_form.puzzle() }}</p>
+                    <p>&#128467; {{ puzzle_log_filter_form.date() }}</p>
+
+                    <div class='pageLink submitBtn' >
+                        {{ puzzle_log_filter_form.apply_puzzle_log_filter() }}</div>   
+
+                </form>
+            </div>
+        </div>
+
+
+        {# Log List #}
+
+        {% set m = logs|length %}
+        {% if m == 0 %}
+            <p style='color: var(--t-white);'>No logs found for this filter 👀</p>
+        
+        {% else %}
+            <div id="puzzleLogList">
+                <table>                
+                    <thead>
+                        <tr>
+                            <th>&#128467;</th>
+                            <th>&#129513;</th>
+                            <th>&#128572;</th>
+                            <th>&#128393;</th>
+                        </tr>
+                    </thead>
+
+                    {% for i in range(m) %}
+
+                        {% set player = logs[i][2] %}
+                        {% set color = colors[player] %}
+                        {% set puzzle_num = logs[i][4]|int - 1 %}
+
+                        <tr style="border-left: 5px solid {{ color }}c9;">
+                            <td style="color: var(--c-grey)"> {{ m - i }} <br>
+                                <b>{{ logs[i][1] }}<b> </td>
+                            <td style="color: {{color}}">
+                                {{ puzzles.iloc[puzzle_num].title }}<br>
+                                <b> {{ logs[i][5] }}</b> </td>
+                            <td style="color: {{color}}"> {{ player }} <br>
+                                <b>{{ logs[i][6] }}</b> </td>
+                            <td style="color: var(--c-grey)"> {{ logs[i][7] }} </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% endif %}
+
     {% endif %}
 </section>
 

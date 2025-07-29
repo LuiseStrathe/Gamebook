@@ -608,7 +608,7 @@ def end_dice(group, game_id, player_ids, game_data, winner_ids, comment):
 
 
 
-# PUZZLES page
+# Puzzle page
 
 def add_puzzle(group_id, add_puzzle_form):
     
@@ -669,6 +669,7 @@ def submit_puzzle_record(id, form):
     pass  
 
 
+
 def delete_puzzle_log(id, form, logs):
     
     group = load_group(id)[0]
@@ -694,7 +695,7 @@ def delete_puzzle_log(id, form, logs):
     
     pass    
  
- 
+
     
 def change_puzzle(id, form):
     
@@ -729,6 +730,26 @@ def change_puzzle(id, form):
 
 
 
+
+# Log List & Filter
+
+def puzzle_choice_filter_gen(logs, puzzles):
+    
+    choice_filter = \
+    [sorted(set([i[2] for i in logs])),
+     sorted(set([i[5] for i in logs])),
+     sorted(puzzles.title[puzzles.id == j][0] for j in set([i[4] for i in logs])),
+     sorted(set([i[1].partition('/')[2] for i in logs]))]
+    
+    choice_puzzles = \
+        [(f"{puzzles.id.iloc[i]}: \
+            {puzzles.title.iloc[i]} ({puzzles.pcs.iloc[i]} pcs)")
+            for i in range(len(puzzles))]
+    
+    
+    return choice_filter, choice_puzzles
+
+
 def gen_puzzle_logs(id, sort_by='date'):
     
     group = load_group(id)[0]
@@ -754,10 +775,58 @@ def gen_puzzle_logs(id, sort_by='date'):
 
 
 
+def puzzle_log_filter_data(log_filter_key, logs, player_colors, puzzles):
+    print('\nlog_filter_key: ', log_filter_key)
+    
+    if log_filter_key == 'all':
+        return 'all', logs
+    
+    else:
+        player, puzzle, size, date = log_filter_key.split('__')
+        
+        filter_data = [
+            [player, player_colors[player]] if player != '' else '', 
+            puzzle if puzzle != '' else '', 
+            size if size != '' else '', 
+            date if date != '' else '']
+        
+        filtered_logs = logs.copy()
+        
+        if player != '':
+            filtered_logs = [l for l in filtered_logs if l[2] == player]
+            
+        if puzzle != '':
+            puzzle_id = puzzles[puzzles.title == puzzle].id.values[0]
+            print('puzzle_id: ', puzzle_id, puzzle)
+            filtered_logs = [l for l in filtered_logs if l[4] == puzzle_id]
+            
+        if size != '':
+            filtered_logs = [l for l in filtered_logs if int(l[5]) == int(size)]
+            
+        if date != '':
+            filtered_logs = [l for l in filtered_logs \
+                if l[1][-5:].replace('/', '-') == date]
+        
+        return filter_data, filtered_logs
 
 
 
-# STATS page
+def puzzle_log_filter_key_gen(form):
+
+    player = form.player.data if form.player.data != 'All Players' else ''
+    puzzle = form.puzzle.data if form.puzzle.data != 'All Puzzles' else ''
+    size = form.size.data if form.size.data != 'All Sizes' else ''
+    date = form.date.data.replace('/', '-') if form.date.data != 'All Times' else ''
+
+    filter_string = f"{player}__{puzzle}__{size}__{date}"      
+    
+    return 'all' if filter_string == '______' else filter_string
+
+
+
+
+
+# Stats page
 
 def gen_puzzle_charts(logs, puzzle_names, chart_colors): 
       

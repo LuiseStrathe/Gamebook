@@ -31,6 +31,7 @@ page_titles = {
     "stats_rounds.html": "Stats",
     "stats_dice.html": "Stats",
     "stats_puzzle.html": "Stats",
+    "stats_puzzle_all.html": "Stats",
     "dice.html": "Dice",
     "puzzle.html": "Puzzles",
     "rounds.html": "Rounds",

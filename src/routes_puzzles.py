@@ -23,8 +23,13 @@ from datetime import datetime
 
 
 @app.route("/puzzle", methods=["GET", "POST"])
-def puzzle():  
-  
+def puzzle_redirect():
+  return redirect("/puzzle/all")
+
+
+@app.route("/puzzle/<string:log_filter_key>", methods=["GET", "POST"])
+def puzzle(log_filter_key):  
+
   
   # INIT
   
@@ -42,10 +47,6 @@ def puzzle():
   player_colors = {}
   for p in range(group.n):
     player_colors[players[p]] = group.colors[p]
-       
-  choice_puzzles = \
-    [(f"{puzzles.id.iloc[i]}: {puzzles.title.iloc[i]} ({puzzles.pcs.iloc[i]} pcs.)")
-    for i in range(len(puzzles))]
 
   choice_logs_delete = \
     [(f"({len(logs) - i}) {logs[i][2]}: \
@@ -53,11 +54,17 @@ def puzzle():
       in {logs[i][6]} ({logs[i][1]})")
       for i in range(len(logs))]
     
-  choice_filter = \
-    [sorted(set([i[2] for i in logs])),
-     sorted(set([i[5] for i in logs])),
-     sorted(puzzles.title[puzzles.id == j][0] for j in set([i[4] for i in logs])),
-     sorted(set([i[1].partition('/')[2] for i in logs]))]
+  choice_filter, choice_puzzles = puzzle_choice_filter_gen(logs, puzzles)
+    
+  filter_data, filtered_logs = puzzle_log_filter_data( \
+    log_filter_key, logs, player_colors, puzzles)
+  
+  if filter_data == 'wrong key':
+    return redirect("/puzzle/all#puzzleLogs")
+  
+  if len(filtered_logs) == 0:
+    info = "No logs found for this filter."
+  
   
   
   # FORMS
@@ -133,14 +140,21 @@ def puzzle():
   
   # FILTER PUZZLE LOGS
   if puzzle_log_filter_form.validate_on_submit():
-    print("\n> puzzle LOG FILTER submitted\n")
-    return redirect(f"/puzzle#puzzleLogs")
+    
+    new_filter_key = puzzle_log_filter_key_gen(puzzle_log_filter_form)
+    print(f"\n> puzzle LOG FILTER submitted: {new_filter_key}\n")
+    
+    if len(new_filter_key) < 7 or len(new_filter_key) > 60 \
+      or '__' not in new_filter_key:
+        return redirect(f"/puzzle/all#filterDiv")
+    else: 
+      return redirect(f"/puzzle/{new_filter_key}#filterDiv")
   
   else:
     print("> Submit LOG FILTER - errors: ", puzzle_log_filter_form.errors)
-    
-    
-  static = 'puzzle.html'  
+
+  static = 'puzzle.html'     
+
   return render_template(
     static, page=page_html(static, "IN"), 
     add_puzzle_form=add_puzzle_form, 
@@ -149,7 +163,8 @@ def puzzle():
     puzzle_record_delete_form=puzzle_record_delete_form,
     puzzle_log_filter_form=puzzle_log_filter_form,
     puzzles=puzzles, colors=player_colors,
-    logs=logs, info=info)
+    logs=filtered_logs, n=len(logs), filter=filter_data, 
+    info=info)
 
 
 
@@ -163,27 +178,63 @@ def puzzle():
 #               PUZZLE STATS
 ###############################################
 
-@app.route("/stats/puzzle", methods=["GET", "POST"])
-def stats_puzzle():
+
+@app.route("/stats/puzzle")
+def stats_redirect():
+  return redirect("/stats/puzzle_all")
+
+
+@app.route("/stats/puzzle_<string:log_filter_key>", methods=["GET", "POST"])
+def stats_puzzle_all(log_filter_key):
   
   if verify_session() == False and \
     check_key(session['username'], session['key']) == False:
       init_session()
       return redirect(url_for('login', retry=False))  
   
-  # init
+  
+  
+  # INIT
+  
   group_id = name_to_id(session['username'])
   group = load_group(group_id)[0]
   players = group.players
-  puzzles = pd.DataFrame(group.puzzles, columns=['id', 'title'])
+  puzzles = pd.DataFrame(group.puzzles)
+  player_colors = {}
+  for p in range(group.n):
+    player_colors[players[p]] = group.colors[p]
+  
+  
+  # LOGS & FILTERS
+  
+  logs = gen_puzzle_logs(group_id)
+  
+  filter_data, filtered_logs = puzzle_log_filter_data( \
+    log_filter_key, logs, player_colors, puzzles)
+  
+  choice_filter, choice_puzzles = puzzle_choice_filter_gen(logs, puzzles)
+  puzzle_log_filter_form = PuzzleLogFilterForm(
+    players=players, puzzles=choice_puzzles, choice_filter=choice_filter,
+    csrf_enabled=False)   
+  
+  if puzzle_log_filter_form.validate_on_submit():
+    
+    new_filter_key = puzzle_log_filter_key_gen(puzzle_log_filter_form)
+    print(f"\n> puzzle LOG FILTER submitted: {new_filter_key}\n")
+    
+    if len(new_filter_key) < 7 or len(new_filter_key) > 60 \
+      or '__' not in new_filter_key:
+        return redirect(f"/stats/puzzle_all#filterDiv")
+    else: 
+      return redirect(f"/stats/puzzle_{new_filter_key}#filterDiv")  
   
   
   # CHARTS
+  
   #   > LABELS =  [0:categories, 1:players (w/ puzzle), 2:colors, 3:puzzles, 4:colors puzzles]
   #   > EXTRA =   [0:#logs player, 1:avg speed player, 2:avg speed puzzle]
-  #   > DATA =    [0:#logged, 1:speed player, 2:speed puzzle]
+  #   > DATA =    [0:#logged, 1:speed player, 2:speed puzzle]  
   
-  logs = gen_puzzle_logs(group_id)   
   charts = gen_puzzle_charts(logs, puzzles, chart_colors)
   
   #print('\n LABELS:\n', charts[0])
@@ -192,7 +243,11 @@ def stats_puzzle():
      
     
   static = 'stats_puzzle.html'  
+  
   return render_template(
     static, page=page_html(static, "IN"),
-    logs=logs, puzzles=puzzles, charts=charts,
-    players=players, modes=modes, modes_info=modes_info,)
+    puzzles=puzzles, players=players, colors=player_colors,
+    n=len(logs), logs=filtered_logs, 
+    charts=charts,
+    puzzle_log_filter_form=puzzle_log_filter_form, filter=filter_data, 
+    modes=modes, modes_info=modes_info)

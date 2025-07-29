@@ -297,6 +297,8 @@
    border-color: var(--t-white) !important;
 }
 
+
+
 #puzzleLogList {
     max-height: 600px;
     overflow: auto;
@@ -304,10 +306,6 @@
     border-radius: 5px;
 }
 
-
-#puzzleLogFilter {
-
-}
 
 @media screen and (max-width: 800px) {
     #puzzleLib, #puzzleLogList, #puzzleLogs {

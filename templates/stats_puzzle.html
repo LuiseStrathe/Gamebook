@@ -10,8 +10,7 @@
 {# CSS & JS #}
 <link rel="stylesheet" href="../static/styles_stats.css">
 <link rel="stylesheet" href="../static/styles_games.css">
-<script src='../static/puzzle_stats.js'></script> 
-
+<script src='../static/puzzle_stats.js'></script>
 
 {# Header #}
 <section class="statsHeader">
@@ -36,13 +35,14 @@
   </div>
 </section>
 
-{% set n = logs|length %}
-{% if n > 0 %}
+
+{% if n != 0 %}
 
   <a href='#logs' style='display: block; margin: 15px auto; width: fit-content;'>
     &#x25BE; go to logs  &#x25BE;</a>
 
   {# Chart area #}
+
   <section class='fullDiv' style='background-color: var(--c-deep-blue-tr)'>  
     <h2><span style='background-color: white; color: black;'>
         Puzzle Analytics</span></h2>
@@ -64,7 +64,6 @@
     <div class='midDiv'>
       <div style='height: 100%; max-width: {{ width_charts }}px' class='canvasDiv'>
         <canvas id="logsChart"></canvas>
-        
         <script>
           logs_chart( 
             {{ charts[0][0] |safe }},
@@ -131,48 +130,124 @@
 
 
 
-  {# Logs List #}
-  {# 0:game_id, 1:date, 2:winner, 3: player color #}
-  {# 4:puzzle title, 5:pcs, 6:time, 7:comment #}
+  {# Logs #}
 
   <section class='midDiv'>  
     <h2><span style='background-color: white; color: var(--c-blue-dark);'>
       All puzzles finished</span></h2>
     <a href='/puzzle' style='padding-bottom: 30px; display: block;'>
-      &#10149; add more puzzles or logs here</a>
+      &#10149; edit puzzles or logs here</a>
 
-    <div id='puzzleLogList' style='background-color: var(--b-dark-tr);'>
-      <table>                
-        <thead>
-            <tr>
-                <th>&#128467;</th>
-                <th>&#129513;</th>
-                <th>&#128572;</th>
-                <th>&#128393;</th>
-            </tr>
-        </thead>
+    
+    {# Logs Filter #}
 
-        {% for i in range(n) %} 
-          <tr>
-            <td>{{ n - i }} <br>
-              <b>{{ logs[i][1] }}</b> </td>
-            <td style='color: {{ logs[i][3] }};'>
-              {{ puzzles['title'].iloc[logs[i][4] - 1] }}<br>
-              <b> {{ logs[i][5] }}</b> </td>
-            <td style='color: {{ logs[i][3] }}'> {{ logs[i][2] }} <br>
-              <b>{{ logs[i][6] }}</b> </td>
-            <td style='color: var(--c-grey)'> {{ logs[i][7] }} </td>
-          </tr>
-        {% endfor %}
-      </table>
+    <div id='filterDiv'>
+
+      {% if filter != "all" %}
+
+        {% if filter[3] != "" %}
+            <p>🗓 {{ filter[3] }}</p>
+        {% endif %}
+        {% if filter[1] != "" %}
+            <p>🏜️ {{ filter[1] }}</p>
+        {% endif %}
+        {% if filter[2] != "" %}
+            <p>🧩 {{ filter[2] }}</p>
+        {% endif %}
+        {% if filter[0] != "" %}
+            <p style='border-color: {{ filter[0][1] }}c9;'> 
+            😼  {{ filter[0][0] }}</p>
+        {% endif %}
+        
+        <a class='pageLink puzzleBtn' href="/puzzle#puzzleLogs">
+          <span style='color: var(--s-red); font-weight: bold;'>X</span> 
+          Reset</a>
+
+      {% elif filter == 'all' %}     
+        <p style="text-align: center; color: white; height: auto; border: none;">
+          Here are all the puzzle times, which 
+          <span style='text-transform: uppercase;'><b>{{ page[2] }}</b></span> 
+          has finished & logged:
+        </p>
+      {% else %}
+        <p style="text-align: center; color: white; height: auto; border: none;">
+          No results for this filter 👀</p>
+      
+      {% endif %}
+
+      <button class='pageLink puzzleBtn' onclick='puzzle_log_filter()'>
+        🔍 Filter</button>
+
+    </div>    
+
+
+    <div id='puzzleLogFilter' class='popUp'>
+      <div class='popUpContent'>
+        <div class='popHead'>
+          <p>Filter Puzzle Logs</p>
+          <button onclick='puzzle_log_filter()'>
+            X </button>
+        </div> 
+
+        <form action="" method="POST">
+          {{ puzzle_log_filter_form.hidden_tag() }}
+
+          <p>&#128572; {{ puzzle_log_filter_form.player() }}</p>
+          <p>&#129513; {{ puzzle_log_filter_form.size() }}</p>
+          <p>🏜️ {{ puzzle_log_filter_form.puzzle() }}</p>
+          <p>&#128467; {{ puzzle_log_filter_form.date() }}</p>
+
+          <div class='pageLink submitBtn' >
+            {{ puzzle_log_filter_form.apply_puzzle_log_filter() }}</div>   
+
+        </form>
+      </div>
     </div>
 
-  </section>
 
+  {# Logs List #}
+  {# 0:game_id, 1:date, 2:winner, 3: player color #}
+  {# 4:puzzle title, 5:pcs, 6:time, 7:comment #}    
+
+  {% set m = logs|length %}
+  {% if m == 0 %}
+    <p style='color: var(--t-white);'>No logs found for this filter 👀</p>
+  
+  {% else %}
+    <div id='puzzleLogList' style='background-color: var(--b-dark-tr);'>
+        <table>                
+          <thead>
+              <tr>
+                  <th>&#128467;</th>
+                  <th>&#129513;</th>
+                  <th>&#128572;</th>
+                  <th>&#128393;</th>
+              </tr>
+          </thead>
+
+          {% for i in range(m) %} 
+            <tr>
+              <td>{{ m - i }} <br>
+                <b>{{ logs[i][1] }}</b> </td>
+              <td style='color: {{ logs[i][3] }};'>
+                {{ puzzles['title'].iloc[logs[i][4] - 1] }}<br>
+                <b> {{ logs[i][5] }}</b> </td>
+              <td style='color: {{ logs[i][3] }}'> {{ logs[i][2] }} <br>
+                <b>{{ logs[i][6] }}</b> </td>
+              <td style='color: var(--c-grey)'> {{ logs[i][7] }} </td>
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
+
+    </section>
+  {% endif %}
 
 
 {% else %}
+
   {# Giphy Content #}
+
   <section id='statsMain' class='fullDiv'>  
     <div class='giphyBg'
         style='background-image: url("\
@@ -185,6 +260,7 @@
           Nothing there yet ...</p>
     </div>
   </section>
+
 {% endif %}
 
 {% endblock %}
