@@ -161,6 +161,10 @@ function finish_game() {
   document.getElementById("finishGame").classList.toggle("gameShow");
 }
 
+function toggle_rules() {
+  document.getElementById("rulesPopUp").classList.toggle("gameShow");
+}
+
 
 
 /*  ####################################

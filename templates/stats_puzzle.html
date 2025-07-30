@@ -38,7 +38,7 @@
 
 {% if n != 0 %}
 
-  <a href='#logs' style='display: block; margin: 15px auto; width: fit-content;'>
+  <a href='#filterDiv' style='display: block; margin: 15px auto; width: fit-content;'>
     &#x25BE; go to logs  &#x25BE;</a>
 
   {# Chart area #}
@@ -135,8 +135,8 @@
   <section class='midDiv'>  
     <h2><span style='background-color: white; color: var(--c-blue-dark);'>
       All puzzles finished</span></h2>
-    <a href='/puzzle' style='padding-bottom: 30px; display: block;'>
-      &#10149; edit puzzles or logs here</a>
+    <a href='/puzzle#filterDiv' style='padding-bottom: 30px; display: block;'>
+      &#10149; Edit puzzles or logs here</a>
 
     
     {# Logs Filter #}
@@ -159,7 +159,7 @@
             😼  {{ filter[0][0] }}</p>
         {% endif %}
         
-        <a class='pageLink puzzleBtn' href="/puzzle#puzzleLogs">
+        <a class='pageLink puzzleBtn' href="/puzzle#filterDiv">
           <span style='color: var(--s-red); font-weight: bold;'>X</span> 
           Reset</a>
 

@@ -91,8 +91,7 @@ def dice(game_id):
   point_entries = create_dice_point_entries(
     game_data, n, dice_form, len(player_ids))
   
-  chart_data = create_dice_game_chart(history=game_data[1])
-  
+  chart_data = create_dice_game_chart(game_data=game_data, n=int(n))
                
   static = "dice.html"
   return render_template(

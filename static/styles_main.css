@@ -99,6 +99,7 @@ div {
     overflow-y: auto;
     padding: 0;
     margin: auto;
+    max-height: 400px;
 }
 
 
@@ -178,6 +179,8 @@ div {
         left: 50%;
         transform: translate(-50%, -50%);
         min-width: 300px;
+        max-height: 80%;
+        overflow: auto;
 
         padding: 20px;
         border-radius: 5px;
@@ -187,7 +190,7 @@ div {
         z-index: 10;
         box-shadow: 0 0 10px 5px var(--s-shadow);
     
-    * p {
+    * p, * h3 {
         margin: 10px auto;
         color: var(--t-white);}
 
@@ -466,7 +469,11 @@ textarea {
         height: 40px;
         background-color: var(--t-white);
         border-radius: 5px;
-        font-weight: bold;}
+        font-weight: bold;
+    
+    &:hover {
+        cursor: pointer;
+    }}
 }
 
 

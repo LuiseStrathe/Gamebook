@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="../static/styles_games.css">
 <style type="text/css">body {background-image: var(--bg-play) !important;}</style>
 <script src='../static/play_charts.js'></script> 
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
 
 {% set players = game_info[3] %}
 {% set colors = game_info[4] %}
@@ -23,15 +24,75 @@
         Dice</h1> 
 
     {% if status == 'play' %}
-        <a class="pageLink" 
-        href="/"><span style="color: red; font-weight: bold;">X</span> Stop Game</a>
+        <button class="mainLink " 
+            style='background-color: transparent; border: none; 
+            display: inline-block; margin-right: 40px; margin-bottom: 15px;'
+            onclick="toggle_rules()">🕯️ Game Rules 🕯️</button>
+        <a class="mainLink" style='display: inline-block; margin-right: 40px;'
+            href="/">❌ Stop Game ❌</a>
+
     {% else %}
-        <a class="pageLink"
-            href="/"><span style="color: red; font-weight: bold;">X</span> Exit Game</a>
+        <a class="mainLink" href="/stats/dice">&#10149; To Dice Stats</a>
     {% endif %}
 
 </div>
 
+<div class='popUp' id='rulesPopUp'>
+    <div class='popUpContent'>
+        <div class='popHead'>
+            <p>Dice Rules</p>
+            <button onclick='toggle_rules()'>
+                X </button>
+        </div>
+        <div class='popText' style='text-align: left;'>
+
+            <p>In Dice, players take turns rolling five dice 
+                to get points in different categories. The player with most 
+                points after 13 round wins.</p>
+            <p>All you need is a set of 5 dice, maybe you also have a dice cup.</p>
+            
+            <hr><br><h3 style='text-align: left;'>🎲 ROLL</h3>
+            <p>Players take turns rolling the dice.</p>
+            <p>In each round, you roll the dice up to three times, using the final dice values to get score.</p>
+            <p>When you reroll, you can keep some of the dice values and roll the rest again.</p>
+            <p>The final five values of your roll will be used to score points.</p>
+            
+
+            <hr><br><h3 style='text-align: left;'>🧠 SCORE</h3>
+            <p>Choose a category to score points in with the values you just rolled.</p>
+            <p>The dice values must match the category requirements and sometimes also defines the score to enter.</p>
+            <p>If there is no fitting category, you can score 0 points in any category instead.</p>
+            <p>Each category can only be used once per game, so choose wisely!</p>
+            <p>After scoring, the game continues with the next player.</p>
+
+            <br><h3 style='text-align: left; color: var(--i-background);'>Scoring Categories:</h3>
+            <ul style='color: var(--i-background);'>
+                <li><b>1's</b>: Sum of all dice showing 1.</li>
+                <li><b>2's</b>: Sum of all dice showing 2.</li>
+                <li><b>3's</b>: Sum of all dice showing 3.</li>
+                <li><b>4's</b>: Sum of all dice showing 4.</li>
+                <li><b>5's</b>: Sum of all dice showing 5.</li>
+                <li><b>6's</b>: Sum of all dice showing 6.</li>
+            </ul><ul style='color: var(--i-background);'>    
+                <li><b>3 of a Kind</b>: Sum of all values if you have at least three dice showing the same number.</li>
+                <li><b>4 of a Kind</b>:  Sum of all values if you have at least four dice showing the same number.</li>
+                <li><b>Full House</b>:      25 points if you have three of one number and two of another.</li>
+                <li><b>Small Straight</b>:  30 points if you have a sequence of four numbers (e.g., 1-2-3-4).</li>
+                <li><b>Large Straight</b>:  40 points if you have a sequence of five numbers (e.g., 2-3-4-5-6).</li>
+                <li><b>Gamer</b>:           50 points if you have all five dice showing the same number.</li>
+                <li><b>Chance</b>:          Sum of all dice.</li>
+            </ul>
+
+            <hr><br><h3 style='text-align: left;'>👑 WIN</h3>
+            <p>The game ends after 13 rounds, when all players have scored in all categories.</p>
+            <p style='color: var(--s-yellow);'>Players with more than 63 points in the first 
+                six categories get a bonus of 35 points.</p>
+            <button onclick='toggle_rules()' class='pageLink'
+                style='border-color: var(--t-white); color: var(--t-white);'>
+                Close </button>
+        </div>
+    </div>
+</div>
 
 {% if info != "" %}
     <div id="infoID" class="userFeedback infoShow">
@@ -49,28 +110,48 @@
             Dicin'</span></h2>
 
         {% if status == 'play' %}        
-            <p>Game {{ game_info[1] }} <b>@ {{ round }} rounds done </b><br>
-            startet on {{ game_info[2] }}</p>
+            <p>The ongoing game (id: {{ game_info[1] }}) 
+                startet on {{ game_info[2] }} & 
+                is at <b>round {{ round }} of 13</b>:</p>
 
         {% elif status == 'final' %}
-            <h2><br>{{ winners }} won!</h2>
-            <p style='color: white; text-align: center;'>
-                How do you want to remember this game?</p>
+            <div class='popUp infoShow' id='saveGamePopUp'>
+                <div class='popUpContent'>
+                    <div class='popHead'>
+                      <p>Save this Game</p>
+                    </div>
+                    
+                    <h2>{{ winners }} won!</h2>
+                    <div class='giphyBg' style='height: 300px; display: flex;
+                        align-items: center; justify-content: center; width:100%;
+                        background-image: 
+                        url("https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExOWdvMXZ0YnY0ZTgyd3V5cXN3cG1ib2ZjdXIzdmhoZ2ZnczhrYWk0ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ZJPSFNLmADueHvzoZ8/giphy.gif");'>
+                    </div>
 
-            <form action="" method="POST">
-                {{ submit_game_form.hidden_tag() }}  
-                <p>{{ submit_game_form.comment() }}</p>                              
+                    <p style='color: white; text-align: center;'>
+                        How do you want to remember this game?</p>
+                    <form action="" method="POST">
+                        {{ submit_game_form.hidden_tag() }}  
+                        <p>{{ submit_game_form.comment() }}</p>                              
 
-                <div class='acceptBtn'>
-                    {{ submit_game_form.submit() }}
+                        <div class='acceptBtn'>
+                            {{ submit_game_form.submit() }}
+                        </div>
+                    </form>
+                    <hr><br>
+                    <a href="/" class='pageLink'
+                        style='border-color: var(--s-red); display: block; 
+                        font-size: 0.9rem'>
+                        ❌ Don't Save ❌</a>
                 </div>
-            </form>
+            </div>
 
         {% else %}
-            <p>Congratz to <b>{{ winners }}</b> for winning!</p>
-            <p style="font-size: 0.9rem;">
-                Game finished on {{ game_info[2] }}</p>
-            <p><b> {{ game_info[5] }}</b></p>
+            <p>🎉 Congratz to <b>{{ winners }}</b> for winning!
+            <span style="font-size: 0.9rem;">
+                Game finished on {{ game_info[2] }}</span></p>
+            <p style='color: var(--s-yellow);'><i>
+                "{{ game_info[5] }}"</i></p>
         {% endif %} 
 
         
@@ -103,7 +184,8 @@
                             {{ game_info[7][row] }}</td>
                         {% for p in range(players|length) %}
                             <td class='playInput'>
-                                {{ point_entries[row][p] }} </td>
+                                {% set pts = point_entries[row][p] %}
+                                {{ '✖️' if pts == 0 else pts }} </td>
                         {% endfor %}
                     </tr>
                 {% endfor %}
@@ -113,12 +195,16 @@
                     <td class='playCol' style='font-weight: normal;'>&sum;</td>
                     {% for p in range(players|length) %}
                         <td style='color: {{ colors[p] }}; font-weight: normal; background-color: transparent;'>
-                            {{ point_entries[-4][p] }} + {{ point_entries[-3][p] }}</td>
+                            {{ point_entries[-4][p] }} + {{ point_entries[-3][p] }}
+                            <span style='font-size: 0.8rem; color: var(--s-yellow);'>*</span></td>
                     {% endfor %}
                 </tr>
 
                 <tr class="divider">
-                    <td colspan='{{ players|length + 1 }}'><hr></td>
+                    <td colspan='{{ players|length + 1 }}'>
+                        <span style='font-size: 0.8rem; color: var(--s-yellow);'>
+                            * You get +35 bonus points for 63 points or more.</span>
+                        <br><hr></td>
                 </tr>
 
 
@@ -131,7 +217,8 @@
                                 {{ game_info[8][row] }}</span></td>
                         {% for p in range(players|length) %}
                             <td class='playInput'>
-                                {{ point_entries[row][p] }} </td>
+                                {% set pts = point_entries[row][p]  %}
+                                {{ '✖️' if pts == 0 else pts }} </td>
                         {% endfor %}
                     </tr>
                 {% endfor %}
@@ -155,11 +242,23 @@
                 </tr>
 
                 <tr class="finalRow">
+                    <td class='playCol'></td>
+                    {% for p in range(players|length) %}
+                        <td style='color: {{ colors[p] }}; background-color: transparent; 
+                            font-size: 1rem; font-weight: normal;'>
+                                {{ point_entries[-4][p] }}
+                                + {{ point_entries[-3][p] }}
+                                <span style='font-size: 0.8rem; color: var(--s-yellow);'>*</span>
+                                + {{ point_entries[-2][p] }} =</td>
+                    {% endfor %}
+                </tr>
+
+                <tr class="finalRow">
                     <td class='playCol'>&sum;</td>
                     {% for p in range(players|length) %}
                         {% if status != 'play' and players[p] in winners %}
-                            <td style='color: {{ colors[p] }};
-                                background-color: transparent; 
+                            <td style='color: black;
+                                background-color: {{ colors[p] }}; 
                                 border: 1px solid {{ colors[p] }};'>
                                     {{ point_entries[-1][p] }}</td>
                         {% else %}
@@ -174,7 +273,8 @@
 
             {# submit button #}
             {% if status == 'play' %}
-                <div class='pageLink submitBtn'>
+                <div class='pageLink submitBtn'
+                    style='background-color: var(--t-white);'>
                     {{ dice_form.submitDice() }}</div>
             {% endif %}
         </form>    
@@ -184,10 +284,18 @@
 
 
 
-{% if round > 2 %}
+{% if round > 0 %}
     <section class="gameSection" >
-        <h2 style='color: white;'>Game Journey</h2>  
-        <p style='color: var(--c-grey);'>35-point bonus excluded.</p>   
+        <h2><span style='color: white; background-color: black'>
+            Game Journey</span></h2>  
+
+        {% if status == 'play' %}
+            <p style='color: var(--t-white);'>Round {{ round }} of 13 &emsp;
+            <span style='color: var(--s-yellow);'>* 35-point bonus excluded</span></p>   
+        {% else %}
+            <p style='color: var(--t-white);'>Game finished on {{ game_info[2] }} &emsp;
+            <span style='color: var(--s-yellow);'>* 35-point bonus included</p>
+        {% endif %}
 
         <canvas id="dice_chart" height='500px'></canvas>
         <script>

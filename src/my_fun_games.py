@@ -401,9 +401,30 @@ def create_dice_point_entries(game_data, round, form, n_players):
 
 
 
-def create_dice_game_chart(history):
-    chart_data = [[r for r in range(1, 14)], history.T.tolist()]
-    return chart_data
+def create_dice_game_chart(game_data, n):
+    
+    points, history, activation = game_data.copy()
+    chart_labels = [r for r in range(1, 14)]
+    chart_data = history.T.tolist()
+    
+    
+    # add row with bonus + total 
+    if n > 12:
+        
+        bonus = np.sum(points[:6], axis=0) 
+        bonus = np.where(bonus >= 63, 35, 0)
+        bonus = bonus + history[-1]
+        
+        chart_labels += ['Bonus']
+        chart_data = np.vstack([history, bonus]).T.tolist()
+    
+    # empty values for unplayed rounds
+    else:
+        for p in range(len(points[0])):
+            for m in range(n, 13):
+                chart_data[p][m] = 'NaN'
+    
+    return [chart_labels, chart_data]
 
 
 
@@ -750,6 +771,7 @@ def puzzle_choice_filter_gen(logs, puzzles):
     return choice_filter, choice_puzzles
 
 
+
 def gen_puzzle_logs(id, sort_by='date'):
     
     group = load_group(id)[0]
@@ -763,8 +785,8 @@ def gen_puzzle_logs(id, sort_by='date'):
         # 4:puzzle title, 5:pcs, 6:time, 7:comment
         log = [ result.game_id,
                 result.time_stamp.strftime("%d/%m/%y"), 
-                group.players[result.winner_id],  
-                group.colors[result.winner_id],   
+                group.players[result.winner_id],
+                group.colors[result.winner_id],
                 result.title, 
                 result.n_rounds, 
                 str(timedelta(seconds=result["g_data"])),
@@ -828,13 +850,14 @@ def puzzle_log_filter_key_gen(form):
 
 # Stats page
 
-def gen_puzzle_charts(logs, puzzle_names, chart_colors): 
-      
-    # clean logs
+def gen_puzzle_charts(logs, puzzle_names, chart_colors):     
+    
+    
+    # Clean Logs
     logs = [l for l in logs if l[6] != '0:00:00']
   
     
-    # LABELS 
+    # Labels 
     categories = sorted(list(set([l[5] for l in logs])), reverse=False)
     players = list(set([l[2] for l in logs]))
     puzzles = sorted(list(set([l[4] for l in logs])))
@@ -847,7 +870,7 @@ def gen_puzzle_charts(logs, puzzle_names, chart_colors):
     avg_player, avg_puzzle = [], []
 
     
-    # player data
+    # Player Data
     for p in range(len(players)):
         playr = players[p]
         log_p = [l for l in logs if l[2] == playr]
@@ -883,12 +906,12 @@ def gen_puzzle_charts(logs, puzzle_names, chart_colors):
         else:
             avg_player.append(f'{avg_player_min} - {avg_player_max}')
         
-        logged[c] = logged[c].tolist()
+        # CAUTION: following line removed
+        # to avoid error whenever more players than categories were logged
+        #logged[c] = logged[c].tolist()
         
         
-        
-        
-    # puzzle data
+    # Puzzle Data
     
     for z in range(len(puzzles)):
         puz = puzzles[z]
@@ -917,10 +940,9 @@ def gen_puzzle_charts(logs, puzzle_names, chart_colors):
             else:
                 times_puzzle[z, :, c] = [None, None]
                 
-        
 
 
-    # EXTRA data
+    # Extra Data
     
     colors, colors_puzzles = [], []
         
@@ -948,13 +970,14 @@ def gen_puzzle_charts(logs, puzzle_names, chart_colors):
         
         color = chart_colors[z]
         colors_puzzles.append([color, color + '30'])
-  
+
                 
-    # COMBINE DATA
+    # Combine Data
     charts = [
         [categories, players, colors, puzzles, colors_puzzles],
         [sum_logged, avg_player, avg_puzzle], 
         [logged.tolist(), times_player.tolist(), json.dumps(times_puzzle.tolist())]]
+    
     
     return charts
 

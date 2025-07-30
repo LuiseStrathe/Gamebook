@@ -18,13 +18,10 @@
 
     <div>
         {% if status == 'play' %}
-            <a class="pageLink" 
-            href="/">Stop Game</a>
+            <a class="mainLink" href="/">❌ Stop Game ❌</a>
         {% else %}
-        <a class="pageLink"
-            href="/">&#10149; Play Again</a>
-        <a class="pageLink"
-                href="/stats/rounds">&#10149; To Statistics</a>
+            <a class="mainLink" href="/">&#10149; Play Again</a> &emsp;
+            <a class="mainLink" href="/stats/rounds">&#10149; To Statistics</a>
         {% endif %}
     </div>
 </div>
@@ -50,15 +47,19 @@
 
         <h2><span style='background-color: var(--s-yellow); color: black;'>
             {{ game_info[1] }} </span></h2>
+
         {% if status == 'play' %}        
-            <p>Game {{ game_info[0] }} <b>@ round {{ round }} </b><br>
-            startet on {{ game_info[2] }}</p>
+            <p>The ongoing game (id: {{ game_info[0] }}) 
+                startet on {{ game_info[2] }} and is in 
+                <b>round {{ round }}</b>:</p>
+
         {% else %}
-            <p>Congratz to <b>{{ winners }}</b> for winning!</p>
-            <p style="font-size: 0.9rem;">
+            <p>🎉 Congratz to <b>{{ winners }}</b> for winning!
+            <span style="font-size: 0.9rem;">
                 Game {{ game_info[0] }} finished on {{ game_info[2] }} 
-                @ {{ round }} rounds </p>
-            <p><b> {{ game_info[5] }}</b></p>
+                in {{ round }} rounds </p>
+            <p style='color: var(--s-yellow);'><i>
+                "{{ game_info[5] }}"</i></p>
         {% endif %}
 
 
@@ -90,7 +91,8 @@
                             <td class='playCol'>
                                 {{ row + 1 }}</td>
                             {% for p in range(players|length) %}
-                                <td>{{ points[row][p] }}</td>
+                                {% set pts = points[row][p] %}
+                                <td>{{ '-' if pts == 0 else pts }}</td>
                             {% endfor %}
                         </tr>
                     {% endfor %}
@@ -124,8 +126,8 @@
 
                         {% for p in range(players|length) %}
                             {% if status == 'done' and players[p] in winners %}
-                                <td style='color: {{ colors[p] }};
-                                    background-color: transparent; 
+                                <td style='color: black;
+                                    background-color: {{ colors[p] }}; 
                                     border: 1px solid {{ colors[p] }};'>
                                         {{ points[-1][p] }}</td>
                             {% else %}
@@ -140,7 +142,8 @@
             </table>
 
             {% if status == 'play' %}
-                <div class='pageLink submitBtn'>
+                <div class='pageLink submitBtn'
+                    style=''>
                     {{ rounds_form.submitRound() }}</div>
             {% endif %}
         </form>
@@ -148,23 +151,21 @@
 </div>
 
 
-
 {# Finish Game #}
 {% if round > 1 %}
     {% if status == 'play' %}
+
+        <button class='pageLink finishBtn submitBtn' 
+            style='background-color: black; color: var(--s-yellow);'
+            onclick='finish_game()'>
+            🏁 Game Finished 🏁
+        </button>
+
         <section class="gameSection">
-
-            <button class='finishBtn' 
-                style='background-color: black; color: var(--s-yellow);'
-                onclick='finish_game()'>
-                Finish Game
-            </button>
-
-
             <div id="finishGame" class="popUp">
                 <div class='popUpContent'>
                     <div class='popHead'>
-                      <p>Log this game</p>
+                      <p>Safe this Game</p>
                       <button onclick='finish_game()'>
                           X </button>
                     </div>
@@ -172,12 +173,10 @@
                     <h2>GAME OVER?</h2>
 
                     <div class='giphyBg' style='height: 250px; background-image: 
-                        url("https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3B4bHB0\
-                        ajNoYnd1YWUyam5nbDZib3UzMTYxbzhiZ2F4d253Z3YwbCZlcD12MV9pbnRlcm5\
-                        hbF9naWZfYnlfaWQmY3Q9Zw/2afdli2NFvmq1KsIeS/giphy.gif");'>
+                        url("https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExOWdvMXZ0YnY0ZTgyd3V5cXN3cG1ib2ZjdXIzdmhoZ2ZnczhrYWk0ZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ZJPSFNLmADueHvzoZ8/giphy.gif");'>
                     </div>
-                    <p> Your current entries will NOT be included. 
-                        'Close round' to fix this.<br></p>
+                    <p><i>🏮 Your current entries will NOT be included. 
+                        'Confirm ⏵ Next Round' to fix this.</i></p>
                     <p>How do you want to remember this game?</p>
                     <form action="" method="POST">
                         {{ submit_game_form.hidden_tag() }}  

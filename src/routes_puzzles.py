@@ -191,7 +191,7 @@ def stats_puzzle_all(log_filter_key):
     check_key(session['username'], session['key']) == False:
       init_session()
       return redirect(url_for('login', retry=False))  
-  
+
   
   
   # INIT
@@ -203,7 +203,7 @@ def stats_puzzle_all(log_filter_key):
   player_colors = {}
   for p in range(group.n):
     player_colors[players[p]] = group.colors[p]
-  
+
   
   # LOGS & FILTERS
   
@@ -227,13 +227,15 @@ def stats_puzzle_all(log_filter_key):
         return redirect(f"/stats/puzzle_all#filterDiv")
     else: 
       return redirect(f"/stats/puzzle_{new_filter_key}#filterDiv")  
-  
+
   
   # CHARTS
   
   #   > LABELS =  [0:categories, 1:players (w/ puzzle), 2:colors, 3:puzzles, 4:colors puzzles]
   #   > EXTRA =   [0:#logs player, 1:avg speed player, 2:avg speed puzzle]
-  #   > DATA =    [0:#logged, 1:speed player, 2:speed puzzle]  
+  #   > DATA =    [ chart 0:#logged [player, category], 
+  #                 chart 1:speed player, 
+  #                 chart 2:speed puzzle]  
   
   charts = gen_puzzle_charts(logs, puzzles, chart_colors)
   

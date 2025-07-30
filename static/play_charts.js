@@ -34,7 +34,7 @@ function updateRoundsChart(
             scales: {
                 y: {
                     beginAtZero: true,
-                    border:{ dash: [8, 4],},
+                    border:{ dash: [2, 8],},
                     grid: { color: '#d2d2d2c7',},},},
 
             plugins: {
@@ -99,7 +99,7 @@ function updateDiceChart(
             scales: {
                 y: {
                     beginAtZero: true,
-                    border:{ dash: [8, 4],},
+                    border:{ dash: [2, 8],},
                     grid: { color: '#d2d2d2c7',},},},
 
             plugins: {
@@ -116,7 +116,21 @@ function updateDiceChart(
                         
                 title: {
                     display: true,
-                    text: 'Total Points by Round',},},
+                    text: 'Total Points by Round',},
+
+                annotation: {
+                    annotations: [{
+                        type: 'line',
+                        mode: 'vertical',
+                        scaleID: 'x',
+                        value: 12,
+                        borderColor: 'yellow',
+                        borderWidth: 2,
+                        label: {
+                            enabled: true,
+                            content: 'Vertical Line'}
+                    }]}
+                },
 
             elements: {
                 point: {

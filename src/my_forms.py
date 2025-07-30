@@ -111,7 +111,7 @@ class DeleteForm(FlaskForm):
 class SubmitGameForm(FlaskForm):
   
   comment = TextAreaField("Comment", validators=[Optional()])
-  submit = SubmitField("Save", validators=[DataRequired()])
+  submit = SubmitField("Save this Game", validators=[DataRequired()])
 
 
 
@@ -134,7 +134,7 @@ class CloseRoundForm(FlaskForm):
   for i in range(10):   # 10 players
     exec(f"pt{i} = IntegerField('enter points', validators=[Optional()])")
   
-  submitRound = SubmitField("Next Round", validators=[DataRequired()])
+  submitRound = SubmitField("Confirm  ⏵  Next Round", validators=[DataRequired()])
 
 
 
@@ -170,7 +170,7 @@ class PlayDiceForm(FlaskForm):
     exec(f"p{i}_{id} = IntegerField('{name}', \
       validators=[Optional(strip_whitespace=True)])")
     
-  submitDice = SubmitField("Confirm", validators=[DataRequired()])
+  submitDice = SubmitField("Confirm  ⏵  Next Round", validators=[DataRequired()])
 
 
   
