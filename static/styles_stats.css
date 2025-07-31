@@ -150,43 +150,63 @@
 #logs {
     background-color: var(--b-dark-tr);
     border-radius: 5px;
-    padding: 20px;
-    margin: 0 auto;
-    overflow: auto;
-    max-height: 600px;  
-    
-    .log {
-        display: flex;
-        overflow-x: auto;
-        margin: 5px 0;
-        padding: 0;
 
-        text-align: left;
-        background-color: var(--b-dark-tr);
-        
-        div {        
-            min-width: 120px;
-            text-align: left;
-            display: inline-block; 
-            margin: 0; 
-            padding: 10px;}}
-
-    p {
+    p, td, th {
         margin: 0;
-        padding: 0;
+        padding: 5px;
         color: var(--t-white);}
-}    
-
-
-.logDesc {
-    text-decoration: italic;
-    font-size: 0.8rem;
+    th {
+        border:none;}
+    tr {
+        border-radius: 5px;}
 }
 
-.logBold {
-    font-size: 1.2rem;
-    font-weight: bold;
+#logList {
+    border-radius: 5px;
+    max-height: 600px;
+    overflow: auto;
+    color: var(--t-white);
+
+    table {
+        border-collapse: separate;
+        border-spacing: 0 10px;}
 }
+
+tr.rowLinkRow {
+    position: relative;
+    height: 3rem;
+
+    td {
+        padding: 5px;
+    }
+    
+    &:hover {
+        background-color: var(--b-white-tr)!important;
+        cursor: pointer;}
+}
+
+.rowLink {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    content: '';
+    width: 100%;
+    height: 3rem;
+    padding: 0;
+    margin: 0;
+}
+
+
+@media screen and (max-width: 800px) {
+    #logList {
+        padding: 20px;
+        border-radius: 0;}
+
+        table {
+            min-width: 500px;}
+}
+    
 
 
 @media screen and (max-width: 1024px) {
@@ -195,9 +215,6 @@
         margin: 0;
         padding: 20px 0;
         border-radius: 0;}
-    .log {
-        width: 100%;       
-        min-width: 600px;}
 }
 
 

@@ -55,7 +55,8 @@ def puzzle(log_filter_key):
       for i in range(len(logs))]
     
   choice_filter, choice_puzzles = puzzle_choice_filter_gen(logs, puzzles)
-    
+  
+  
   filter_data, filtered_logs = puzzle_log_filter_data( \
     log_filter_key, logs, player_colors, puzzles)
   
@@ -65,7 +66,7 @@ def puzzle(log_filter_key):
   if len(filtered_logs) == 0:
     info = "No logs found for this filter."
   
-  
+
   
   # FORMS
   
@@ -214,8 +215,7 @@ def stats_puzzle_all(log_filter_key):
   
   choice_filter, choice_puzzles = puzzle_choice_filter_gen(logs, puzzles)
   puzzle_log_filter_form = PuzzleLogFilterForm(
-    players=players, puzzles=choice_puzzles, choice_filter=choice_filter,
-    csrf_enabled=False)   
+    choice_filter=choice_filter, csrf_enabled=False)   
   
   if puzzle_log_filter_form.validate_on_submit():
     
@@ -241,7 +241,7 @@ def stats_puzzle_all(log_filter_key):
   
   #print('\n LABELS:\n', charts[0])
   #print('\n EXTRA:\n', charts[1])
-  #print('\n DATA:\n', *charts[2], sep='\n')
+  #print('\n DATA:\n', *charts[2], sep='\n\n')
      
     
   static = 'stats_puzzle.html'  

@@ -9,6 +9,7 @@
 
 {# CSS #}
 <link rel="stylesheet" href="../static/styles_stats.css">
+<link rel="stylesheet" href="../static/styles_games.css">
 
 
 
@@ -38,7 +39,6 @@
 
 </section>
 
-{% set n = logs|length %}
 {% if n > 0 %}
 
   <a href='#logs' style='display: block; margin: 15px auto; width: fit-content;'>
@@ -60,8 +60,8 @@
         {% for p in range(winner_chart[1]|length) %}
         <span style='color: {{ winner_chart[2][0][p] }}; font-weight: bold;'>
           {{ winner_chart[1][p] }}:
-          {{ winner_chart[4][p] }} | 
-          {{ winner_chart[0][0][p] + winner_chart[0][1][p] }}
+          {{ winner_chart[0][0][p] + winner_chart[0][1][p] }} ⏵
+          {{ winner_chart[4][p] }} 
         </span> &emsp;
         {% endfor %}
       </p>
@@ -89,42 +89,110 @@
   </section>
 
 
+  {# Logs #}
 
-  {# Logs List #}
 
   <section class='midDiv'>  
     <h2><span style='background-color: white; color: var(--c-blue-dark);'>
-      All Rounds Logged</span></h2>
-    <p>Click on a game to open the game details:</p>    
+      Rounds Games Logged</span></h2>
 
-    <div id='logs'>
 
+    {# Logs Filter #}
+
+    <div id='filterDiv'>
+
+      {% if filter != "all" %}
+
+        {% if filter[2] != "" %}
+            <p>🗓 {{ filter[2] }}</p>
+        {% endif %}
+        {% if filter[1] != "" %}
+            <p>🏜️ {{ filter[1] }}</p>
+        {% endif %}
+        {% if filter[0] != "" %}
+            <p style='background-color: {{ filter[0][1] }}c9;'> 
+            😼  {{ filter[0][0] }}</p>
+        {% endif %}
+        
+        <a class='pageLink puzzleBtn' href="/stats/rounds_all#filterDiv">
+          ❌ Reset</a>
+
+      {% elif filter == 'all' %}     
+        <p style='color: var(--t-white); background-color: transparent;'>
+          All round games, which 
+          <span style='text-transform: uppercase;'><b>{{ page[2] }}</b></span> 
+          has finished & logged</p>
+      {% else %}
+        <p style="text-align: center; color: white; height: auto; border: none;">
+          No results for this filter 👀</p>
       
-      {% for i in range(n) %}
-        <div class='log'>
-        {% set color = logs[i][7] %}
-          <a href='/rounds/{{ logs[i][0] }}'>
+      {% endif %}
+
+      <button class='pageLink puzzleBtn' onclick='log_filter()'>
+        🔍 Filter</button>
+
+    </div>    
 
 
-            <div style='min-width: 70px !important;'>
-              <p class='logDesc'><span  class='listBold'>{{ n - i }}</span>
-                <br>{{ logs[i][1] }}</p></div>
-            <div><p><span  class='listBold'>{{ logs[i][3] }}</span>
-                <br>({{ logs[i][5] }} rounds)</p></div>
+    <div id='logFilter' class='popUp'>
+      <div class='popUpContent'>
+        <div class='popHead'>
+          <p>Filter Rounds Logs</p>
+          <button onclick='log_filter()'>
+            X </button>
+        </div> 
 
-            <div style='{{ color }}'>
-              <p><span  class='logBold'>&#x1F3C6; {{ logs[i][2] }}</span>
-                <br>{{ logs[i][4] }}</p>
-            </div>
-            <div><p> points:<br>{{ logs[i][8] }}</p></div>
-            <div style='flex-grow: 1;'>
-              <p class='logDesc'>{{ logs[i][6] }}</p></div>
+        <form action="" method="POST">
+          {{ log_filter_form.hidden_tag() }}
 
+          <p>&#128572; {{ log_filter_form.player() }}</p>
+          <p>🏜️ {{ log_filter_form.title() }}</p>
+          <p>&#128467; {{ log_filter_form.date() }}</p>
 
-          </a>
-        </div>
-      {% endfor %}
+          <div class='pageLink submitBtn' >
+            {{ log_filter_form.apply_log_filter() }}</div>
+        </form> 
+      </div>
     </div>
+
+
+
+    {# Logs List #}
+
+    {% set m = logs|length %}
+    {% if m == 0 %}
+      <p style='color: var(--t-white); '>No logs found for this filter 👀</p>
+    
+    {% else %} 
+      <div id='logs'>
+        <p>⏷ Click on a game to open details ⏷</p>   
+        <div id='logList'>
+          <table>
+            <tr>
+              <th>🗓</th>
+              <th>😼</th>
+              <th>🧮</th>
+              <th>🖉</th>
+            </tr>
+
+            {% for i in range(m) %}
+              {% set color = logs[i][7] %}
+              
+              <tr class='rowLinkRow' style='{{ color }}'>
+                <td style='border-top-left-radius: 5px; border-bottom-left-radius: 5px;'>
+                  <a href='/dice/{{ logs[i][0] }}'
+                    aria-label={row.original.url} class="rowLink"></a>
+                    {{ m - i }}<br>{{ logs[i][1] }}</td>
+                <td>🎀 <b>{{ logs[i][2] }}</b> <br>{{ logs[i][4] }}</td>
+                <td>{{ logs[i][8] }}</td>
+                <td style='border-top-right-radius: 5px; border-bottom-right-radius: 5px;'>
+                  {{ logs[i][6] }}</td>
+              </tr>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+    {% endif %}
   </section>
 
 

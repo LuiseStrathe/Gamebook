@@ -7,6 +7,7 @@
 
 
 {# CSS #}
+<link rel="stylesheet" href="../static/styles_stats.css">
 <link rel="stylesheet" href="../static/styles_games.css">
 <style type="text/css">
     body {background-image: var(--bg-play) !important;}</style>
@@ -240,7 +241,7 @@
                     <p>🧩 {{ filter[2] }}</p>
                 {% endif %}
                 {% if filter[0] != "" %}
-                    <p style='border-color: {{ filter[0][1] }}c9;'> 
+                    <p style='background-color: {{ filter[0][1] }}c9;'> 
                     😼  {{ filter[0][0] }}</p>
                 {% endif %}
                 
@@ -249,29 +250,26 @@
                     Reset</a>
 
             {% elif filter == 'all' %}     
-                <p style="text-align: center; color: white; height: auto; border: none;">
-                    Here are all the puzzle times, which 
-                    <span style='text-transform: uppercase;'><b>{{ page[2] }}</b></span> 
-                    
-                    has finished & logged:
-                </p>
+                <p style='color: var(--t-white); background-color: transparent;'>
+                    All puzzle times finished & logged by 
+                    <span style='text-transform: uppercase;'><b>{{ page[2] }}</b></span> </p>
             {% else %}
-                <p style="text-align: center; color: white; height: auto; border: none;">
+                <p style="text-align: center; height: auto; border: none;">
                     No results for this filter 👀</p>
             
             {% endif %}
 
-            <button class='pageLink puzzleBtn' onclick='puzzle_log_filter()'>
+            <button class='pageLink puzzleBtn' onclick='log_filter()'>
                 🔍 Filter</button>
 
         </div>
 
 
-        <div id='puzzleLogFilter' class='popUp'>
+        <div id='logFilter' class='popUp'>
             <div class='popUpContent'>
                 <div class='popHead'>
                     <p>Filter Puzzle Logs</p>
-                    <button onclick='puzzle_log_filter()'>
+                    <button onclick='log_filter()'>
                         X </button>
                 </div> 
 
@@ -298,35 +296,35 @@
             <p style='color: var(--t-white);'>No logs found for this filter 👀</p>
         
         {% else %}
-            <div id="puzzleLogList">
-                <table>                
-                    <thead>
-                        <tr>
-                            <th>&#128467;</th>
-                            <th>&#129513;</th>
-                            <th>&#128572;</th>
-                            <th>&#128393;</th>
-                        </tr>
-                    </thead>
+            <div id='logs'>
+                <div id="logList">
+                    <table>                
+                        <thead>
+                            <tr>
+                                <th>🗓</th>
+                                <th>🧩</th>
+                                <th>😼</th>
+                                <th>🖉</th>
+                            </tr>
+                        </thead>
 
-                    {% for i in range(m) %}
+                        {% for i in range(m) %}
 
-                        {% set player = logs[i][2] %}
-                        {% set color = colors[player] %}
-                        {% set puzzle_num = logs[i][4]|int - 1 %}
+                            {% set player = logs[i][2] %}
+                            {% set color = colors[player] %}
+                            {% set puzzle_num = logs[i][4]|int - 1 %}
 
-                        <tr style="border-left: 5px solid {{ color }}c9;">
-                            <td style="color: var(--c-grey)"> {{ m - i }} <br>
-                                <b>{{ logs[i][1] }}<b> </td>
-                            <td style="color: {{color}}">
-                                {{ puzzles.iloc[puzzle_num].title }}<br>
-                                <b> {{ logs[i][5] }}</b> </td>
-                            <td style="color: {{color}}"> {{ player }} <br>
-                                <b>{{ logs[i][6] }}</b> </td>
-                            <td style="color: var(--c-grey)"> {{ logs[i][7] }} </td>
-                        </tr>
-                    {% endfor %}
-                </table>
+                            <tr style='background-color: {{ color }}7c;'>
+                                <td style='border-top-left-radius: 5px; border-bottom-left-radius: 5px;'> 
+                                    {{ m - i }} <br><b>{{ logs[i][1] }}<b> </td>
+                                <td>{{ puzzles.iloc[puzzle_num].title }}<br>
+                                    <b> {{ logs[i][5] }}</b> </td>
+                                <td>{{ player }} <br><b>{{ logs[i][6] }}</b> </td>
+                                <td style='border-top-right-radius: 5px; border-bottom-right-radius: 5px;'> {{ logs[i][7] }} </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
             </div>
         {% endif %}
 

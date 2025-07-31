@@ -35,6 +35,8 @@ function logs_chart(
             categoryPercentage: 0.8,
             interaction: {intersect: false,},
             skipNull: true,
+            maxBarThickness: 50,
+            minBarThickness: 20,
             
             scales: {
                 y: {
@@ -59,10 +61,7 @@ function logs_chart(
 
                 tooltip: {
                     backgroundColor: '#5f5f5f',
-                    displayColors: true,
-                    callbacks: {
-                        label: function(context) {
-                            return context.dataset.label + ': ' + context.parsed.x;},},},
+                    displayColors: true,},
                         
                 title: {
                     display: true,
@@ -113,10 +112,12 @@ function player_speed_chart(
             responsive: true,
             borderWidth: 3,
             barShowStroke : false,
-            barPercentage: 1.6,
-            categoryPercentage: 0.7,
-            interaction: {intersect: false,},
+            barPercentage: 0.8,
+            categoryPercentage: 0.8,
+            interaction: {intersect: true,},
             skipNull: true,
+            maxBarThickness: 50,
+            minBarThickness: 20,
             
             scales: {
                 y: {
@@ -128,14 +129,14 @@ function player_speed_chart(
                         text: 'Pieces per Minute',},
                     ticks: {color: 'white',},},
                 x: {
-                    stacked: false,
                     beginAtZero: true,
                     border: {color: 'white',},
                     title: {
                         display: true,
                         text: 'Pieces per puzzle',},
                     ticks: {color: 'white',},
-                    grid: {color: 'black', lineWidth: 2},},},
+                    grid: {color: 'black', lineWidth: 2},},
+                },
 
             plugins: {
                 legend: { display: false,},
@@ -196,8 +197,12 @@ function puzzle_speed_chart(
         options: {
             responsive: true,
             borderWidth: 3,
-            barPercentage: 1.6,
-            categoryPercentage: 0.7,
+            barPercentage: 0.8,
+            categoryPercentage: 0.8,
+            interaction: {intersect: false,},
+            skipNull: true,
+            maxBarThickness: 50,
+            minBarThickness: 20,
             
             scales: {
                 y: {
@@ -210,7 +215,6 @@ function puzzle_speed_chart(
                         text: 'Pieces per Minute',},
                     ticks: {color: 'white',},},
                 x: {
-                    stacked: false,
                     beginAtZero: true,
                     border: {color: 'white',},
                     title: {

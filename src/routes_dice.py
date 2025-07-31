@@ -16,8 +16,11 @@ import pandas as pd
 from datetime import datetime
 
 
+###############################################
+#               DICE PLAY
+###############################################
 
-# PLAY
+
 @app.route("/dice/<string:game_id>", methods=["GET", "POST"])
 def dice(game_id):
     
@@ -104,28 +107,65 @@ def dice(game_id):
 
 
 
+###############################################
+#               DICE STATS
+###############################################
 
 
-# STATS
-@app.route("/stats/dice", methods=["GET", "POST"])
-def stats_dice():
+@app.route("/stats/dice")
+def stats_dice_redirect():
+  return redirect("/stats/dice_all")
+
+
+
+@app.route("/stats/dice_<string:log_filter_key>", methods=["GET", "POST"])
+def stats_dice(log_filter_key):
   
   if verify_session() == False and \
     check_key(session['username'], session['key']) == False:
       init_session()
       return redirect(url_for('login', retry=False))  
   
-  # init
+  
+  # INIT
+  
   group_id = name_to_id(session['username'])
   group = load_group(group_id)[0]
   players = group.players
   logs, winner_chart = gen_dice_stats(group_id)
-  colors = group.colors
+  player_colors = {}
+  for p in range(group.n):
+    player_colors[players[p]] = group.colors[p]
+    
+
+  # LOGS & FILTERS
+  
+  logs, winner_chart = gen_dice_stats(group_id)
+  choice_filter = dice_choice_filter_gen(logs, players)
+  filter_data, filtered_logs = dice_log_filter_data(log_filter_key, logs, player_colors)
+  
+  
+  log_filter_form = DiceLogFilterForm(
+    choice_filter=choice_filter, csrf_enabled=False)   
+  
+  if log_filter_form.validate_on_submit():
+    
+    new_filter_key = dice_log_filter_key_gen(log_filter_form)
+    print(f"\n> dice LOG FILTER submitted: {new_filter_key}\n")
+    
+    if len(new_filter_key) < 7 or len(new_filter_key) > 60 \
+      or '__' not in new_filter_key:
+        return redirect(f"/stats/dice_all#filterDiv")
+    else: 
+      return redirect(f"/stats/dice_{new_filter_key}#filterDiv")  
+    
     
   static = 'stats_dice.html'  
   return render_template(
     static, page=page_html(static, "IN"),
     players=players, modes=modes, modes_info=modes_info,
-    logs=logs, winner_chart=winner_chart, colors=colors,)
+    logs=filtered_logs, n = len(logs), filter= filter_data,
+    log_filter_form=log_filter_form, 
+    winner_chart=winner_chart, colors=player_colors,)
 
 

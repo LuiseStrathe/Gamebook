@@ -18,8 +18,11 @@ from datetime import datetime
 
 
 
+###############################################
+#               ROUNDS PLAY
+###############################################
 
-# PLAY
+
 @app.route("/rounds/<string:game_id>", methods=["GET", "POST"])
 def rounds(game_id):
   
@@ -105,28 +108,64 @@ def rounds(game_id):
   
   
   
-# STATS
+###############################################
+#               ROUNDS STATS
+###############################################
 
-@app.route("/stats/rounds", methods=["GET", "POST"])
-def stats_rounds():
+
+@app.route("/stats/rounds")
+def stats_rounds_redirect():
+  return redirect("/stats/rounds_all")
+
+
+
+@app.route("/stats/rounds_<string:log_filter_key>", methods=["GET", "POST"])
+def stats_rounds(log_filter_key):
   
   if verify_session() == False and \
     check_key(session['username'], session['key']) == False:
       init_session()
       return redirect(url_for('login', retry=False))  
   
-  # init
+  
+  # INIT
   group_id = name_to_id(session['username'])
   group = load_group(group_id)[0]
   players = group.players
-  logs, winner_chart = gen_rounds_stats(group_id)
-  colors = group.colors
+  player_colors = {}
+  for p in range(group.n):
+    player_colors[players[p]] = group.colors[p]
   
+  
+  # LOGS & FILTERS
+  
+  logs, winner_chart = gen_rounds_stats(group_id)
+  choice_filter = rounds_choice_filter_gen(logs, players)
+  filter_data, filtered_logs = rounds_log_filter_data(
+    log_filter_key, logs, player_colors)
+  
+  
+  log_filter_form = RoundsLogFilterForm(
+    choice_filter=choice_filter, csrf_enabled=False)   
+  
+  if log_filter_form.validate_on_submit():
+    
+    new_filter_key = rounds_log_filter_key_gen(log_filter_form)
+    print(f"\n> rounds LOG FILTER submitted: {new_filter_key}\n")
+    
+    if len(new_filter_key) < 7 or len(new_filter_key) > 60 \
+      or '__' not in new_filter_key:
+        return redirect(f"/stats/rounds_all#filterDiv")
+    else: 
+      return redirect(f"/stats/rounds_{new_filter_key}#filterDiv")  
+
     
   static = 'stats_rounds.html'  
   return render_template(
     static, page=page_html(static, "IN"),
     players=players, modes=modes, modes_info=modes_info,
-    logs=logs, winner_chart=winner_chart, colors=colors,)
+    logs=filtered_logs, n = len(logs), filter= filter_data,
+    log_filter_form=log_filter_form, 
+    winner_chart=winner_chart, colors=player_colors,)
   
   

@@ -63,7 +63,6 @@ def winner_str(players, winner_ids):
 ###############################################
 
 
-
 # start from GROUP page
 
 def start_rounds(group_id, form):
@@ -96,7 +95,7 @@ def start_rounds(group_id, form):
         # group.results  > save in group
         result = { \
             'game_id': game_id, 'mode': 'rounds', 'group_id': group.id, 'time_stamp': datetime.now(),
-            'g_data': [points], 'n_rounds': 0, 'title': form.r_title.data,
+            'g_data': [points], 'n_rounds': 0, 'title': form.r_title.data.capitalize(),
             'player_ids': players, 'winner_id': '', 'comment': '',
             'info_1': '', 'info_2': '', 'info_3': ''}
         
@@ -106,6 +105,7 @@ def start_rounds(group_id, form):
         
     return game_id, info
           
+   
    
 
 # CREATE data to display  
@@ -188,6 +188,7 @@ def create_rounds_chart(points, player_ids):
 
 
 
+
 # during PLAYING
 
 def next_rounds(group, game_id, result, points, n, form, n_players):
@@ -253,13 +254,67 @@ def end_rounds(group, points, game_id, title, players, comment):
 
 
 
+# Log List & Filter
+
+def rounds_choice_filter_gen(logs, players):
+    
+    choice_filter = \
+    [players,
+     sorted(set(np.array(logs).T[3].tolist())),
+     sorted(set([i[1].partition('/')[2] for i in logs]))]    
+    
+    return choice_filter
+
+
+
+def rounds_log_filter_key_gen(form):
+
+    player = form.player.data if form.player.data != 'All Players' else ''
+    title = form.title.data if form.title.data != 'All Games' else ''
+    date = form.date.data.replace('/', '-') if form.date.data != 'All Times' else ''
+
+    filter_string = f"{player}__{title}__{date}"      
+    print("  filter_string:", filter_string)
+    return 'all' if filter_string == '____' else filter_string
+
+
+
+def rounds_log_filter_data(log_filter_key, logs, player_colors):
+    
+    if log_filter_key == 'all':
+        return 'all', logs
+    
+    else:
+        player, title, date = log_filter_key.split('__')
+        
+        filter_data = [
+            [player, player_colors[player]] if player != '' else '', 
+            title if title != '' else '',
+            date if date != '' else '']
+        
+        filtered_logs = logs.copy()
+        
+        if player != '':
+            filtered_logs = [l for l in filtered_logs if player in l[4]]
+            
+        if title != '':
+            filtered_logs = [l for l in filtered_logs if l[3] == title]
+            
+        if date != '':
+            filtered_logs = [l for l in filtered_logs \
+                if l[1][-5:].replace('/', '-') == date]
+        
+        return filter_data, filtered_logs
+
+
+
+
 
 
 
 ###############################################
 #                     DICE 
 ###############################################
-
 
 
 # start from GROUP page
@@ -314,6 +369,7 @@ def start_dice(group_id, form):
 
 
 
+
 # CREATE data to display
 
 def gen_dice_stats(id):
@@ -333,10 +389,11 @@ def gen_dice_stats(id):
 
         if len(winner_ids) > 1:
             color_css = 'background-image: linear-gradient(to right, ' + \
-                'c9, '.join([group.colors[p] for p in winner_ids])\
-                + 'c9);'
+                '7c, '.join([group.colors[p] for p in winner_ids]) + '7c);'
         else: 
-            color_css = 'background-color: ' + group.colors[winner_ids[0]] + 'c9;'
+            color_css = 'background-image: linear-gradient(to left, ' + \
+                group.colors[winner_ids[0]] + '7c, ' + \
+                group.colors[winner_ids[0]] + '7c);'
         
         # cols: 0:id, 1:date , 2:winner name, 3:title of game, 
         #       4:players, 5:rounds, 6:comment, 7:color of winner,
@@ -425,6 +482,7 @@ def create_dice_game_chart(game_data, n):
                 chart_data[p][m] = 'NaN'
     
     return [chart_labels, chart_data]
+
 
 
 
@@ -584,6 +642,8 @@ def dice_history(history, new_points, activation, new_activation, n_players):
     return new_history
 
 
+
+
 # FINISH game
 
 def end_dice(group, game_id, player_ids, game_data, winner_ids, comment):
@@ -619,14 +679,59 @@ def end_dice(group, game_id, player_ids, game_data, winner_ids, comment):
 
 
 
+# Log List & Filter
+
+
+def dice_choice_filter_gen(logs, players):
+    
+    choice_filter = \
+    [players,
+     sorted(set([i[1].partition('/')[2] for i in logs]))]    
+    
+    return choice_filter
+
+
+
+def dice_log_filter_key_gen(form):
+
+    player = form.player.data if form.player.data != 'All Players' else ''
+    date = form.date.data.replace('/', '-') if form.date.data != 'All Times' else ''
+
+    filter_string = f"{player}__{date}"      
+    
+    return 'all' if filter_string == '__' else filter_string
+
+
+
+def dice_log_filter_data(log_filter_key, logs, player_colors):
+    
+    if log_filter_key == 'all':
+        return 'all', logs
+    
+    else:
+        player, date = log_filter_key.split('__')
+        
+        filter_data = [
+            [player, player_colors[player]] if player != '' else '', 
+            date if date != '' else '']
+        
+        filtered_logs = logs.copy()
+        
+        if player != '':
+            filtered_logs = [l for l in filtered_logs if player in l[4]]
+
+        if date != '':
+            filtered_logs = [l for l in filtered_logs \
+                if l[1][-5:].replace('/', '-') == date]
+        
+        return filter_data, filtered_logs
+
 
 
 
 ###############################################
 #                     PUZZLES 
 ###############################################
-
-
 
 
 # Puzzle page
@@ -754,25 +859,7 @@ def change_puzzle(id, form):
 
 # Log List & Filter
 
-def puzzle_choice_filter_gen(logs, puzzles):
-    
-    choice_filter = \
-    [sorted(set([i[2] for i in logs])),
-     sorted(set([i[5] for i in logs])),
-     sorted(puzzles.title[puzzles.id == j][0] for j in set([i[4] for i in logs])),
-     sorted(set([i[1].partition('/')[2] for i in logs]))]
-    
-    choice_puzzles = \
-        [(f"{puzzles.id.iloc[i]}: \
-            {puzzles.title.iloc[i]} ({puzzles.pcs.iloc[i]} pcs)")
-            for i in range(len(puzzles))]
-    
-    
-    return choice_filter, choice_puzzles
-
-
-
-def gen_puzzle_logs(id, sort_by='date'):
+def gen_puzzle_logs(id):
     
     group = load_group(id)[0]
     logs = []
@@ -797,8 +884,36 @@ def gen_puzzle_logs(id, sort_by='date'):
 
 
 
+def puzzle_choice_filter_gen(logs, puzzles):
+    
+    choice_filter = \
+    [sorted(set([i[2] for i in logs])),
+     sorted(set([i[5] for i in logs])),
+     sorted(puzzles.title[puzzles.id == j][0] for j in set([i[4] for i in logs])),
+     sorted(set([i[1].partition('/')[2] for i in logs]))]    
+    
+    choice_puzzles = [(f"{puzzles.id.iloc[i]}: \
+        {puzzles.title.iloc[i]} ({puzzles.pcs.iloc[i]} pcs)")
+        for i in range(len(puzzles))]
+    
+    return choice_filter, choice_puzzles
+
+
+
+def puzzle_log_filter_key_gen(form):
+
+    player = form.player.data if form.player.data != 'All Players' else ''
+    puzzle = form.puzzle.data if form.puzzle.data != 'All Puzzles' else ''
+    size = form.size.data if form.size.data != 'All Sizes' else ''
+    date = form.date.data.replace('/', '-') if form.date.data != 'All Times' else ''
+
+    filter_string = f"{player}__{puzzle}__{size}__{date}"      
+    
+    return 'all' if filter_string == '______' else filter_string
+
+
+
 def puzzle_log_filter_data(log_filter_key, logs, player_colors, puzzles):
-    print('\nlog_filter_key: ', log_filter_key)
     
     if log_filter_key == 'all':
         return 'all', logs
@@ -819,7 +934,6 @@ def puzzle_log_filter_data(log_filter_key, logs, player_colors, puzzles):
             
         if puzzle != '':
             puzzle_id = puzzles[puzzles.title == puzzle].id.values[0]
-            print('puzzle_id: ', puzzle_id, puzzle)
             filtered_logs = [l for l in filtered_logs if l[4] == puzzle_id]
             
         if size != '':
@@ -830,19 +944,6 @@ def puzzle_log_filter_data(log_filter_key, logs, player_colors, puzzles):
                 if l[1][-5:].replace('/', '-') == date]
         
         return filter_data, filtered_logs
-
-
-
-def puzzle_log_filter_key_gen(form):
-
-    player = form.player.data if form.player.data != 'All Players' else ''
-    puzzle = form.puzzle.data if form.puzzle.data != 'All Puzzles' else ''
-    size = form.size.data if form.size.data != 'All Sizes' else ''
-    date = form.date.data.replace('/', '-') if form.date.data != 'All Times' else ''
-
-    filter_string = f"{player}__{puzzle}__{size}__{date}"      
-    
-    return 'all' if filter_string == '______' else filter_string
 
 
 
@@ -912,7 +1013,7 @@ def gen_puzzle_charts(logs, puzzle_names, chart_colors):
         
         
     # Puzzle Data
-    
+
     for z in range(len(puzzles)):
         puz = puzzles[z]
         log_z = [l for l in logs if l[4] == puz]
@@ -921,7 +1022,14 @@ def gen_puzzle_charts(logs, puzzle_names, chart_colors):
         times = [int(s) / 60 + int(m) + 60 * int(h) for h, m, s in times]
         pieces = np.sum([l[5] for l in log_z])
         avg = np.sum(times) / pieces
-        avg_puzzle.append(round(avg, 2))
+        title = puzzle_names['title'][puzzle_names['id'] == puz].values[0]
+        pieces_of_puzzle = int(pieces/len(times))
+        total_avg_time = int(round(pieces * avg, 0))
+        total_avg_time = f'{total_avg_time//60}:{total_avg_time%60}'
+        
+        avg_puzzle_z = [title, f'{len(times)}x ⏵ {round(avg, 2)} ~ {total_avg_time}', 
+                        pieces_of_puzzle]
+        avg_puzzle.append(avg_puzzle_z)
         
         for c in range(len(categories)):
             cat = categories[c]
@@ -939,8 +1047,8 @@ def gen_puzzle_charts(logs, puzzle_names, chart_colors):
                 
             else:
                 times_puzzle[z, :, c] = [None, None]
-                
 
+    
 
     # Extra Data
     
@@ -953,7 +1061,6 @@ def gen_puzzle_charts(logs, puzzle_names, chart_colors):
     while len(puzzles) > len(chart_colors):
         chart_colors += chart_colors        
         
-        
     for p in players:
         
         color, i = "", 0
@@ -963,20 +1070,39 @@ def gen_puzzle_charts(logs, puzzle_names, chart_colors):
             i += 1
         colors.append([color, color + '30'])
     
-    
     for z in range(len(puzzles)):
         
         puzzles[z] = puzzle_names['title'][puzzle_names['id'] == puzzles[z]][0]
         
         color = chart_colors[z]
         colors_puzzles.append([color, color + '30'])
+        avg_puzzle[z].append(color)
+        
+    avg_puzzle = sorted(avg_puzzle, key=lambda x: x[2])
+    
+        
+    # Clean Data of Zeros
+
+    logged = logged.tolist()
+    for i in range(len(logged)):
+        logged[i] = list(map(lambda x: 'NaN' if x == 0 else x, logged[i]))
+
+    times_player = times_player.tolist()
+    for i in range(len(times_player)):
+        for j in range(len(times_player[i])):
+            times_player[i][j] = list(map(lambda x: 'NaN' if x == 0 else x, times_player[i][j]))
+    
+    times_puzzle = times_puzzle.tolist()
+    times_puzzle = list(map(lambda x: 'NaN' if x == 0 else x, times_puzzle))
+
 
                 
     # Combine Data
+
     charts = [
         [categories, players, colors, puzzles, colors_puzzles],
         [sum_logged, avg_player, avg_puzzle], 
-        [logged.tolist(), times_player.tolist(), json.dumps(times_puzzle.tolist())]]
+        [logged, times_player, json.dumps(times_puzzle)]]
     
     
     return charts

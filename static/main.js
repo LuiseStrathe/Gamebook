@@ -150,8 +150,8 @@ function puzzle_log_delete() {
   document.getElementById("puzzleLogDeleteForm").classList.toggle("gameShow");
 }
 
-function puzzle_log_filter() {
-  document.getElementById("puzzleLogFilter").classList.toggle("gameShow");
+function log_filter() {
+  document.getElementById("logFilter").classList.toggle("gameShow");
 }
 
 

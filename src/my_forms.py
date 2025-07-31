@@ -115,6 +115,7 @@ class SubmitGameForm(FlaskForm):
 
 
 
+
 # ROUNDS
 
 class StartRoundsForm(FlaskForm):
@@ -135,6 +136,25 @@ class CloseRoundForm(FlaskForm):
     exec(f"pt{i} = IntegerField('enter points', validators=[Optional()])")
   
   submitRound = SubmitField("Confirm  ⏵  Next Round", validators=[DataRequired()])
+
+
+
+
+class RoundsLogFilterForm(FlaskForm):
+  player = SelectField("Player", 
+    choices=[], validators=[Optional()])
+  title = SelectField("Game Title", 
+    choices=[], validators=[Optional()])
+  date = SelectField("Date",
+    choices=[], validators=[Optional()])
+  apply_log_filter = SubmitField("Filter")
+  
+  def __init__(self, choice_filter, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+    self.player.choices = ['All Players'] + choice_filter[0]
+    self.title.choices = ['All Games'] + choice_filter[1]
+    self.date.choices = ['All Times'] + choice_filter[2]
+
 
 
 
@@ -171,6 +191,21 @@ class PlayDiceForm(FlaskForm):
       validators=[Optional(strip_whitespace=True)])")
     
   submitDice = SubmitField("Confirm  ⏵  Next Round", validators=[DataRequired()])
+
+
+
+class DiceLogFilterForm(FlaskForm):
+  player = SelectField("Player", 
+    choices=[], validators=[Optional()])
+  date = SelectField("Date",
+    choices=[], validators=[Optional()])
+  apply_log_filter = SubmitField("Filter")
+  
+  def __init__(self, choice_filter, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+    self.player.choices = ['All Players'] + choice_filter[0]
+    self.date.choices = ['All Times'] + choice_filter[1]
+
 
 
   
@@ -225,6 +260,7 @@ class PuzzleRecordForm(FlaskForm):
     self.player.choices = players
 
 
+
 class PuzzleRecordDeleteForm(FlaskForm):
   logs = SelectField("Logs", 
     choices=[], validators=[DataRequired()])
@@ -234,6 +270,7 @@ class PuzzleRecordDeleteForm(FlaskForm):
     super().__init__(*args, **kwargs)
     self.logs.choices = log_choices
     
+
 
 class PuzzleLogFilterForm(FlaskForm):
   player = SelectField("Player", 
