@@ -38,11 +38,11 @@ def group(group_id):
     group = load_group(group_id)[0]
     
     info = ""
-    rounds_form = StartRoundsForm(csrf_enabled=False)
+    rounds_form = StartRoundsForm(get_rounds_games(group_id), csrf_enabled=False)
     dice_form = StartDiceForm(csrf_enabled=False)
     
     
-    if rounds_form.validate_on_submit():          
+    if rounds_form.validate_on_submit():
       game_id, info = start_rounds(group_id, rounds_form)
       
       if info == '':      
@@ -64,7 +64,7 @@ def group(group_id):
     return render_template(
       static, page=page_html(static, "IN"), info=info,
       modes=modes_info, num_modes=len(modes), group=group, 
-      rounds_form=rounds_form, dice_form=dice_form)
+      rounds_form=rounds_form, dice_form=dice_form,)
     
     
   else:

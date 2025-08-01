@@ -129,6 +129,32 @@
                      
     ############################################  */
 
+.gameButton {
+    font-size: 1rem;
+    background-color: var(--b-dark-tr);
+    color: var(--t-white);
+    font-weight: normal;
+    padding: 10px;
+}
+
+.activeGameButton {
+    border-color: var(--t-white);
+}
+
+.inactiveGameButton {
+    cursor: not-allowed;
+    background-color: transparent;
+}
+
+.gameBox {
+    display: none;
+    border: none;
+}
+
+.activeGameBox {
+    display: block;
+}
+
 
 #winnerBoard {
     height: 100px;
@@ -156,7 +182,8 @@
         padding: 5px;
         color: var(--t-white);}
     th {
-        border:none;}
+        border:none;
+        height: 1rem;}
     tr {
         border-radius: 5px;}
 }
@@ -169,7 +196,9 @@
 
     table {
         border-collapse: separate;
-        border-spacing: 0 10px;}
+        border-spacing: 0 10px;
+        margin: 0;
+        padding: 0;}
 }
 
 tr.rowLinkRow {

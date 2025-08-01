@@ -120,11 +120,17 @@ class SubmitGameForm(FlaskForm):
 
 class StartRoundsForm(FlaskForm):
   
-  r_title = StringField("Rounds Game Title", 
-    validators=[DataRequired(), Length(min=3, max=20)])
+  title = SelectField("Game Title", 
+    choices=[], validators=[Optional()])
+  new_title = StringField("New Game Title", 
+    validators=[Optional(), Length(min=3, max=20)])
   
   for i in range(10):   # 10 players
     exec(f"r_p_{i} = BooleanField('Rounds Player {i+1}')")
+    
+  def __init__(self, games, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+    self.title.choices = games
   
   submit_rounds_start = SubmitField("Start")
   
@@ -136,7 +142,6 @@ class CloseRoundForm(FlaskForm):
     exec(f"pt{i} = IntegerField('enter points', validators=[Optional()])")
   
   submitRound = SubmitField("Confirm  ⏵  Next Round", validators=[DataRequired()])
-
 
 
 

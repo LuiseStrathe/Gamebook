@@ -96,7 +96,8 @@
           
           <div>
             <p>What game are you playing?</p>
-            <p>{{ rounds_form.r_title() }}</p>
+            <p>{{ rounds_form.title() }}</p>
+            <p>New Game:<br>{{ rounds_form.new_title() }}</p>
             <p><br>Who is joining?</p>
 
             {% for p in range(group.n) %}

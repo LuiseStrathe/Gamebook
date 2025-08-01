@@ -34,10 +34,10 @@
       {% endif %}
     {% endfor %}
   </div>
-
-
-
 </section>
+
+
+
 
 {% if n > 0 %}
 
@@ -51,33 +51,138 @@
         Rounds Analytics</span></h2>
 
     
-    <h3 style='color: white; text-decoration: underline;'>
-      <br>Win Rates & Paticipation</h3>  
-    
-    
     {% if n > 2 %}
-      <p>
-        {% for p in range(winner_chart[1]|length) %}
-        <span style='color: {{ winner_chart[2][0][p] }}; font-weight: bold;'>
-          {{ winner_chart[1][p] }}:
-          {{ winner_chart[0][0][p] + winner_chart[0][1][p] }} ⏵
-          {{ winner_chart[4][p] }} 
-        </span> &emsp;
-        {% endfor %}
-      </p>
+    <div class='midDiv'>
+      
+      {# Game Buttons#}
+      <h3 style='color: white; text-decoration: underline;'>
+        Win Rates & Participation</h3>
 
-      <div class='midDiv'>
-        <div style='height: {{winner_chart[3]}};' class='canvasDiv'>
-          <canvas id="winnerBoard"></canvas>
-          <script src='../static/rounds_stats.js'></script> 
-          <script>
+      <button class='gameButton pageLink activeGameButton' id='game_button_all'
+        onclick="switchRoundsGame(event, 'game_box_all'),
+            updateWinners( 
+              {{ winner_charts['All Games'][1] |safe }},
+              {{ winner_charts['All Games'][2] |safe }},
+              {{ winner_charts['All Games'][0] |safe }})">
+                All
+      </button>
+
+      {% for g in games %}
+        {% if winner_charts[g][1] != [] %}
+          <button class='gameButton pageLink' id='game_button_{{g}}'
+            onclick="
+              switchRoundsGame(event, '{{ "game_box_" + g }}'),
               updateWinners( 
-                {{ winner_chart[1] |safe }},
-                {{ winner_chart[2] |safe }},
-                {{ winner_chart[0] |safe }},);
-          </script>    
-        </div>  
+                {{ winner_charts[g][1] |safe }},
+                {{ winner_charts[g][2] |safe }},
+                {{ winner_charts[g][0] |safe }})">
+                  {{ g }}
+          </button>
+        {% else %}
+          <button class='gameButton pageLink inactiveGameButton'>
+            {{ g }}</button>
+        {% endif %}
+      {% endfor %}
+
+      {# Player Buttons #}
+      {% for p in players %}
+        {% set color = colors[p] %}
+        {% if winner_charts[p][1] != [] %}
+          <button class='gameButton pageLink' id='game_button_{{ p }}'
+            style='color: {{ color }};'
+            onclick="
+              switchRoundsGame(event, '{{ "game_box_" + p }}'),
+              updateWinners( 
+                {{ winner_charts[p][1] |safe }},
+                {{ winner_charts[p][2] |safe }},
+                {{ winner_charts[p][0] |safe }})">
+                  {{ p }}
+          </button>
+        {% else %}
+          <button class='gameButton pageLink inactiveGameButton'>
+            {{ p }}</button>
+        {% endif %}
+      {% endfor %}
+
+
+      {# Game Boxes #}
+      {% set winner_chart = winner_charts['All Games'] %}
+
+      <div class='gameBox activeGameBox' id='game_box_all'>
+        <p>{% for p in range(winner_chart[1]|length) %}
+          <span style='color: {{ winner_chart[2][0][p] }}; font-weight: bold;'>
+            {{ winner_chart[1][p] }}:
+            {{ winner_chart[0][0][p] + winner_chart[0][1][p] }} ⏵
+            {{ winner_chart[4][p] }} </span> &emsp;
+        {% endfor %}</p>
       </div>
+
+
+      {% for i in range(games|length) %}
+        {% set game = games[i] %} 
+        {% set winner_chart = winner_charts[game] %}
+
+        <div class='gameBox' id='game_box_{{ game }}'>
+          {% if winner_chart[1]|length > 0 %}
+            <p>
+              {% for p in range(winner_chart[1]|length) %}
+                <span style='color: {{ winner_chart[2][0][p] }}; font-weight: bold;'>
+                  {{ winner_chart[1][p] }}:
+                  {{ winner_chart[0][0][p] + winner_chart[0][1][p] }} ⏵
+                  {{ winner_chart[4][p] }} </span> &emsp;
+              {% endfor %}
+            </p>
+
+          {% else %}
+            <p style='color: var(--t-white);'>
+              💔 Not enough games played yet for this game.</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+
+
+
+      {% for i in range(players|length) %}
+        {% set player = players[i] %} 
+        {% set winner_chart = winner_charts[player] %}
+        
+
+        {# Player Game Box #}
+
+        <div class='gameBox' id='game_box_{{ player }}'>
+          {% if winner_chart[1]|length > 0 %}
+            <p>
+              {% for p in range(winner_chart[1]|length) %}
+                <span style='color: {{ winner_chart[2][0][p] }}; font-weight: bold;'>
+                  {{ winner_chart[1][p] }}:
+                  {{ winner_chart[0][0][p] + winner_chart[0][1][p] }} ⏵
+                  {{ winner_chart[4][p] }} </span> &emsp;
+              {% endfor %}
+            </p>
+
+          {% else %}
+            <p style='color: var(--t-white);'>
+              💔 Not enough games played yet for this player.</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+      
+
+
+      {# Winner Board #}
+      <div style='height: {{winner_charts['All Games'][3]}};' class='canvasDiv'>
+        <canvas id="winnerBoard"></canvas>
+        <script src='../static/rounds_stats.js'></script> 
+        <script>
+            updateWinners( 
+              {{ winner_charts['All Games'][1] |safe }},
+              {{ winner_charts['All Games'][2] |safe }},
+              {{ winner_charts['All Games'][0] |safe }});
+        </script>    
+      </div>
+    </div>
 
 
     {% else %}
@@ -180,9 +285,9 @@
               
               <tr class='rowLinkRow' style='{{ color }}'>
                 <td style='border-top-left-radius: 5px; border-bottom-left-radius: 5px;'>
-                  <a href='/dice/{{ logs[i][0] }}'
+                  <a href='/rounds/{{ logs[i][0] }}'
                     aria-label={row.original.url} class="rowLink"></a>
-                    {{ m - i }}<br>{{ logs[i][1] }}</td>
+                    {{ m - i }} | <b>{{ logs[i][3].upper() }}</b><br>{{ logs[i][1] }}</td>
                 <td>🎀 <b>{{ logs[i][2] }}</b> <br>{{ logs[i][4] }}</td>
                 <td>{{ logs[i][8] }}</td>
                 <td style='border-top-right-radius: 5px; border-bottom-right-radius: 5px;'>

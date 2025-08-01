@@ -1,7 +1,7 @@
 
 /*  
     Contains all Chart JS functions for 
-    the Rounds Stats page.
+    the Rounds & Dice Stats page.
     
 */
 
@@ -57,7 +57,7 @@ var winner_board = new Chart(ctx_w, {
                     
             title: {
                 display: true,
-                text: 'Rounds games played & games won:',},},
+                text: 'Games played & won:',},},
     },},);
                 
 

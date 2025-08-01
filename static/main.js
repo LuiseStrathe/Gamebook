@@ -167,6 +167,7 @@ function toggle_rules() {
 
 
 
+
 /*  ####################################
 
     Tabs
@@ -174,7 +175,7 @@ function toggle_rules() {
     #################################### */ 
 
 
-// Open the default tab
+// Open the default mode tab
 
 function openMode(evt, Mode) {
 
@@ -195,6 +196,24 @@ function openMode(evt, Mode) {
 }
 
 
+// Choose rounds game tab to choose game title for charts
+
+function switchRoundsGame(evt, game) {
+  var i, tabcontent, tablinks;
+
+  tablinks = document.getElementsByClassName("gameButton");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].classList.remove("activeGameButton");
+  }
+
+  tabcontent = document.getElementsByClassName("gameBox");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].classList.remove("activeGameBox");
+  }
+
+  evt.currentTarget.classList.add("activeGameButton");
+  document.getElementById(game).classList.add("activeGameBox");
+}
 
 
 

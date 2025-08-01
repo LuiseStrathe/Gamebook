@@ -135,11 +135,13 @@ def stats_rounds(log_filter_key):
   player_colors = {}
   for p in range(group.n):
     player_colors[players[p]] = group.colors[p]
+  games = get_rounds_games(group_id)
   
   
   # LOGS & FILTERS
   
-  logs, winner_chart = gen_rounds_stats(group_id)
+  logs, winner_charts = gen_rounds_stats(
+    group_id, players, games)
   choice_filter = rounds_choice_filter_gen(logs, players)
   filter_data, filtered_logs = rounds_log_filter_data(
     log_filter_key, logs, player_colors)
@@ -158,14 +160,14 @@ def stats_rounds(log_filter_key):
         return redirect(f"/stats/rounds_all#filterDiv")
     else: 
       return redirect(f"/stats/rounds_{new_filter_key}#filterDiv")  
-
+    
     
   static = 'stats_rounds.html'  
   return render_template(
     static, page=page_html(static, "IN"),
     players=players, modes=modes, modes_info=modes_info,
     logs=filtered_logs, n = len(logs), filter= filter_data,
-    log_filter_form=log_filter_form, 
-    winner_chart=winner_chart, colors=player_colors,)
+    log_filter_form=log_filter_form, games=games,
+    winner_charts=winner_charts, colors=player_colors,)
   
   

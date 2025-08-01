@@ -70,15 +70,18 @@ def start_rounds(group_id, form):
     # check players
     group = load_group(group_id)[0]
     players = [p for p in range(group.n) if form[f'r_p_{p}'].data]
-            
+    print('> start_rounds - players:', players)
+    
     if len(players) < 2:
         info = 'Select at least 2 players for a rounds game.'
         game_id = 0
+        print('info:', info)
         
     else:
         # init game
         info = ''
         game_id = gen_game_id('rounds')
+        title = form.new_title.data.capitalize() if form.new_title.data != '' else form.title.data
         points = np.zeros((1, len(players)))  
         group = load_group(group_id)[0]
         results = group.results
@@ -95,28 +98,41 @@ def start_rounds(group_id, form):
         # group.results  > save in group
         result = { \
             'game_id': game_id, 'mode': 'rounds', 'group_id': group.id, 'time_stamp': datetime.now(),
-            'g_data': [points], 'n_rounds': 0, 'title': form.r_title.data.capitalize(),
+            'g_data': [points], 'n_rounds': 0, 'title': title,
             'player_ids': players, 'winner_id': '', 'comment': '',
             'info_1': '', 'info_2': '', 'info_3': ''}
-        
         
         group.results = pd.concat([group.results, pd.DataFrame([result])])
         group.update_group()        
         
     return game_id, info
           
-   
+
+
+def get_rounds_games(group_id):
+    group = load_group(group_id)[0]
+    
+    # get all games played
+    results = group.results[group.results['mode']=='rounds'] 
+    results = results[results['winner_id'] != '']
+    
+    # get titles of games
+    games = sorted(set(results.title.tolist()))
+    
+    return games 
    
 
 # CREATE data to display  
 
-def gen_rounds_stats(id):
+def gen_rounds_stats(id, players, games):
     
     group = load_group(id)[0]
+    n = group.n
     logs = []
     results = group.results[group.results['mode']=='rounds'] 
     results = results[results['winner_id'] != '']
-    winner_chart = np.zeros((group.n, 2)).astype(int)
+    winner_charts = {}
+    
     
     # logs with all games played
     for i in range(len(results)):
@@ -135,39 +151,87 @@ def gen_rounds_stats(id):
         #       8:points per player
         log = [ result.game_id,
                 result.time_stamp.strftime("%d/%m/%y"), 
-                winner_str(group.players, result.winner_id),
+                winner_str(players, result.winner_id),
                 result.title, 
-                ', '.join([group.players[p] for p in result.player_ids]),   
+                ', '.join([players[p] for p in result.player_ids]),   
                 result.n_rounds, 
                 result.comment,
                 color_css,
-                ' : '.join(sums)
-                ]
+                ' : '.join(sums)]
+        
         logs.insert(0, log)
     
-    # winner chart
+    
+    # winner charts
     if len(logs) > 2:
-        colors, colors_faint, log_names = [], [], []
-        log_players = np.zeros(group.n, dtype=int)
         
-        for p in range(group.n):
-            n_played = np.sum([p in r for r in results.player_ids])
-            if n_played > 0:
-                n_won = np.sum([p in r.winner_id for i, r in results.iterrows()])
-                winner_chart[p] = [n_won, n_played - n_won]
-                log_players[p] = 1
-                log_names.append(group.players[p])
-                colors.append(group.colors[p])
-                colors_faint.append(group.colors[p] + '30')
+        for i in range(len(games) + 1):
 
-        winner_chart = winner_chart[log_players == 1]
-        win_rates = [f"{round(100 * w / (w + l)) if w + l > 0 else 'n/a'}%" for w, l in winner_chart if w + l > 0]
-        height = str(sum(log_players) * 30 + 200) + 'px'
+            colors, colors_faint, log_names, height, win_rates = [], [], [], '', []
+            log_players = np.zeros(n, dtype=int)
+            winner_chart = np.zeros((n, 2)).astype(int)
+            
+            if i == 0:
+                result = results.copy()
+                title = 'All Games'
+            else:
+                result = results[results.title == games[i - 1]]
+                title = games[i - 1]
+
+            
+            if len(result) > 0:
+                for p in range(n):
+                    n_played = np.sum([p in r for r in result.player_ids])
+                    if n_played > 0:
+                        n_won = np.sum([p in r.winner_id for i, r in result.iterrows()])
+                        winner_chart[p] = [n_won, n_played - n_won]
+                        log_players[p] = 1
+                        log_names.append(group.players[p])
+                        colors.append(group.colors[p])
+                        colors_faint.append(group.colors[p] + '30')
+
+                winner_chart = winner_chart[log_players == 1]
+                win_rates = [f"{round(100 * w / (w + l)) if w + l > 0 else 'n/a'}%" for w, l in winner_chart if w + l > 0]
+                height = str(sum(log_players) * 30 + 200) + 'px'
+                
+                winner_chart = winner_chart.T.tolist()
         
-        winner_chart = winner_chart.T.tolist()
-        winner_chart = [winner_chart, log_names, [colors, colors_faint], height, win_rates]
+            winner_charts[title] = [winner_chart, log_names, [colors, colors_faint], height, win_rates]
+            
         
-    return logs, winner_chart
+        m = len(games)
+        for p in range(n):
+            colors, colors_faint, log_names, height, win_rates = [], [], [], '', []
+            log_games = np.zeros(m, dtype=int)
+            winner_chart = np.zeros((m, 2)).astype(int)
+            
+            result = results[results.player_ids.apply(lambda x: p in x)]
+            player = players[p]
+            
+            
+            if len(result) > 0:
+                for g in range(m):
+                    result_g = result[result.title == games[g]]
+                    n_played = len(result_g)
+
+                    if n_played > 0:
+                        n_won = np.sum([p in r.winner_id for i, r in result_g.iterrows()])
+                        winner_chart[g] = [n_won, n_played - n_won]
+                        log_games[g] = 1
+                        log_names.append(games[g])
+                        colors.append(group.colors[p])
+                        colors_faint.append(group.colors[p] + '30')
+
+                winner_chart = winner_chart[log_games == 1]
+                win_rates = [f"{round(100 * w / (w + l)) if w + l > 0 else 'n/a'}%" for w, l in winner_chart if w + l > 0]
+                height = str(sum(log_games) * 30 + 200) + 'px'
+                
+                winner_chart = winner_chart.T.tolist()
+        
+            winner_charts[player] = [winner_chart, log_names, [colors, colors_faint], height, win_rates]
+            
+        
+    return logs, winner_charts
 
 
 
