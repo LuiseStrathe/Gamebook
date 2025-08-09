@@ -1,8 +1,8 @@
 <title>GamesBook README</title>
 
-<h1>GAMES BOOK</h1>
+<h1>GAMESBOOK</h1>
 
-<p>GamesBook is a free Flask web application. The app allows users to record analogue games they play! Their gaming records and analytics can be accessed by their whole group.</p>
+<p>GamesBook is a free Flask web application. The app allows users to record & analyze analogue games they play. With the group account all players can access and contribute to the gaming records. Multiple game modes are supported.</p>
 
 
 <a href="www.gamesbook.site" target='_blank'>>>> Visit GameBook here!</a>
@@ -29,7 +29,7 @@
 
 <h2>GamesBook App</h2>
 <h3>Content</h3>
-<p>GamesBook is a web application that allows users to record analogue games they play. The app is designed for groups of friends or families who play games together and want to keep track of their gaming records. You can simply access GameBook via the web browser on your smartphone, tablet or computer.</p>
+<p>GamesBook is a web application that allows users to record analogue games they play. The app is designed for groups of friends or families who play games together and want to keep track of their gaming records, anywhere & anytime. You can simply access GamesBook via the web browser on your smartphone, tablet or computer.</p>
 
 <h3>Technical Setup</h3>
 <p>The web application GamesBook is deployed on a project-dedicated Ubuntu VPS. The source code is accessible on the <a href='' target='_blank'>GitHub repository</a> and the deployment is done via SSH access. GameBook is served using Nginx and Gunicorn and built with Flask, Python, Chart JS, HTML, CSS and JavaScript.</p>
@@ -51,31 +51,26 @@
 
 <p>Following game modes are available: </p>
 <ul>
-    <li><b>Rounds</b> <br>In a Rounds game, the game goes in rounds. At start the players which participate can be selected from the group. Then, in each round, all players can receive points. When a round is finished, the entries are locked and the total of all rounds up to that point is displayed. The number of rounds is not restricted and a game can be finished and saved at any round.
-    <br><br><i>Note: This is the most <b>generic game mode</b> and can be used for many different actual games such as Scrabble, checkers or rolling dice.</i></li><br>
-    <li><b>Puzzle</b> <br>A group can save multiple different puzzles they may undertake, including info such as number of pieces and a description to identify the actual real live puzzle. Once they completed a puzzle, a user can make a record in GameBook of the specific puzzle and the time it took for them to finish it under their alias within the group.</li><br> 
-    <li><b>Yahtzee (a.k.a. Kniffel)</b> <br>Yahtzee is a dice game where the aim is to score points by rolling five dice to make certain combinations. The game can be played with up to 8 players and follwing a specific rule set. The game is played in rounds and the total score is calculated at the end of the game. The game can only be finished and saved after all rounds are played.
-    </li>
-    <br> 
-    <li><b>Skat</b> <br><i>Not yet implemented</i></li>
+    <li><b>ROUNDS (round based, incl. most board and card games)</b> <br>Rounds includes all round-based games with points given to or taken from the players each round. At start the participating players and the game title are defined. Then, in each round, all players can receive points. When a round is finished, the entries are locked and the total of all rounds up to that point is displayed. The number of rounds is not restricted and a game can be finished and saved at any round. The game title serves as a category to easily select again in future games and analyze each game title separately.</li><br>
+    <li><b>DICE (a.k.a. Yahtzee, Kniffel)</b> <br>Yahtzee is a dice game where the aim is to score points by rolling five dice to make certain combinations. The game can be played with up to 8 players and follwing a specific rule set. The game is played in rounds and the total score is calculated at the end of the game. The game can only be finished and saved after all rounds are played.
+    </li><br>
+    <li><b>PUZZLE (a.k.a. Jigsaw)</b> <br>A group can save multiple different puzzles they may undertake, including info such as number of pieces and a description to identify the actual real live puzzle. Once they completed a puzzle, a user can make a record in GameBook of the specific puzzle and the time it took for them to finish it under their alias within the group.</li>
 </ul>
 
 
 <h3>Group Accounts</h3>
-<p>A group account with up to 8 players can be registered. Once the account is created, everyone with the shared credentials has full access. The group can hold up to 8 individual players, each identified by an alias (eg. their name). </p>
+<p>A group account with up to 8 players can be registered. Once the account is created, everyone with the shared credentials has full access. The group can hold up to ten individual players, each identified by an alias (e.g. their name). </p>
 <p> With the group name and password a user can start a session by logging into the shared group space. There is no verification (e.g. with an email address) and therefore a the login credentials can not be retrieved after the account creation. This basic registration is due to the non-sensitivity of content and to ease the access to the side for multiple individuals.</p>
-<p>The password is encrypted and stored in the database. The group name is stored in plain text and can be accessed by all group members when logged in.</p>
+<p>The password is encrypted with salt and stored in the database. The group name is stored in plain text and all functions can be accessed by each group member when logged in, there is no restriction on the actions they can perform.</p>
+
 
 
 
 <h3>Analytics</h3>
-<p>Once a game is finished, the group can access the analytics of all their games so far. The analytics include the total number of games, the total number of rounds, the total number of players and the average score per player. The analytics are displayed in a table and can be accessed by all group members when logged in.</p>
-
-<h3>Test Mode</h3>
-<p>Any visitor can access the test mode, which is a simple version of rounds mode. This option allows non-account users to get a feeling for the app experience without creating a group account. Naturally, no records will be safed and analytics are accessible.</p>
+<p>Once a game is finished, a record is created in the database. All records ('logs') can be reviewed and filtered in the analytics section of Gamesbook. In addition each game mode has its own analytics view, allowing for a more detailed analysis of specific game types, including charts and other group-specific insights.</p>
 
 <h3>Responsive Design</h3>
-<p>The web application is designed with a responsive layout, which means it can be accessed on any device, including smartphones, tablets and computers. The design is optimized for mobile devices and can be used on the go.</p>
+<p>The web application is designed with a responsive layout, which means it can be used on any device, including smartphones, tablets and computers. The design is optimized for mobile devices and can be used on the go.</p>
 
 <br> 
 <h2>Project Structure</h2>

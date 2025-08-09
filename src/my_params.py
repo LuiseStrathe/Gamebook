@@ -140,12 +140,16 @@ modes_info = [
         
         "Play round-based games within your group.", 
         
-        "Play round-based games within your group.\n\n \
-        In each round, you can enter points for each player.\n \
-        The winner is the player with the most points over all rounds.\n\n \
-        You can use this mode for all kinds of games. Either you note down rounds \
+        "Rounds includes all round-based games such as board or card games,\
+        sports or party games.\n\n \
+        Each round you can enter points for every player. \
+        The winner is the player with the most points.\n \
+        This mode works for most types of games. Either you note down rounds\
         (as in scrabble) or \
-        the results of multiple games you want to combine, e.g. cards or table tennis.",
+        the results of multiple games you want to combine, e.g. cards or table tennis.\n\n \
+        You will be able to anayze each game title seperately, \
+        e.g. checking out who won most scrabble matches \
+        or what is your win rate in table tennis.",
         
         "../static/media/modes/desc_mode.png", 
         "../static/media/modes/rounds_icon_tr.png", 
@@ -156,16 +160,15 @@ modes_info = [
     ["dice",
      
         "Roll 5 dice to gain points for specific combinations.",
-        
-        "This game mode is not yet available.\n\n \
-        Roll the dice and as in the classic achieve points in different categories. \n\n \
-        You need 5 Dice. The acitve player can reroll twice.\n \
-        Each time you roll the dice, you can choose which dice you want to keep. \
-        You can not reroll with those anymore.\n \
-        To end your turn you have to choose a combination and gain the points.\n \
-        The winner is the player with most points in total.",
-        
-        "../static/media/modes/desc_mode.png",  
+
+        "You might know this game as 'Yatzy' or 'Kniffel' - this is it.\n \
+        Players roll 5 dice to receive points in the given 13 categories. \
+        The categories are pre-defined, examples are 'Multiple 3's' or 'Full House'. \
+        The winner is the player with most points in total. \n\n \
+        Don't worry if you don't know the rules, \
+        Gamesbook will help you play it with ease.",
+
+        "../static/media/modes/gamesbook_ref_d01.png",  
         "../static/media/modes/dice_icon_tr.png", 
         "../static/media/modes/dice_icon.png", 
         'https://giphy.com/embed/l2JdUMnCDg6qs368g',
@@ -173,15 +176,16 @@ modes_info = [
     
     ["puzzle",
      
-        "Save the puzzles you've finished and compare times.",
-        
-        "Challenge your puzzle skills: \
-        finish a puzzle tracking the time you need to finish it. \
-        You can then log your time in GamesBook in a easy way. \
-        Just add the puzzle once and then save logs each time you finish it. \n \
+        "Save all puzzles you've finished and compare times.",
+
+        "🧩 Challenge your (Jigsaw) puzzle skills!\n\n \
+        Add all your puzzles to the Gamesbook library and \
+        log the time it took you to finish them. \n \
+        You can then log your times in GamesBook in a easy way. \
+        Just add the puzzle once and then save logs each time you finish it. \n\n \
         After a view entries you will be able to explore your stats  \
-        and compare within your group.",        
-        
+        and compare within your group or between different puzzles.",
+
         "../static/media/modes/desc_mode.png", 
         "../static/media/modes/puzzle_icon_tr.png",
         "../static/media/modes/puzzle_icon.png",
@@ -189,6 +193,26 @@ modes_info = [
     ],
 ]      
 
+
+mode_images = [
+    ["../static/media/modes/gamesbook_ref_r07.png",
+    "../static/media/modes/gamesbook_ref_r08.png",
+    "../static/media/modes/gamesbook_ref_r09.png",
+    "../static/media/modes/gamesbook_ref_r10.png",
+    "../static/media/modes/gamesbook_ref_r11.png",
+    "../static/media/modes/gamesbook_ref_r12.png"],
+    ["../static/media/modes/gamesbook_ref_d01.png",
+    "../static/media/modes/gamesbook_ref_d02.png",
+    "../static/media/modes/gamesbook_ref_d03.png",
+    "../static/media/modes/gamesbook_ref_d04.png",
+    "../static/media/modes/gamesbook_ref_d06.png",
+    "../static/media/modes/gamesbook_ref_d05.png"],
+    ["../static/media/modes/gamesbook_ref_p01.png",
+    "../static/media/modes/gamesbook_ref_p02.png",
+    "../static/media/modes/gamesbook_ref_p03.png",
+    "../static/media/modes/gamesbook_ref_p04.png",
+    "../static/media/modes/gamesbook_ref_p05.png"],
+]
 
 
 

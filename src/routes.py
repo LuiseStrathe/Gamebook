@@ -47,7 +47,7 @@ def index():
   
   static = "_index.html"
   return render_template(static, page=page_html(static, "out"),
-                         modes=modes_info, 
+                         modes=modes_info, mode_images=mode_images,
                          about_info=about_info, 
                          num_modes=len(modes))
 

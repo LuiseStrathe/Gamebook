@@ -63,10 +63,11 @@ def group(group_id):
     static = 'group.html'
     return render_template(
       static, page=page_html(static, "IN"), info=info,
-      modes=modes_info, num_modes=len(modes), group=group, 
-      rounds_form=rounds_form, dice_form=dice_form,)
-    
-    
+      modes=modes_info, num_modes=len(modes), 
+      mode_images=mode_images, group=group, 
+      rounds_form=rounds_form, dice_form=dice_form)
+
+
   else:
     init_session()
     return redirect(url_for('login', retry=False))
